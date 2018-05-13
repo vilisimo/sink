@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:sink/forms/input.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Sink',
-      theme: new ThemeData(
+      theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
@@ -27,12 +28,11 @@ class MyHomePage extends StatelessWidget {
           alignment: Alignment.center,
         ),
       ),
-      body: new Center(
-        child: new Column(
+      body: Center(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new Text('Nothing done yet!',),
-            new Text('Sadness and sorrow...'),
+            ExpenseForm(),
           ],
         ),
       ),
