@@ -11,13 +11,13 @@ class Sink extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: HomeScreen(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({Key key}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  HomeScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
