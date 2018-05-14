@@ -35,7 +35,7 @@ class ExpenseFormState extends State<ExpenseForm> {
               onSaved: (value) => _cost = double.parse(value),
             ),
             _textFormField("Add a note", (value) => _description = value),
-            _textFormField("Enter a category", (value) => value = _category),
+            _textFormField("Enter a category", (value) => _category = value),
 
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
