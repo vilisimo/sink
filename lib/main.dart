@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sink/forms/input.dart';
+import 'package:sink/ui/expense_form.dart';
 
 void main() => runApp(MyApp());
 
