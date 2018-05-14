@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sink/ui/expense_form.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(Sink());
 
-class MyApp extends StatelessWidget {
+class Sink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
