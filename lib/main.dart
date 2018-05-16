@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        fullscreenDialog: false,
+        fullscreenDialog: true,
         builder: (context) {
           return ExpenseForm();
         }
