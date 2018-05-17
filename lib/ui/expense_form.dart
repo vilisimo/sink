@@ -12,7 +12,6 @@ class ExpenseForm extends StatefulWidget {
 }
 
 class ExpenseFormState extends State<ExpenseForm> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   DateTime _initialDate = DateTime.now();
 
@@ -45,9 +44,16 @@ class ExpenseFormState extends State<ExpenseForm> {
                   validator: (value) => _validatePrice(value),
                   onSaved: (value) => _cost = double.parse(value),
                 ),
-                _textFormField("Add a note", (value) => _description = value),
-                _textFormField(
-                    "Enter a category", (value) => _category = value),
+                TextFormField(
+                  decoration: InputDecoration(labelText: "Add a note"),
+                  validator: (value) => _validateNotEmpty(value),
+                  onSaved: (value) => _description = value,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(labelText: "Enter a category"),
+                  validator: (value) => _validateNotEmpty(value),
+                  onSaved: (value) => _category = value,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: RaisedButton(
@@ -58,8 +64,7 @@ class ExpenseFormState extends State<ExpenseForm> {
                             cost: _cost,
                             date: _initialDate,
                             category: _category,
-                            description: _description
-                        ));
+                            description: _description));
                       }
                     },
                     child: Text('Submit'),
@@ -70,14 +75,6 @@ class ExpenseFormState extends State<ExpenseForm> {
           );
         },
       ),
-    );
-  }
-
-  TextFormField _textFormField(String label, Function onSave) {
-    return TextFormField(
-      decoration: InputDecoration(labelText: label),
-      validator: (value) => _validateNotEmpty(value),
-      onSaved: onSave,
     );
   }
 
