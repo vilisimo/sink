@@ -33,7 +33,7 @@ class ExpenseFormState extends State<ExpenseForm> {
                 DatePicker(
                   labelText: 'From',
                   selectedDate: _initialDate,
-                  selectDate: ((DateTime date) {
+                  onChanged: ((DateTime date) {
                     setState(() {
                       _initialDate = date;
                     });

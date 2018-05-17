@@ -11,12 +11,12 @@ class DatePicker extends StatelessWidget {
     Key key,
     this.labelText,
     this.selectedDate,
-    this.selectDate
+    this.onChanged
   }) : super(key: key);
 
   final String labelText;
   final DateTime selectedDate;
-  final ValueChanged<DateTime> selectDate;
+  final ValueChanged<DateTime> onChanged;
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -27,7 +27,7 @@ class DatePicker extends StatelessWidget {
     );
 
     if (picked != null && picked != selectedDate) {
-      selectDate(picked);
+      onChanged(picked);
     }
   }
 
