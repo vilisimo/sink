@@ -41,7 +41,7 @@ class ExpenseFormState extends State<ExpenseForm> {
                 _textFormField("Add a note", (value) => _description = value),
                 _textFormField(
                     "Enter a category", (value) => _category = value),
-                _DateTimePicker(
+                _DatePicker(
                   labelText: 'From',
                   selectedDate: _initialDate,
                   selectDate: ((DateTime date) {
@@ -102,11 +102,11 @@ class ExpenseFormState extends State<ExpenseForm> {
   }
 }
 
-class _DateTimePicker extends StatelessWidget {
+class _DatePicker extends StatelessWidget {
 
   static const _YEAR = 365;
 
-  const _DateTimePicker({
+  const _DatePicker({
     Key key,
     this.labelText,
     this.selectedDate,
