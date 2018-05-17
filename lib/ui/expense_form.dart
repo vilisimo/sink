@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sink/domain/expense.dart';
 import 'package:sink/utils/validations.dart';
 import 'package:sink/exceptions/InvalidInput.dart';
 import 'package:intl/intl.dart';
@@ -13,8 +14,9 @@ class ExpenseForm extends StatefulWidget {
 }
 
 class ExpenseFormState extends State<ExpenseForm> {
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  DateTime _initialDate = new DateTime.now();
+  DateTime _initialDate = DateTime.now();
 
   String _description;
   double _cost;
@@ -24,7 +26,7 @@ class ExpenseFormState extends State<ExpenseForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Enter a record')),
-      body: new Builder(
+      body: Builder(
         builder: (BuildContext context) {
           return Form(
             key: _formKey,
@@ -39,7 +41,7 @@ class ExpenseFormState extends State<ExpenseForm> {
                 _textFormField("Add a note", (value) => _description = value),
                 _textFormField(
                     "Enter a category", (value) => _category = value),
-                new _DateTimePicker(
+                _DateTimePicker(
                   labelText: 'From',
                   selectedDate: _initialDate,
                   selectDate: ((DateTime date) {
@@ -53,12 +55,16 @@ class ExpenseFormState extends State<ExpenseForm> {
                   child: RaisedButton(
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
-                        Scaffold.of(context).showSnackBar(
-                            new SnackBar(content: new Text('Processing...')));
-                        Navigator.pop(context);
+                        _formKey.currentState.save();
+                        Navigator.of(context).pop(Expense(
+                            cost: _cost,
+                            date: _initialDate,
+                            category: _category,
+                            description: _description
+                        ));
                       }
                     },
-                    child: new Text('Submit'),
+                    child: Text('Submit'),
                   ),
                 ),
               ],
@@ -133,7 +139,7 @@ class _DateTimePicker extends StatelessWidget {
           child: InkWell(
             onTap: () { _selectDate(context); },
             child: InputDecorator(
-              decoration: new InputDecoration(
+              decoration: InputDecoration(
                 border: InputBorder.none,
               ),
               child: Row(
