@@ -50,17 +50,49 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: listViewController,
         itemCount: entries.length,
         itemBuilder: (buildContext, index) {
-          return new Column(
-            children: <Widget>[
-              ListTile(
-                leading: Text(DateFormat.MMMEd().format(entries[index].date)),
-                title: Text(entries[index].category.toString()),
-                subtitle: Text(entries[index].category.toString()),
-                trailing: Text(entries[index].cost.toString()),
-              )
-            ],
+          return Card(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    DateFormat.yMMMMEEEEd().format(entries[index].date),
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(Icons.account_balance_wallet),
+                  title: Text(entries[index].category.toString()),
+                  subtitle: Text(entries[index].category.toString()),
+                  trailing: Text(
+                    "${entries[index].cost} €",
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                ),
+              new ButtonTheme.bar( // make buttons use the appropriate styles for cards
+                child: new ButtonBar(
+                  children: <Widget>[
+                    new FlatButton(
+                      child: const Text('EDIT'),
+                      onPressed: () {
+                        // TODO: add edit
+                      },
+                    ),
+                    new FlatButton(
+                      child: const Text('DELETE'),
+                      onPressed: () {
+                        // TODO: add deletion
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              ],
+            ),
           );
-        }),
+        }
+      ),
       floatingActionButton: FloatingActionButton(
           tooltip: 'Add an expense',
           child: Icon(Icons.add),
