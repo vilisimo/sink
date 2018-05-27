@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                     new FlatButton(
-                      child: const Text('DELETE'),
+                      child: const Icon(Icons.delete),
                       onPressed: () {
                         setState(() {
                           entries.removeAt(index);
