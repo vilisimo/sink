@@ -47,7 +47,7 @@ class DatePicker extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Text(DateFormat.yMMMd().format(selectedDate))
+                      Text(DateFormat.yMMMMEEEEd().format(selectedDate))
                     ],
                   ),
                 )
