@@ -70,23 +70,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(fontSize: 20.0),
                   ),
                 ),
-              new ButtonTheme.bar( // make buttons use the appropriate styles for cards
-                child: new ButtonBar(
+              ButtonTheme.bar( // make buttons use the appropriate styles for cards
+                child: ButtonBar(
                   children: <Widget>[
-                    new FlatButton(
-                      child: const Text('EDIT'),
+                    IconButton(
+                      icon: Icon(Icons.edit),
                       onPressed: () {
                         // TODO: add edit
                       },
                     ),
-                    new FlatButton(
-                      child: const Icon(Icons.delete),
+                    IconButton(
+                      icon: Icon(Icons.delete),
                       onPressed: () {
                         setState(() {
                           entries.removeAt(index);
                         });
                       },
-                    ),
+                    )
                   ],
                 ),
               ),
