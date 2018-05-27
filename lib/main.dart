@@ -82,7 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     new FlatButton(
                       child: const Text('DELETE'),
                       onPressed: () {
-                        // TODO: add deletion
+                        setState(() {
+                          entries.removeAt(index);
+                        });
                       },
                     ),
                   ],
