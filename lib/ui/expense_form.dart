@@ -56,18 +56,23 @@ class ExpenseFormState extends State<ExpenseForm> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: RaisedButton(
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        _formKey.currentState.save();
-                        Navigator.of(context).pop(Expense(
-                            cost: _cost,
-                            date: _initialDate,
-                            category: _category,
-                            description: _description));
-                      }
-                    },
-                    child: Text('Submit'),
+                  child: new Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      RaisedButton(
+                        onPressed: () {
+                          if (_formKey.currentState.validate()) {
+                            _formKey.currentState.save();
+                            Navigator.of(context).pop(Expense(
+                                cost: _cost,
+                                date: _initialDate,
+                                category: _category,
+                                description: _description));
+                          }
+                        },
+                        child: Text('Submit'),
+                      ),
+                    ],
                   ),
                 ),
               ],
