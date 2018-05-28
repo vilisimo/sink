@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         IconButton(
                           icon: Icon(Icons.edit),
                           onPressed: () {
-                            // TODO: add edit
+                            _editExpense(entries[index]);
                           },
                         ),
                         IconButton(
@@ -85,12 +85,26 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Future _editExpense(Expense expense) async {
+    Expense editedEntry = await Navigator.of(context).push(
+          MaterialPageRoute<Expense>(
+              fullscreenDialog: true,
+              builder: (context) {
+                return ExpenseForm.edit(expense);
+              }),
+        );
+
+    if (editedEntry != null) {
+      setState(() => entries[entries.indexOf(expense)] = editedEntry);
+    }
+  }
+
   Future _enterExpense() async {
     Expense newEntry = await Navigator.of(context).push(
           MaterialPageRoute<Expense>(
               fullscreenDialog: true,
               builder: (context) {
-                return ExpenseForm();
+                return ExpenseForm.save();
               }),
         );
 

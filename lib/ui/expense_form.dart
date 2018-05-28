@@ -5,19 +5,38 @@ import 'package:sink/ui/date_picker.dart';
 import 'package:sink/utils/validations.dart';
 
 class ExpenseForm extends StatefulWidget {
+  final Expense _expense;
+
+  ExpenseForm.save() : _expense = null;
+
+  ExpenseForm.edit(this._expense);
+
   @override
   ExpenseFormState createState() {
-    return ExpenseFormState();
+    if (_expense != null) {
+      return ExpenseFormState.edit(_expense);
+    } else {
+      return ExpenseFormState.save();
+    }
   }
 }
 
 class ExpenseFormState extends State<ExpenseForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  DateTime _initialDate = DateTime.now();
 
-  String _description;
+  DateTime _initialDate = DateTime.now();
   double _cost;
   String _category;
+  String _description;
+
+  ExpenseFormState.save();
+
+  ExpenseFormState.edit(Expense expense) {
+    this._initialDate = expense.date;
+    this._cost = expense.cost;
+    this._category = expense.category;
+    this._description = expense.description;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +62,19 @@ class ExpenseFormState extends State<ExpenseForm> {
                   keyboardType: TextInputType.number,
                   validator: (value) => _validatePrice(value),
                   onSaved: (value) => _cost = double.parse(value),
+                  initialValue: _cost == null ? null : _cost.toString(),
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: "Category"),
                   validator: (value) => _validateNotEmpty(value),
                   onSaved: (value) => _category = value,
+                  initialValue: _category,
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: "Description"),
                   validator: (value) => _validateNotEmpty(value),
                   onSaved: (value) => _description = value,
+                  initialValue: _description,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
