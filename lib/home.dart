@@ -45,7 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.account_balance_wallet),
                     title: Text(entries[index].category.toString()),
                     subtitle: Text(entries[index].description.toString()),
                     trailing: Text(
