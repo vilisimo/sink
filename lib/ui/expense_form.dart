@@ -22,7 +22,7 @@ class ExpenseFormState extends State<ExpenseForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Enter a record')),
+      appBar: AppBar(title: Text('New Expense')),
       body: Builder(
         builder: (BuildContext context) {
           return Form(
@@ -39,20 +39,20 @@ class ExpenseFormState extends State<ExpenseForm> {
                   }),
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: "Enter a price"),
+                  decoration: InputDecoration(labelText: "Price"),
                   keyboardType: TextInputType.number,
                   validator: (value) => _validatePrice(value),
                   onSaved: (value) => _cost = double.parse(value),
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: "Add a note"),
-                  validator: (value) => _validateNotEmpty(value),
-                  onSaved: (value) => _description = value,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: "Enter a category"),
+                  decoration: InputDecoration(labelText: "Category"),
                   validator: (value) => _validateNotEmpty(value),
                   onSaved: (value) => _category = value,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(labelText: "Description"),
+                  validator: (value) => _validateNotEmpty(value),
+                  onSaved: (value) => _description = value,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -70,7 +70,7 @@ class ExpenseFormState extends State<ExpenseForm> {
                                 description: _description));
                           }
                         },
-                        child: Text('Submit'),
+                        child: Text('Save'),
                       ),
                     ],
                   ),
