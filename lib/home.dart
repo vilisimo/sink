@@ -112,9 +112,9 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         entries.add(newEntry);
         listViewController.animateTo(
-          entries.length * 50.0,
-          duration: Duration(microseconds: 5),
-          curve: new ElasticInCurve(0.01),
+          listViewController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 100),
+          curve: Curves.ease,
         );
       });
     }
