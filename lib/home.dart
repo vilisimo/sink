@@ -33,47 +33,36 @@ class _HomeScreenState extends State<HomeScreen> {
           controller: listViewController,
           itemCount: entries.length,
           itemBuilder: (buildContext, index) {
-            return Card(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  new Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      DateFormat.yMMMMEEEEd().format(entries[index].date),
-                      style: TextStyle(fontWeight: FontWeight.w500),
+            return Dismissible(
+              key: ObjectKey(entries[index]),
+              direction: DismissDirection.horizontal,
+              onDismissed: (DismissDirection direction) {
+                setState(() {
+                  entries.removeAt(index);
+                });
+              },
+              child: Card(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Text(
+                        DateFormat.yMMMMEEEEd().format(entries[index].date),
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
                     ),
-                  ),
-                  ListTile(
-                    title: Text(entries[index].category.toString()),
-                    subtitle: Text(entries[index].description.toString()),
-                    trailing: Text(
-                      "${entries[index].cost} €",
-                      style: TextStyle(fontSize: 20.0),
+                    ListTile(
+                      title: Text(entries[index].category.toString()),
+                      subtitle: Text(entries[index].description.toString()),
+                      trailing: Text(
+                        "${entries[index].cost} €",
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                      onTap: () => _editExpense(entries[index]),
                     ),
-                  ),
-                  ButtonTheme.bar(
-                    padding: EdgeInsets.zero,
-                    child: ButtonBar(
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
-                            _editExpense(entries[index]);
-                          },
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            setState(() {
-                              entries.removeAt(index);
-                            });
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           }),
