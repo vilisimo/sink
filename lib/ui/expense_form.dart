@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sink/domain/expense.dart';
+import 'package:sink/domain/entry.dart';
 import 'package:sink/exceptions/InvalidInput.dart';
 import 'package:sink/ui/date_picker.dart';
 import 'package:sink/utils/validations.dart';
 
 class ExpenseForm extends StatefulWidget {
-  final Expense _expense;
+  final Entry _expense;
 
   ExpenseForm.save() : _expense = null;
 
@@ -31,7 +31,7 @@ class ExpenseFormState extends State<ExpenseForm> {
 
   ExpenseFormState.save();
 
-  ExpenseFormState.edit(Expense expense) {
+  ExpenseFormState.edit(Entry expense) {
     this._initialDate = expense.date;
     this._cost = expense.cost;
     this._category = expense.category;
@@ -41,7 +41,7 @@ class ExpenseFormState extends State<ExpenseForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('New Expense')),
+      appBar: AppBar(title: Text('New Entry')),
       body: Builder(
         builder: (BuildContext context) {
           return Form(
@@ -85,7 +85,7 @@ class ExpenseFormState extends State<ExpenseForm> {
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
-                            Navigator.of(context).pop(Expense(
+                            Navigator.of(context).pop(Entry(
                                 cost: _cost,
                                 date: _initialDate,
                                 category: _category,

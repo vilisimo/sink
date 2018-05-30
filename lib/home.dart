@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sink/domain/expense.dart';
+import 'package:sink/domain/entry.dart';
 import 'package:sink/ui/expense_form.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Expense> entries = List();
+  List<Entry> entries = List();
   ScrollController listViewController = ScrollController();
 
   @override
@@ -84,9 +84,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future _editExpense(Expense expense) async {
-    Expense editedEntry = await Navigator.of(context).push(
-          MaterialPageRoute<Expense>(
+  Future _editExpense(Entry expense) async {
+    Entry editedEntry = await Navigator.of(context).push(
+          MaterialPageRoute<Entry>(
               fullscreenDialog: true,
               builder: (context) {
                 return ExpenseForm.edit(expense);
@@ -99,8 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future _enterExpense() async {
-    Expense newEntry = await Navigator.of(context).push(
-          MaterialPageRoute<Expense>(
+    Entry newEntry = await Navigator.of(context).push(
+          MaterialPageRoute<Entry>(
               fullscreenDialog: true,
               builder: (context) {
                 return ExpenseForm.save();

@@ -1,8 +1,8 @@
 import 'package:meta/meta.dart';
 
-class Expense {
+class Entry {
 
-  Expense({
+  Entry({
     @required this.cost,
     @required this.date,
     @required this.category,
