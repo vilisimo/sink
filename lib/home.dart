@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   ButtonTheme.bar(
-                    // make buttons use the appropriate styles for cards
+                    padding: EdgeInsets.zero,
                     child: ButtonBar(
                       children: <Widget>[
                         IconButton(
