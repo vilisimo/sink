@@ -18,9 +18,12 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Entry> entries = List();
   ScrollController listViewController = ScrollController();
 
+  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Container(
           child: Text('Sink'),
@@ -40,7 +43,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 setState(() {
                   entries.removeAt(index);
                 });
-              },
+
+              _scaffoldKey.currentState.showSnackBar(new SnackBar(
+                  content: new Text('Deleted item $index'),
+              ));
+            },
               child: Card(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
