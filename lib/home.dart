@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sink/domain/entry.dart';
@@ -40,12 +41,17 @@ class _HomeScreenState extends State<HomeScreen> {
               key: ObjectKey(entries[index]),
               direction: DismissDirection.horizontal,
               onDismissed: (DismissDirection direction) {
+                var item = entries[index];
                 setState(() {
                   entries.removeAt(index);
                 });
 
               _scaffoldKey.currentState.showSnackBar(new SnackBar(
-                  content: new Text('Deleted item $index'),
+                content: new Text('Entry removed'),
+                action: SnackBarAction(
+                  label: "UNDO",
+                  onPressed: () => handleUndo(item, index),
+                ),
               ));
             },
               child: Card(
@@ -114,5 +120,13 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       });
     }
+  }
+
+  void handleUndo(Entry entry, int index) {
+    final int entryIndex = entries.length >= index ? index : entries.length;
+
+    setState(() {
+      entries.insert(entryIndex, entry);
+    });
   }
 }
