@@ -53,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     ListTile(
+                      dense: true,
                       title: Text(entries[index].category.toString()),
                       subtitle: Text(entries[index].description.toString()),
                       trailing: Text(
