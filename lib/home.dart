@@ -19,7 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Entry> entries = List();
   ScrollController listViewController = ScrollController();
 
-  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  static final GlobalKey<ScaffoldState> _scaffoldKey =
+      new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,21 +40,32 @@ class _HomeScreenState extends State<HomeScreen> {
           itemBuilder: (buildContext, index) {
             return Dismissible(
               key: ObjectKey(entries[index]),
-              direction: DismissDirection.horizontal,
+              background: Container(
+                color: Colors.red,
+                padding: const EdgeInsets.all(16.0),
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    // TODO: figure out how to show icon depending on direction
+                    Icon(Icons.delete),
+                  ],
+                ),
+              ),
+              direction: DismissDirection.endToStart,
               onDismissed: (DismissDirection direction) {
                 var item = entries[index];
                 setState(() {
                   entries.removeAt(index);
                 });
 
-              _scaffoldKey.currentState.showSnackBar(new SnackBar(
-                content: new Text('Entry removed'),
-                action: SnackBarAction(
-                  label: "UNDO",
-                  onPressed: () => handleUndo(item, index),
-                ),
-              ));
-            },
+                _scaffoldKey.currentState.showSnackBar(new SnackBar(
+                  content: new Text('Entry removed'),
+                  action: SnackBarAction(
+                    label: "UNDO",
+                    onPressed: () => handleUndo(item, index),
+                  ),
+                ));
+              },
               child: Card(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
