@@ -58,8 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   entries.removeAt(index);
                 });
 
-                _scaffoldKey.currentState.showSnackBar(new SnackBar(
-                  content: new Text('Entry removed'),
+                _scaffoldKey.currentState.showSnackBar(SnackBar(
+                  content: Text('Entry removed'),
                   action: SnackBarAction(
                     label: "UNDO",
                     onPressed: () => handleUndo(item, index),
