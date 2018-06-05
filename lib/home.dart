@@ -35,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ListView.builder(
           shrinkWrap: true,
           reverse: true,
+          padding: EdgeInsets.all(8.0),
           controller: listViewController,
           itemCount: entries.length,
           itemBuilder: (buildContext, index) {
