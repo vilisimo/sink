@@ -41,14 +41,16 @@ class _HomeScreenState extends State<HomeScreen> {
           itemBuilder: (buildContext, index) {
             return Dismissible(
               key: ObjectKey(entries[index]),
-              background: Container(
+              background: Card(
                 color: Colors.red,
-                padding: const EdgeInsets.all(16.0),
-                child: new Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    // TODO: figure out how to show icon depending on direction
-                    Icon(Icons.delete),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      // TODO: figure out how to show icon on left/right depending on direction
+                      child: Icon(Icons.delete),
+                    ),
                   ],
                 ),
               ),
