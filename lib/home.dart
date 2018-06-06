@@ -70,27 +70,70 @@ class _HomeScreenState extends State<HomeScreen> {
                 ));
               },
               child: Card(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: Text(
-                        DateFormat.yMMMMEEEEd().format(entries[index].date),
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
+                child: InkWell(
+                  onTap: () => _editExpense(entries[index]),
+                  enableFeedback: true,
+                  child: Container(
+                    child: new Column(
+                      children: <Widget>[
+                        new Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                              vertical: 6.0
+                          ),
+                          child: Row(
+                            children: <Widget>[
+                              new Expanded(
+                                child: Text(
+                                  entries[index].category.toString(),
+                                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),),
+                              )
+                            ],
+                          ),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            new Expanded(
+                              child: new Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    new Padding(
+                                      padding: const EdgeInsets.only(bottom: 4.0),
+                                      child: Text(
+                                        entries[index].description.toString(),
+                                        style: TextStyle(fontSize: 16.0),
+                                      ),
+                                    ),
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        DateFormat.yMMMMEEEEd().format(entries[index].date),
+                                        style: TextStyle(color: Colors.grey),
+                                      )
+                                    ],
+                                  ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            new Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    "${entries[index].cost} €",
+                                    style: TextStyle(fontSize: 20.0),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    ListTile(
-                      dense: true,
-                      title: Text(entries[index].category.toString()),
-                      subtitle: Text(entries[index].description.toString()),
-                      trailing: Text(
-                        "${entries[index].cost} €",
-                        style: TextStyle(fontSize: 20.0),
-                      ),
-                      onTap: () => _editExpense(entries[index]),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             );
