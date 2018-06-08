@@ -8,6 +8,7 @@ dependencies:
   cupertino_icons: ^0.1.0
   intl: ^0.15.6
   flutter_redux: ^0.5.1
+  uuid: 1.0.0
 
 dev_dependencies:
   flutter_test:

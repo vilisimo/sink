@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:uuid/uuid.dart';
 
 class Entry {
 
@@ -9,6 +10,7 @@ class Entry {
     this.description
   });
 
+  final Uuid id = Uuid().v4();
   final double cost;
   final DateTime date;
   final String category;
