@@ -2,7 +2,7 @@ import 'package:sink/domain/entry.dart';
 import 'package:sink/redux/actions.dart';
 
 List<Entry> reduce(List<Entry> entries, dynamic action) {
-  switch (action) {
+  switch (action.runtimeType) {
     case AddEntry:
       return List.from(entries)..add(action.entry);
 
