@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sink/domain/entry.dart';
 import 'package:sink/ui/entry_item.dart';
+import 'package:sink/ui/expense_form.dart';
 
 class EntryList extends StatelessWidget {
   @override
@@ -11,7 +12,13 @@ class EntryList extends StatelessWidget {
       builder: (context, list) {
         return new ListView.builder(
           itemCount: list.length,
-          itemBuilder: (context, position) => new EntryItem(list[position]),
+          itemBuilder: (context, position) => new InkWell(
+              onTap: () => showDialog(
+                  context: context,
+                  builder: (context) =>
+                      EditExpenseScreen(list[position], position)),
+              enableFeedback: true,
+              child: Card(child: EntryItem(list[position]))),
         );
       },
     );
