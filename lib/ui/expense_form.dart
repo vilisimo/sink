@@ -1,22 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sink/domain/entry.dart';
 import 'package:sink/exceptions/InvalidInput.dart';
+import 'package:sink/redux/actions.dart';
 import 'package:sink/ui/date_picker.dart';
 import 'package:sink/utils/validations.dart';
 
+class AddExpenseScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<List<Entry>, Function> (
+      converter: (store) {
+        return (entry) => store.dispatch(AddEntry(entry));
+      },
+      builder: (context, callback) {
+        return ExpenseForm.save(callback);
+      },
+    );
+  }
+}
+
+
 class ExpenseForm extends StatefulWidget {
   final Entry _expense;
+  final Function onClick;
 
-  ExpenseForm.save() : _expense = null;
+  ExpenseForm.save(this.onClick) : _expense = null;
 
-  ExpenseForm.edit(this._expense);
+  ExpenseForm.edit(this._expense) : onClick = null;
 
   @override
   ExpenseFormState createState() {
     if (_expense != null) {
-      return ExpenseFormState.edit(_expense);
+      return ExpenseFormState.edit(_expense, null);
     } else {
-      return ExpenseFormState.save();
+      return ExpenseFormState.save(onClick);
     }
   }
 }
@@ -24,14 +42,16 @@ class ExpenseForm extends StatefulWidget {
 class ExpenseFormState extends State<ExpenseForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final Function onClick;
+
   DateTime _initialDate = DateTime.now();
   double _cost;
   String _category;
   String _description;
 
-  ExpenseFormState.save();
+  ExpenseFormState.save(this.onClick);
 
-  ExpenseFormState.edit(Entry expense) {
+  ExpenseFormState.edit(Entry expense, this.onClick) {
     this._initialDate = expense.date;
     this._cost = expense.cost;
     this._category = expense.category;
@@ -85,11 +105,15 @@ class ExpenseFormState extends State<ExpenseForm> {
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
-                            Navigator.of(context).pop(Entry(
+
+                            Entry entry = Entry(
                                 cost: _cost,
                                 date: _initialDate,
                                 category: _category,
-                                description: _description));
+                                description: _description);
+
+                            Navigator.pop(context);
+                            onClick(entry);
                           }
                         },
                         child: Text('Save'),
