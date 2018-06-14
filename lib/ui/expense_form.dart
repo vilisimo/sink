@@ -20,6 +20,26 @@ class AddExpenseScreen extends StatelessWidget {
   }
 }
 
+class EditExpenseScreen extends StatelessWidget {
+
+  final Entry entry;
+  final int position;
+
+  EditExpenseScreen(this.entry, this.position);
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<List<Entry>, Function> (
+      converter: (store) {
+        return (entry) => store.dispatch(EditEntry(entry, position));
+      },
+      builder: (context, callback) {
+        return ExpenseForm.edit(callback, entry);
+      },
+    );
+  }
+}
+
 
 class ExpenseForm extends StatefulWidget {
   final Entry _expense;
@@ -27,12 +47,12 @@ class ExpenseForm extends StatefulWidget {
 
   ExpenseForm.save(this.onClick) : _expense = null;
 
-  ExpenseForm.edit(this._expense) : onClick = null;
+  ExpenseForm.edit(this.onClick, this._expense);
 
   @override
   ExpenseFormState createState() {
     if (_expense != null) {
-      return ExpenseFormState.edit(_expense, null);
+      return ExpenseFormState.edit(onClick, _expense);
     } else {
       return ExpenseFormState.save(onClick);
     }
@@ -51,7 +71,7 @@ class ExpenseFormState extends State<ExpenseForm> {
 
   ExpenseFormState.save(this.onClick);
 
-  ExpenseFormState.edit(Entry expense, this.onClick) {
+  ExpenseFormState.edit(this.onClick, Entry expense) {
     this._initialDate = expense.date;
     this._cost = expense.cost;
     this._category = expense.category;

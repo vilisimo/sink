@@ -7,10 +7,9 @@ List<Entry> reduce(List<Entry> entries, dynamic action) {
       return List.from(entries)..add(action.entry);
 
     case EditEntry:
-      return List
-          .from(entries)
-          .map((entry) => entry.id == action.entry.id ? action.entry : entry)
-          .toList();
+      List<Entry> items = List.from(entries);
+      items[action.index] = action.entry;
+      return items;
 
     case DeleteEntry:
       List<Entry> items = List.from(entries);

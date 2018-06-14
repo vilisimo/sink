@@ -8,8 +8,9 @@ class AddEntry {
 
 class EditEntry {
   final Entry entry;
+  final int index;
 
-  EditEntry(this.entry);
+  EditEntry(this.entry, this.index);
 }
 
 class DeleteEntry {
