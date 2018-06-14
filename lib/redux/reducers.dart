@@ -13,9 +13,9 @@ List<Entry> reduce(List<Entry> entries, dynamic action) {
           .toList();
 
     case DeleteEntry:
-      List<Entry> entries = List.from(entries);
-      entries.remove(action.entry);
-      return entries;
+      List<Entry> items = List.from(entries);
+      items.remove(action.entry);
+      return items;
 
     default:
       throw "Action not recognized";
