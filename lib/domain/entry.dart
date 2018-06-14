@@ -10,7 +10,7 @@ class Entry {
     this.description
   });
 
-  final Uuid id = Uuid().v4();
+  final String id = Uuid().v4();
   final double cost;
   final DateTime date;
   final String category;
