@@ -14,7 +14,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Entry> entries = List();
-  ScrollController listViewController = ScrollController();
 
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>();

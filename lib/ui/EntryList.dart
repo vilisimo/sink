@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:sink/domain/entry.dart';
 import 'package:sink/redux/actions.dart';
+import 'package:sink/redux/state.dart';
 import 'package:sink/ui/entry_item.dart';
 import 'package:sink/ui/expense_form.dart';
 
 class EntryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new StoreConnector<List<Entry>, Store<List<Entry>>>(
+    return new StoreConnector<AppState, Store<AppState>>(
       converter: (store) => store,
       builder: (context, store) {
 //              onDismissed: (DismissDirection direction) {
@@ -31,10 +31,10 @@ class EntryList extends StatelessWidget {
           shrinkWrap: true,
           reverse: true,
           padding: EdgeInsets.all(8.0),
-          itemCount: store.state.length,
+          itemCount: store.state.entries.length,
           itemBuilder: (context, position) {
             return new Dismissible(
-              key: ObjectKey(store.state[position]),
+              key: ObjectKey(store.state.entries[position]),
               background: Card(
                 color: Colors.red,
                 child: Row(
@@ -49,15 +49,16 @@ class EntryList extends StatelessWidget {
               ),
               direction: DismissDirection.endToStart,
               onDismissed: (DismissDirection direction) {
-                store.dispatch(DeleteEntry(store.state[position]));
+                store.dispatch(DeleteEntry(store.state.entries[position]));
               },
               child: new InkWell(
                   onTap: () => showDialog(
                       context: context,
-                      builder: (context) =>
-                          EditExpenseScreen(store.state[position], position)),
+                      builder: (context) => EditExpenseScreen(
+                          store.state.entries[position], position)),
                   enableFeedback: true,
-                  child: Card(child: EntryItem(store.state[position]))),
+                  child: Card(
+                      child: EntryItem(store.state.entries[position]))),
             );
           },
         );

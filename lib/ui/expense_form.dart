@@ -3,13 +3,14 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sink/domain/entry.dart';
 import 'package:sink/exceptions/InvalidInput.dart';
 import 'package:sink/redux/actions.dart';
+import 'package:sink/redux/state.dart';
 import 'package:sink/ui/date_picker.dart';
 import 'package:sink/utils/validations.dart';
 
 class AddExpenseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<List<Entry>, Function> (
+    return StoreConnector<AppState, Function> (
       converter: (store) {
         return (entry) => store.dispatch(AddEntry(entry));
       },
@@ -29,7 +30,7 @@ class EditExpenseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<List<Entry>, Function> (
+    return StoreConnector<AppState, Function> (
       converter: (store) {
         return (entry) => store.dispatch(EditEntry(entry, position));
       },

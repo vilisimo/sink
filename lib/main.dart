@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:sink/domain/entry.dart';
 import 'package:sink/redux/reducers.dart';
+import 'package:sink/redux/state.dart';
 
 import 'home.dart';
 
@@ -20,19 +21,19 @@ void main() {
         description: "Cinema"),
   ];
 
-  final Store store = Store<List<Entry>>(reduce, initialState: entries);
+  final Store store = Store<AppState>(reduce, initialState: AppState(entries));
 
   runApp(Sink(store));
 }
 
 class Sink extends StatelessWidget {
-  final Store<List<Entry>> store;
+  final Store<AppState> store;
 
   Sink(this.store);
 
   @override
   Widget build(BuildContext context) {
-    return StoreProvider<List<Entry>>(
+    return StoreProvider<AppState>(
       store: store,
       child: MaterialApp(
         title: 'Sink',
