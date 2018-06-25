@@ -12,21 +12,6 @@ class EntryList extends StatelessWidget {
     return new StoreConnector<AppState, Store<AppState>>(
       converter: (store) => store,
       builder: (context, store) {
-//              onDismissed: (DismissDirection direction) {
-//                var item = entries[index];
-//                setState(() {
-//                  entries.removeAt(index);
-//                });
-//
-//                _scaffoldKey.currentState.showSnackBar(SnackBar(
-//                  content: Text('Entry removed'),
-//                  action: SnackBarAction(
-//                    label: "UNDO",
-//                    onPressed: () => handleUndo(item, index),
-//                  ),
-//                ));
-//              },
-
         return new ListView.builder(
           shrinkWrap: true,
           reverse: true,
@@ -49,7 +34,15 @@ class EntryList extends StatelessWidget {
               ),
               direction: DismissDirection.endToStart,
               onDismissed: (DismissDirection direction) {
-                store.dispatch(DeleteEntry(store.state.entries[position]));
+                store.dispatch(DeleteEntry(store.state.entries[position], position));
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  duration: Duration(seconds: 5),
+                  content: Text('Entry removed'),
+                  action: SnackBarAction(
+                    label: "UNDO",
+                    onPressed: () => store.dispatch(UndoDelete()),
+                  ),
+                ));
               },
               child: new InkWell(
                   onTap: () => showDialog(
@@ -57,8 +50,7 @@ class EntryList extends StatelessWidget {
                       builder: (context) => EditExpenseScreen(
                           store.state.entries[position], position)),
                   enableFeedback: true,
-                  child: Card(
-                      child: EntryItem(store.state.entries[position]))),
+                  child: Card(child: EntryItem(store.state.entries[position]))),
             );
           },
         );

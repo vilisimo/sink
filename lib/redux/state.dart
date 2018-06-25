@@ -9,11 +9,12 @@ class AppState {
 
   AppState(this.entries, {this.lastEntry, this.lastEntryIndex});
 
-  static AppState copyWith({List<Entry> entries, Entry lastEntry, int index}) {
+  static AppState copyWith(
+      {List<Entry> entries, Entry lastEntry, int lastEntryIndex}) {
     return AppState(
       entries ?? new List<Entry>(),
       lastEntry: lastEntry ?? null,
-      lastEntryIndex: index ?? null,
+      lastEntryIndex: lastEntryIndex ?? null,
     );
   }
 }
