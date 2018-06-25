@@ -30,52 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: EntryList(),
-//      body: ListView.builder(
-//          shrinkWrap: true,
-//          reverse: true,
-//          padding: EdgeInsets.all(8.0),
-//          controller: listViewController,
-//          itemCount: entries.length,
-//          itemBuilder: (buildContext, index) {
-//            return Dismissible(
-//              key: ObjectKey(entries[index]),
-//              background: Card(
-//                color: Colors.red,
-//                child: Row(
-//                  mainAxisAlignment: MainAxisAlignment.end,
-//                  children: <Widget>[
-//                    Padding(
-//                      padding: const EdgeInsets.only(right: 20.0),
-//                      // TODO: figure out how to show icon on left/right depending on direction
-//                      child: Icon(Icons.delete),
-//                    ),
-//                  ],
-//                ),
-//              ),
-//              direction: DismissDirection.endToStart,
-//              onDismissed: (DismissDirection direction) {
-//                var item = entries[index];
-//                setState(() {
-//                  entries.removeAt(index);
-//                });
-//
-//                _scaffoldKey.currentState.showSnackBar(SnackBar(
-//                  content: Text('Entry removed'),
-//                  action: SnackBarAction(
-//                    label: "UNDO",
-//                    onPressed: () => handleUndo(item, index),
-//                  ),
-//                ));
-//              },
-//              child: Card(
-//                child: InkWell(
-//                  onTap: () => _editExpense(entries[index]),
-//                  enableFeedback: true,
-//                  child: EntryItem(entries[index])
-//                ),
-//              ),
-//            );
-//          }),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Add an expense',
         child: Icon(Icons.add),
