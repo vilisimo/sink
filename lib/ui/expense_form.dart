@@ -10,7 +10,7 @@ import 'package:sink/utils/validations.dart';
 class AddExpenseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, Function> (
+    return StoreConnector<AppState, Function>(
       converter: (store) {
         return (entry) => store.dispatch(AddEntry(entry));
       },
@@ -22,7 +22,6 @@ class AddExpenseScreen extends StatelessWidget {
 }
 
 class EditExpenseScreen extends StatelessWidget {
-
   final Entry entry;
   final int position;
 
@@ -30,7 +29,7 @@ class EditExpenseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, Function> (
+    return StoreConnector<AppState, Function>(
       converter: (store) {
         return (entry) => store.dispatch(EditEntry(entry, position));
       },
@@ -40,7 +39,6 @@ class EditExpenseScreen extends StatelessWidget {
     );
   }
 }
-
 
 class ExpenseForm extends StatefulWidget {
   final Entry _expense;

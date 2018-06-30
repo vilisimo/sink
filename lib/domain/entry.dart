@@ -2,13 +2,11 @@ import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
 
 class Entry {
-
-  Entry({
-    @required this.cost,
-    @required this.date,
-    @required this.category,
-    this.description
-  });
+  Entry(
+      {@required this.cost,
+      @required this.date,
+      @required this.category,
+      this.description});
 
   final String id = Uuid().v4();
   final double cost;

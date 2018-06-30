@@ -3,7 +3,6 @@ import 'package:sink/domain/entry.dart';
 import 'package:intl/intl.dart';
 
 class EntryItem extends StatelessWidget {
-
   final Entry entry;
 
   EntryItem(this.entry);
@@ -14,16 +13,15 @@ class EntryItem extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-                vertical: 6.0
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
             child: Row(
               children: <Widget>[
                 Expanded(
                   child: Text(
                     entry.category.toString(),
-                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),),
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  ),
                 )
               ],
             ),

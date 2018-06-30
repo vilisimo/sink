@@ -4,15 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DatePicker extends StatelessWidget {
-
   static const _YEAR = 365;
 
-  const DatePicker({
-    Key key,
-    this.labelText,
-    this.selectedDate,
-    this.onChanged
-  }) : super(key: key);
+  const DatePicker({Key key, this.labelText, this.selectedDate, this.onChanged})
+      : super(key: key);
 
   final String labelText;
   final DateTime selectedDate;
@@ -38,7 +33,9 @@ class DatePicker extends StatelessWidget {
       children: <Widget>[
         Expanded(
             child: InkWell(
-                onTap: () { _selectDate(context); },
+                onTap: () {
+                  _selectDate(context);
+                },
                 child: InputDecorator(
                   decoration: InputDecoration(
                     border: InputBorder.none,
@@ -50,9 +47,7 @@ class DatePicker extends StatelessWidget {
                       Text(DateFormat.yMMMMEEEEd().format(selectedDate))
                     ],
                   ),
-                )
-            )
-        )
+                )))
       ],
     );
   }

@@ -24,6 +24,4 @@ class DeleteEntry {
   DeleteEntry(this.entry, this.index);
 }
 
-class UndoDelete {
-
-}
+class UndoDelete {}
