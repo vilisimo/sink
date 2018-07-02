@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sink/models/entry.dart';
-import 'package:sink/ui/containers/entry_item.dart';
-import 'package:sink/ui/containers/expense_form.dart';
+import 'package:sink/ui/presentation/entry_item.dart';
+import 'package:sink/ui/presentation/expense_form.dart';
 
 class EntryList extends StatelessWidget {
   final List<Entry> entries;

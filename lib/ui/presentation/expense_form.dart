@@ -4,7 +4,7 @@ import 'package:sink/exceptions/InvalidInput.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/actions/actions.dart';
 import 'package:sink/models/state.dart';
-import 'package:sink/ui/containers/date_picker.dart';
+import 'package:sink/ui/presentation/date_picker.dart';
 import 'package:sink/utils/validations.dart';
 
 class AddExpenseScreen extends StatelessWidget {
