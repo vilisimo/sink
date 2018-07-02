@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:sink/domain/entry.dart';
 import 'package:sink/redux/actions.dart';
+import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/ui/entry_item.dart';
 import 'package:sink/ui/expense_form.dart';
@@ -75,7 +76,7 @@ class _ViewModel {
 
   static _ViewModel fromState(Store<AppState> store) {
     return _ViewModel(
-        entries: store.state.entries,
+        entries: getEntries(store.state),
         onDismissed: (entry, position) {
           store.dispatch(DeleteEntry(entry, position));
         },
