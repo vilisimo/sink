@@ -1,4 +1,4 @@
-import 'package:sink/domain/entry.dart';
+import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/state.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sink/domain/entry.dart';
 import 'package:sink/exceptions/InvalidInput.dart';
+import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/ui/date_picker.dart';

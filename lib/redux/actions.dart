@@ -1,5 +1,5 @@
 import 'package:meta/meta.dart';
-import 'package:sink/domain/entry.dart';
+import 'package:sink/models/entry.dart';
 
 @immutable
 class AddEntry {
