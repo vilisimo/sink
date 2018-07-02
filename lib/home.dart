@@ -37,12 +37,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  void handleUndo(Entry entry, int index) {
-    final int entryIndex = entries.length >= index ? index : entries.length;
-
-    setState(() {
-      entries.insert(entryIndex, entry);
-    });
-  }
 }
