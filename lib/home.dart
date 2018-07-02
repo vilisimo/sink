@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sink/models/entry.dart';
-import 'package:sink/ui/containers/entry_list.dart';
+import 'package:sink/ui/containers/entries_page.dart';
 import 'package:sink/ui/containers/expense_form.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
           alignment: Alignment.center,
         ),
       ),
-      body: EntryList(),
+      body: EntryListPage(),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Add an expense',
         child: Icon(Icons.add),
