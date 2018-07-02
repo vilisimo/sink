@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sink/models/entry.dart';
-import 'package:sink/ui/entry_list.dart';
-import 'package:sink/ui/expense_form.dart';
+import 'package:sink/ui/containers/entry_list.dart';
+import 'package:sink/ui/containers/expense_form.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:sink/models/entry.dart';
-import 'package:sink/redux/actions.dart';
-import 'package:sink/redux/state.dart';
+import 'package:sink/actions/actions.dart';
+import 'package:sink/models/state.dart';
 
 AppState reduce(AppState state, dynamic action) {
   switch (action.runtimeType) {

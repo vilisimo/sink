@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:sink/models/entry.dart';
-import 'package:sink/redux/reducers.dart';
-import 'package:sink/redux/state.dart';
+import 'package:sink/reducers/reducers.dart';
+import 'package:sink/models/state.dart';
 
 import 'home.dart';
 
