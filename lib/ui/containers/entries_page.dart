@@ -36,12 +36,10 @@ class _ViewModel {
 
   static _ViewModel fromState(Store<AppState> store) {
     return _ViewModel(
-        entries: getEntries(store.state),
-        onDismissed: (entry, position) {
-          store.dispatch(DeleteEntry(entry, position));
-        },
-        onUndo: () {
-          store.dispatch(UndoDelete());
-        });
+      entries: getEntries(store.state),
+      onDismissed: (entry, position) =>
+          store.dispatch(DeleteEntry(entry, position)),
+      onUndo: () => store.dispatch(UndoDelete()),
+    );
   }
 }
