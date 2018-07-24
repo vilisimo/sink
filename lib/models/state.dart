@@ -12,9 +12,9 @@ class AppState {
   AppState copyWith(
       {List<Entry> entries, Entry lastEntry, int lastEntryIndex}) {
     return AppState(
-      entries ?? new List<Entry>(),
-      lastEntry: lastEntry ?? null,
-      lastEntryIndex: lastEntryIndex ?? null,
+      entries ?? this.entries,
+      lastEntry: lastEntry ?? this.lastEntry,
+      lastEntryIndex: lastEntryIndex ?? this.lastEntryIndex,
     );
   }
 }
