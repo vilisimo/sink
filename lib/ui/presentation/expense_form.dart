@@ -1,149 +1,97 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sink/exceptions/InvalidInput.dart';
 import 'package:sink/models/entry.dart';
-import 'package:sink/actions/actions.dart';
-import 'package:sink/models/state.dart';
 import 'package:sink/ui/presentation/date_picker.dart';
 import 'package:sink/utils/validations.dart';
 
-class AddExpenseScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return StoreConnector<AppState, Function>(
-      converter: (store) {
-        return (entry) => store.dispatch(AddEntry(entry));
-      },
-      builder: (context, callback) {
-        return ExpenseForm.save(callback);
-      },
-    );
-  }
-}
-
-class EditExpenseScreen extends StatelessWidget {
-  final Entry entry;
-  final int position;
-
-  EditExpenseScreen(this.entry, this.position);
-
-  @override
-  Widget build(BuildContext context) {
-    return StoreConnector<AppState, Function>(
-      converter: (store) {
-        return (entry) => store.dispatch(EditEntry(entry, position));
-      },
-      builder: (context, callback) {
-        return ExpenseForm.edit(callback, entry);
-      },
-    );
-  }
-}
-
 class ExpenseForm extends StatefulWidget {
-  final Entry _expense;
-  final Function onClick;
+  final Function(Entry) onSave;
+  final Entry entry;
 
-  ExpenseForm.save(this.onClick) : _expense = null;
-
-  ExpenseForm.edit(this.onClick, this._expense);
+  ExpenseForm({this.onSave, this.entry});
 
   @override
   ExpenseFormState createState() {
-    if (_expense != null) {
-      return ExpenseFormState.edit(onClick, _expense);
-    } else {
-      return ExpenseFormState.save(onClick);
-    }
+    return ExpenseFormState(onSave: this.onSave, entry: this.entry);
   }
 }
 
-class ExpenseFormState extends State<ExpenseForm> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class ExpenseFormState extends State {
+  final _formKey = GlobalKey<FormState>();
+  final _category = GlobalKey<FormFieldState<String>>();
+  final _description = GlobalKey<FormFieldState<String>>();
+  final _cost = GlobalKey<FormFieldState<String>>();
 
-  final Function onClick;
+  final Function(Entry) onSave;
+  final Entry entry;
 
-  DateTime _initialDate = DateTime.now();
-  double _cost;
-  String _category;
-  String _description;
+  DateTime _date;
 
-  ExpenseFormState.save(this.onClick);
-
-  ExpenseFormState.edit(this.onClick, Entry expense) {
-    this._initialDate = expense.date;
-    this._cost = expense.cost;
-    this._category = expense.category;
-    this._description = expense.description;
-  }
+  ExpenseFormState({@required this.onSave, this.entry})
+      : _date = entry.date ?? DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('New Entry')),
-      body: Builder(
-        builder: (BuildContext context) {
-          return Form(
-            key: _formKey,
-            child: ListView(
-              children: <Widget>[
-                DatePicker(
-                  labelText: 'From',
-                  selectedDate: _initialDate,
-                  onChanged: ((DateTime date) {
-                    setState(() {
-                      _initialDate = date;
-                    });
-                  }),
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: "Price"),
-                  keyboardType: TextInputType.number,
-                  validator: (value) => _validatePrice(value),
-                  onSaved: (value) => _cost = double.parse(value),
-                  initialValue: _cost == null ? null : _cost.toString(),
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: "Category"),
-                  validator: (value) => _validateNotEmpty(value),
-                  onSaved: (value) => _category = value,
-                  initialValue: _category,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: "Description"),
-                  validator: (value) => _validateNotEmpty(value),
-                  onSaved: (value) => _description = value,
-                  initialValue: _description,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      RaisedButton(
-                        onPressed: () {
-                          if (_formKey.currentState.validate()) {
-                            _formKey.currentState.save();
-
-                            Entry entry = Entry(
-                                cost: _cost,
-                                date: _initialDate,
-                                category: _category,
-                                description: _description);
-
-                            Navigator.pop(context);
-                            onClick(entry);
-                          }
-                        },
-                        child: Text('Save'),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+      body: Form(
+        key: _formKey,
+        child: ListView(
+          children: <Widget>[
+            DatePicker(
+              labelText: 'From',
+              selectedDate: _date,
+              onChanged: ((DateTime date) {
+                setState(() {
+                  _date = date;
+                });
+              }),
             ),
-          );
-        },
+            TextFormField(
+              key: _cost,
+              initialValue: entry.cost == null ? null : entry.cost.toString(),
+              decoration: InputDecoration(labelText: "Price"),
+              keyboardType: TextInputType.number,
+              validator: (value) => _validatePrice(value),
+            ),
+            TextFormField(
+              key: _category,
+              initialValue: entry.category,
+              decoration: InputDecoration(labelText: "Category"),
+              validator: (value) => _validateNotEmpty(value),
+            ),
+            TextFormField(
+              key: _description,
+              initialValue: entry.description,
+              decoration: InputDecoration(labelText: "Description"),
+              validator: (value) => _validateNotEmpty(value),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                    onPressed: () {
+                      if (_formKey.currentState.validate()) {
+                        Entry newEntry = Entry(
+                            date: _date,
+                            cost: double.parse(_cost.currentState.value),
+                            category: _category.currentState.value,
+                            description: _description.currentState.value,
+                            id: entry.id);
+                        onSave(newEntry);
+
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: Text('Save'),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

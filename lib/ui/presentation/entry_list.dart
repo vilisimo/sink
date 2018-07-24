@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sink/models/entry.dart';
+import 'package:sink/ui/containers/add_edit_page.dart';
 import 'package:sink/ui/presentation/entry_item.dart';
-import 'package:sink/ui/presentation/expense_form.dart';
 
 class EntryList extends StatelessWidget {
   final List<Entry> entries;
@@ -48,7 +48,7 @@ class EntryList extends StatelessWidget {
               onTap: () => showDialog(
                   context: context,
                   builder: (context) =>
-                      EditExpenseScreen(entries[position], position)),
+                      EditExpenseScreen(entries[position])),
               enableFeedback: true,
               child: Card(child: EntryItem(entries[position]))),
         );
