@@ -7,4 +7,4 @@ decisions has never been easier!
 - [ ] Usable
 - [x] Unusable
 
-It will take a while. I've never done anything in Flutter before.
+It will take a while. I've never done anything with Flutter before.
