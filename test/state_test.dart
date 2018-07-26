@@ -29,7 +29,7 @@ main() {
     final result = state.copyWith(entries: null);
 
     expect(result.entries, state.entries);
-    expect(result.lastEntryIndex, 0);
-    expect(result.lastEntry, entry);
+    expect(result.lastEntryIndex, state.lastEntryIndex);
+    expect(result.lastEntry, state.lastEntry);
   });
 }
