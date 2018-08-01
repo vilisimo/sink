@@ -5,8 +5,9 @@ import 'package:sink/models/state.dart';
 AppState reduce(AppState state, dynamic action) {
   switch (action.runtimeType) {
     case AddEntry:
-      return state.copyWith(
-          entries: List.from(state.entries)..add(action.entry));
+      List<Entry> list = List.from(state.entries)..add(action.entry);
+      list.sort((Entry a, Entry b) => a.date.isBefore(b.date) ? 1 : 0);
+      return state.copyWith(entries: list);
 
     case EditEntry:
       List<Entry> items = List.from(state.entries);

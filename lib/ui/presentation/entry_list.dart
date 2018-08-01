@@ -15,7 +15,6 @@ class EntryList extends StatelessWidget {
     return Scrollbar(
       child: ListView.builder(
         shrinkWrap: true,
-        reverse: true,
         padding: EdgeInsets.all(8.0),
         itemCount: entries.length,
         itemBuilder: (context, position) {
