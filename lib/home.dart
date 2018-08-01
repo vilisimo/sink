@@ -38,14 +38,6 @@ class _HomeScreenState extends State<HomeScreen>
             child: Text('Sink'),
             alignment: Alignment.center,
           ),
-          bottom: TabBar(
-            isScrollable: true,
-            tabs: <Widget>[
-              Tab(icon: Icon(Icons.receipt)),
-              Tab(icon: Icon(Icons.insert_chart)),
-            ],
-            controller: _tabController,
-          ),
         ),
         body: TabBarView(
           controller: _tabController,
@@ -54,11 +46,26 @@ class _HomeScreenState extends State<HomeScreen>
             Center(child: Text('Placeholder for statistics')),
           ],
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
           tooltip: 'Add an expense',
           child: Icon(Icons.add),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
           onPressed: () => showDialog(
               context: context, builder: (context) => AddExpenseScreen()),
+        ),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(color: Colors.white),
+          child: TabBar(
+            tabs: <Widget>[
+              Tab(icon: Icon(Icons.receipt)),
+              Tab(icon: Icon(Icons.insert_chart)),
+            ],
+            controller: _tabController,
+            labelColor: Colors.black,
+            unselectedLabelColor: Colors.blueGrey,
+          ),
         ),
       ),
     );
