@@ -10,16 +10,43 @@ import 'home.dart';
 void main() {
   List<Entry> entries = [
     new Entry(
+        cost: 61.96,
+        date: DateTime.now().subtract(Duration(days: 11)),
+        category: "Car",
+        description: "Gas to keep it going"),
+    new Entry(
+        cost: 1.49,
+        date: DateTime.now().subtract(Duration(days: 25)),
+        category: "Lighter",
+        description: "For dark nights full of terrors"),
+    new Entry(
+        cost: 18.6,
+        date: DateTime.now().subtract(Duration(days: 3)),
+        category: "Clothes",
+        description: "To hide the shame"),
+    new Entry(
+        cost: 6.22,
+        date: DateTime.now().subtract(Duration(days: 1)),
+        category: "Books",
+        description: "What kind of book costs less than a tenner"),
+    new Entry(
+        cost: 6.18,
+        date: DateTime.now().subtract(Duration(days: 4)),
+        category: "Utilities",
+        description: "Additional cable for those sticky situations"),
+    new Entry(
         cost: 26.3,
         date: DateTime.now(),
         category: "Food",
-        description: "Essential food"),
+        description: "For thought"),
     new Entry(
         cost: 9.05,
         date: DateTime.now().subtract(Duration(days: 3)),
         category: "Entertainment",
-        description: "Cinema"),
+        description: "Movies to kill time"),
   ];
+
+  entries.sort((a, b) {return a.date.isBefore(b.date) ? 1 : -1; });
 
   final Store store = Store<AppState>(reduce, initialState: AppState(entries));
 
