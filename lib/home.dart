@@ -49,22 +49,27 @@ class _HomeScreenState extends State<HomeScreen>
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
           tooltip: 'Add an expense',
-          child: Icon(Icons.add),
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
+          child: Icon(Icons.add),
           onPressed: () => showDialog(
               context: context, builder: (context) => AddExpenseScreen()),
         ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(color: Colors.white),
-          child: TabBar(
-            tabs: <Widget>[
-              Tab(icon: Icon(Icons.receipt)),
-              Tab(icon: Icon(Icons.insert_chart)),
-            ],
-            controller: _tabController,
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.blueGrey,
+        bottomNavigationBar: BottomAppBar(
+          notchMargin: 5.0,
+          shape: CircularNotchedRectangle(),
+          child: Material(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: TabBar(
+              tabs: <Widget>[
+                Tab(icon: Icon(Icons.receipt)),
+                Tab(icon: Icon(Icons.insert_chart)),
+              ],
+              controller: _tabController,
+              labelColor: Colors.black,
+              indicatorColor: Colors.white,
+              unselectedLabelColor: Colors.blueGrey,
+            ),
           ),
         ),
       ),
