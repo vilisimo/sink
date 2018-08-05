@@ -20,4 +20,26 @@ class Entry {
     final now = DateTime.now();
     return Entry(cost: null, date: now, category: '', description: '');
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is Entry &&
+              runtimeType == other.runtimeType &&
+              id == other.id &&
+              cost == other.cost &&
+              date == other.date &&
+              category == other.category &&
+              description == other.description;
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      cost.hashCode ^
+      date.hashCode ^
+      category.hashCode ^
+      description.hashCode;
+
+
+
 }
