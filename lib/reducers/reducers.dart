@@ -18,16 +18,17 @@ AppState reduce(AppState state, dynamic action) {
 
     case DeleteEntry:
       List<Entry> items = List.from(state.entries);
+      List<Entry> removed = List.from(state.removed);
       items.remove(action.entry);
-      return state.copyWith(
-          entries: items,
-          lastEntry: action.entry,
-          lastEntryIndex: action.index);
+      removed.add(action.entry);
+      return state.copyWith(entries: items, removed: removed);
 
     case UndoDelete:
       List<Entry> items = List.from(state.entries);
-      items.insert(state.lastEntryIndex, state.lastEntry);
-      return state.copyWith(entries: items);
+      List<Entry> removed = List.from(state.removed);
+      items.add(removed.removeLast());
+      items.sort((Entry a, Entry b) => a.date.isBefore(b.date) ? 1 : 0);
+      return state.copyWith(entries: items, removed: removed);
 
     default:
       return state;

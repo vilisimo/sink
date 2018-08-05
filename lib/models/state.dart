@@ -3,18 +3,16 @@ import 'package:sink/models/entry.dart';
 
 @immutable
 class AppState {
+  // TODO: store entries in TreeSet?
   final List<Entry> entries;
-  final Entry lastEntry;
-  final int lastEntryIndex;
+  final List<Entry> removed;
 
-  AppState(this.entries, {this.lastEntry, this.lastEntryIndex});
+  AppState(this.entries, {removed}) : this.removed = removed ?? List();
 
-  AppState copyWith(
-      {List<Entry> entries, Entry lastEntry, int lastEntryIndex}) {
+  AppState copyWith({List<Entry> entries, List<Entry> removed}) {
     return AppState(
       entries ?? this.entries,
-      lastEntry: lastEntry ?? this.lastEntry,
-      lastEntryIndex: lastEntryIndex ?? this.lastEntryIndex,
+      removed: removed ?? this.removed,
     );
   }
 }
