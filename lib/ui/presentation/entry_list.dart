@@ -18,7 +18,7 @@ class EntryList extends StatelessWidget {
         padding: EdgeInsets.all(8.0),
         itemCount: entries.length,
         itemBuilder: (context, position) {
-          return new Dismissible(
+          return Dismissible(
             key: ObjectKey(entries[position]),
             background: Card(
               color: Colors.red,
@@ -44,7 +44,7 @@ class EntryList extends StatelessWidget {
                     ),
                   ));
             },
-            child: new InkWell(
+            child: InkWell(
                 onTap: () => showDialog(
                     context: context,
                     builder: (context) =>

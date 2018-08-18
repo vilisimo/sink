@@ -10,7 +10,7 @@ import 'package:sink/ui/presentation/entry_list.dart';
 class EntryListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new StoreConnector<AppState, _ViewModel>(
+    return StoreConnector<AppState, _ViewModel>(
       converter: _ViewModel.fromState,
       builder: (context, vm) {
         return EntryList(
