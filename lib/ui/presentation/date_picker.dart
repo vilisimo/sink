@@ -44,7 +44,21 @@ class DatePicker extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Text(DateFormat.yMMMMEEEEd().format(selectedDate))
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        child: Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Icon(Icons.today),
+                            ),
+                            Text(
+                              DateFormat.yMMMMEEEEd().format(selectedDate),
+                              style: TextStyle(fontSize: 18.0),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 )))

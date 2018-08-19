@@ -38,6 +38,22 @@ class ExpenseFormState extends State {
         key: _formKey,
         child: ListView(
           children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextFormField(
+                key: _cost,
+                initialValue: entry.cost == null ? null : entry.cost.toString(),
+                style: TextStyle(fontSize: 20.0, color: Colors.black),
+                decoration: InputDecoration(
+                  labelText: "Price",
+                  hintText: "00.00",
+                  prefixIcon: Icon(Icons.attach_money),
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.number,
+                validator: (value) => _validatePrice(value),
+              ),
+            ),
             DatePicker(
               labelText: 'From',
               selectedDate: _date,
@@ -47,24 +63,32 @@ class ExpenseFormState extends State {
                 });
               }),
             ),
-            TextFormField(
-              key: _cost,
-              initialValue: entry.cost == null ? null : entry.cost.toString(),
-              decoration: InputDecoration(labelText: "Price"),
-              keyboardType: TextInputType.number,
-              validator: (value) => _validatePrice(value),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextFormField(
+                key: _description,
+                initialValue: entry.description,
+                maxLines: 3,
+                decoration: InputDecoration(
+                  labelText: "Description",
+                  hintText: "Provide a description",
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) => _validateNotEmpty(value),
+              ),
             ),
-            TextFormField(
-              key: _category,
-              initialValue: entry.category,
-              decoration: InputDecoration(labelText: "Category"),
-              validator: (value) => _validateNotEmpty(value),
-            ),
-            TextFormField(
-              key: _description,
-              initialValue: entry.description,
-              decoration: InputDecoration(labelText: "Description"),
-              validator: (value) => _validateNotEmpty(value),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextFormField(
+                key: _category,
+                initialValue: entry.category,
+                decoration: InputDecoration(
+                  labelText: "Category",
+                  hintText: "Enter a category",
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) => _validateNotEmpty(value),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
