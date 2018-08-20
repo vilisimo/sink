@@ -33,7 +33,10 @@ class ExpenseFormState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('New Entry')),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).backgroundColor,
+        title: Text('New Entry'),
+      ),
       body: Form(
         key: _formKey,
         child: ListView(

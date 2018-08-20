@@ -67,7 +67,7 @@ class Sink extends StatelessWidget {
       child: MaterialApp(
         title: 'Sink',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          backgroundColor: Colors.purple,
         ),
         home: HomeScreen(),
       ),

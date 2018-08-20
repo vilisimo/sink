@@ -34,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen>
       home: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
+          backgroundColor: Theme.of(context).backgroundColor,
           title: Container(
             child: Text('Sink'),
             alignment: Alignment.center,
