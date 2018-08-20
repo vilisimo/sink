@@ -69,12 +69,11 @@ class ExpenseFormState extends State {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextFormField(
-                key: _description,
-                initialValue: entry.description,
-                maxLines: 3,
+                key: _category,
+                initialValue: entry.category,
                 decoration: InputDecoration(
-                  labelText: "Description",
-                  hintText: "Provide a description",
+                  labelText: "Category",
+                  hintText: "Enter a category",
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) => _validateNotEmpty(value),
@@ -83,11 +82,12 @@ class ExpenseFormState extends State {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextFormField(
-                key: _category,
-                initialValue: entry.category,
+                key: _description,
+                initialValue: entry.description,
+                maxLines: 3,
                 decoration: InputDecoration(
-                  labelText: "Category",
-                  hintText: "Enter a category",
+                  labelText: "Description",
+                  hintText: "Provide a description",
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) => _validateNotEmpty(value),
