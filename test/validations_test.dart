@@ -4,15 +4,15 @@ import 'package:sink/utils/validations.dart';
 
 void main() {
   test('does not allow an empty string', () {
-    expect(() => notEmpty(''), throwsA(isInstanceOf<InvalidInput>()));
+    expect(() => notEmpty(''), throwsA(TypeMatcher<InvalidInput>()));
   });
 
   test('does not allow whitespaces', () {
-    expect(() => notEmpty('   '), throwsA(isInstanceOf<InvalidInput>()));
+    expect(() => notEmpty('   '), throwsA(TypeMatcher<InvalidInput>()));
   });
 
   test('does not allow a null', () {
-    expect(() => notEmpty(null), throwsA(isInstanceOf<InvalidInput>()));
+    expect(() => notEmpty(null), throwsA(TypeMatcher<InvalidInput>()));
   });
 
   test('does allow a valid string', () {
@@ -20,22 +20,22 @@ void main() {
   });
 
   test('does not allow an empty string instead of a number', () {
-    expect(() => nonNegative(''), throwsA(isInstanceOf<InvalidInput>()));
+    expect(() => nonNegative(''), throwsA(TypeMatcher<InvalidInput>()));
   });
 
   test('does not allow whitespaces in a number', () {
-    expect(() => nonNegative('   '), throwsA(isInstanceOf<InvalidInput>()));
+    expect(() => nonNegative('   '), throwsA(TypeMatcher<InvalidInput>()));
   });
 
   test('does not allow a null instead of a number', () {
-    expect(() => nonNegative(null), throwsA(isInstanceOf<InvalidInput>()));
+    expect(() => nonNegative(null), throwsA(TypeMatcher<InvalidInput>()));
   });
   
   test('does not allow a negative number', () {
-    expect(() => nonNegative('-1'), throwsA(isInstanceOf<InvalidInput>()));
+    expect(() => nonNegative('-1'), throwsA(TypeMatcher<InvalidInput>()));
   });
 
   test('allows a valid number', () {
-    expect(() => nonNegative('0'), throwsA(isInstanceOf<InvalidInput>()));
+    expect(() => nonNegative('0'), throwsA(TypeMatcher<InvalidInput>()));
   });
 }
