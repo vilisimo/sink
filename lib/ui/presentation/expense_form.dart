@@ -36,6 +36,25 @@ class ExpenseFormState extends State {
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
         title: Text('New Entry'),
+        actions: <Widget>[
+          IconButton(
+            iconSize: 28.0,
+            icon: Icon(Icons.save),
+            onPressed: () {
+              if (_formKey.currentState.validate()) {
+                Entry newEntry = Entry(
+                    date: _date,
+                    cost: double.parse(_cost.currentState.value),
+                    category: _category.currentState.value,
+                    description: _description.currentState.value,
+                    id: entry.id);
+                onSave(newEntry);
+
+                Navigator.pop(context);
+              }
+            },
+          )
+        ],
       ),
       body: Form(
         key: _formKey,
@@ -91,30 +110,6 @@ class ExpenseFormState extends State {
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) => _validateNotEmpty(value),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  RaisedButton(
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        Entry newEntry = Entry(
-                            date: _date,
-                            cost: double.parse(_cost.currentState.value),
-                            category: _category.currentState.value,
-                            description: _description.currentState.value,
-                            id: entry.id);
-                        onSave(newEntry);
-
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: Text('Save'),
-                  ),
-                ],
               ),
             ),
           ],
