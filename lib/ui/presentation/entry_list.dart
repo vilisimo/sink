@@ -19,7 +19,7 @@ class EntryList extends StatelessWidget {
         itemCount: entries.length,
         itemBuilder: (context, position) {
           return Dismissible(
-            key: ObjectKey(entries[position]),
+            key: ObjectKey(entries[position].id),
             background: Card(
               color: Colors.red,
               child: Row(
