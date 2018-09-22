@@ -5,9 +5,10 @@ dependencies:
   flutter:
     sdk: flutter
 
+  cloud_firestore: ^0.7.4
   cupertino_icons: ^0.1.0
-  intl: ^0.15.6
   flutter_redux: ^0.5.1
+  intl: ^0.15.6
   uuid: ^1.0.3
 
 dev_dependencies:

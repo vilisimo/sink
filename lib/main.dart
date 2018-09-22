@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:sink/actions/actions.dart';
+import 'package:sink/middleware/middleware.dart';
 import 'package:sink/models/entry.dart';
-import 'package:sink/reducers/reducers.dart';
 import 'package:sink/models/state.dart';
+import 'package:sink/reducers/reducers.dart';
 
 import 'home.dart';
 
@@ -50,7 +52,12 @@ void main() {
     return a.date.isBefore(b.date) ? 1 : -1;
   });
 
-  final Store store = Store<AppState>(reduce, initialState: AppState(entries));
+  final Store store = Store<AppState>(
+    reduce,
+    distinct: true,
+    initialState: AppState(entries),
+    middleware: [SinkMiddleware()],
+  );
 
   runApp(Sink(store));
 }
@@ -62,6 +69,8 @@ class Sink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    store.dispatch(new InitApp());
+
     return StoreProvider<AppState>(
       store: store,
       child: MaterialApp(
