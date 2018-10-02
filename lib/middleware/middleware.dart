@@ -16,6 +16,8 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
       Stream<QuerySnapshot> snapshots = entries.snapshots();
       snapshots.listen((onData) =>
           print("Test data: " + onData.documents[0]['description']));
+    } else {
+      next(action);
     }
   }
 }
