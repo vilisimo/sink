@@ -57,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen>
         ),
         bottomNavigationBar: BottomAppBar(
           notchMargin: 5.0,
+          clipBehavior: Clip.antiAlias,
           shape: CircularNotchedRectangle(),
           child: Material(
             color: Theme.of(context).scaffoldBackgroundColor,
