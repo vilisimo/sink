@@ -15,7 +15,10 @@ class EntryList extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
         stream: FirestoreRepository.getEntriesSnapshot(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) return Text('Loading...');
+          if (!snapshot.hasData) {
+            return Center(child: Text('Loading...'));
+          }
+
           return Scrollbar(
             child: ListView(
               shrinkWrap: true,
