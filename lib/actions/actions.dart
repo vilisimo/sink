@@ -21,9 +21,8 @@ class EditEntry {
 @immutable
 class DeleteEntry {
   final Entry entry;
-  final int index;
 
-  DeleteEntry(this.entry, this.index);
+  DeleteEntry(this.entry);
 }
 
 @immutable

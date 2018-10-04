@@ -4,14 +4,14 @@ import 'package:sink/selectors/selectors.dart';
 import 'package:test/test.dart';
 
 main() {
-  test('get entries retrieves entries from a state', () {
-    var state = AppState([
+  test('retrieves last removed entry', () {
+    var state = AppState(removed: [
       Entry(cost: 1.0, date: DateTime.now(), category: 'a', description: 'b'),
       Entry(cost: 2.0, date: DateTime.now(), category: 'c', description: 'd'),
     ]);
 
-    var entries = getEntries(state);
+    var entry = getLastRemoved(state);
 
-    expect(entries, state.entries);
+    expect(entry, state.removed[1]);
   });
 }

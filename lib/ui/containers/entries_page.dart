@@ -4,7 +4,6 @@ import 'package:redux/redux.dart';
 import 'package:sink/actions/actions.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/models/state.dart';
-import 'package:sink/selectors/selectors.dart';
 import 'package:sink/ui/presentation/entry_list.dart';
 
 class EntryListPage extends StatelessWidget {
@@ -14,7 +13,6 @@ class EntryListPage extends StatelessWidget {
       converter: _ViewModel.fromState,
       builder: (context, vm) {
         return EntryList(
-          entries: vm.entries,
           onDismissed: vm.onDismissed,
           onUndo: vm.onUndo,
         );
@@ -25,20 +23,16 @@ class EntryListPage extends StatelessWidget {
 
 @immutable
 class _ViewModel {
-  final Function(Entry, int) onDismissed;
+  final Function(Entry) onDismissed;
   final Function onUndo;
-  final List<Entry> entries;
 
   _ViewModel(
-      {@required this.entries,
-      @required this.onDismissed,
+      {@required this.onDismissed,
       @required this.onUndo});
 
   static _ViewModel fromState(Store<AppState> store) {
     return _ViewModel(
-      entries: getEntries(store.state),
-      onDismissed: (entry, position) =>
-          store.dispatch(DeleteEntry(entry, position)),
+      onDismissed: (entry) => store.dispatch(DeleteEntry(entry)),
       onUndo: () => store.dispatch(UndoDelete()),
     );
   }
