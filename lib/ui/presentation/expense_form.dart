@@ -98,6 +98,7 @@ class ExpenseFormState extends State {
                 child: TextFormField(
                   key: _category,
                   initialValue: entry.category,
+                  textCapitalization: TextCapitalization.sentences,
                   style: TextStyle(fontSize: 20.0, color: Colors.black),
                   decoration: InputDecoration(
                     hintText: "Enter a category",
@@ -113,6 +114,7 @@ class ExpenseFormState extends State {
               child: Card(
                 child: TextFormField(
                   key: _description,
+                  textCapitalization: TextCapitalization.sentences,
                   initialValue: entry.description,
                   style: TextStyle(fontSize: 20.0, color: Colors.black),
                   maxLines: 3,
