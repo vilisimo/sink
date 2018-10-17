@@ -61,55 +61,68 @@ class ExpenseFormState extends State {
         child: ListView(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextFormField(
-                key: _cost,
-                initialValue: entry.cost == null ? null : entry.cost.toString(),
-                style: TextStyle(fontSize: 20.0, color: Colors.black),
-                decoration: InputDecoration(
-                  labelText: "Price",
-                  hintText: "00.00",
-                  prefixIcon: Icon(Icons.attach_money),
-                  border: OutlineInputBorder(),
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Card(
+                child: DatePicker(
+                  labelText: 'From',
+                  selectedDate: _date,
+                  onChanged: ((DateTime date) {
+                    setState(() {
+                      _date = date;
+                    });
+                  }),
                 ),
-                keyboardType: TextInputType.number,
-                validator: (value) => _validatePrice(value),
-              ),
-            ),
-            DatePicker(
-              labelText: 'From',
-              selectedDate: _date,
-              onChanged: ((DateTime date) {
-                setState(() {
-                  _date = date;
-                });
-              }),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextFormField(
-                key: _category,
-                initialValue: entry.category,
-                decoration: InputDecoration(
-                  labelText: "Category",
-                  hintText: "Enter a category",
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) => _validateNotEmpty(value),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextFormField(
-                key: _description,
-                initialValue: entry.description,
-                maxLines: 3,
-                decoration: InputDecoration(
-                  labelText: "Description",
-                  hintText: "Provide a description",
-                  border: OutlineInputBorder(),
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Card(
+                child: TextFormField(
+                  key: _cost,
+                  initialValue:
+                      entry.cost == null ? null : entry.cost.toString(),
+                  style: TextStyle(fontSize: 20.0, color: Colors.black),
+                  decoration: InputDecoration(
+                    hintText: "Enter a price",
+                    prefixIcon: Icon(Icons.attach_money),
+                    border: InputBorder.none,
+                  ),
+                  keyboardType: TextInputType.number,
+                  validator: (value) => _validatePrice(value),
                 ),
-                validator: (value) => _validateNotEmpty(value),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Card(
+                child: TextFormField(
+                  key: _category,
+                  initialValue: entry.category,
+                  style: TextStyle(fontSize: 20.0, color: Colors.black),
+                  decoration: InputDecoration(
+                    hintText: "Enter a category",
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.all(16.0),
+                  ),
+                  validator: (value) => _validateNotEmpty(value),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Card(
+                child: TextFormField(
+                  key: _description,
+                  initialValue: entry.description,
+                  style: TextStyle(fontSize: 20.0, color: Colors.black),
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                    hintText: "Provide a description",
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.all(16.0),
+                  ),
+                  validator: (value) => _validateNotEmpty(value),
+                ),
               ),
             ),
           ],

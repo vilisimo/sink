@@ -45,7 +45,7 @@ class DatePicker extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        padding: const EdgeInsets.only(top: 2.0, bottom: 2.0),
                         child: Row(
                           children: <Widget>[
                             Padding(
