@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sink/models/entry.dart';
 
 class FirestoreRepository {
-
   static const String _COLLECTION = "entry";
 
   static Firestore _db = Firestore.instance;
@@ -10,6 +9,12 @@ class FirestoreRepository {
 
   static Stream<QuerySnapshot> getEntriesSnapshot() {
     return collection.orderBy('date', descending: true).snapshots();
+  }
+
+  static Stream<QuerySnapshot> snapshotBetween(DateTime from, DateTime to) {
+    return collection
+        .where('date', isGreaterThanOrEqualTo: from, isLessThanOrEqualTo: to)
+        .snapshots();
   }
 
   static void create(Entry entry) {

@@ -19,47 +19,49 @@ class EntryList extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           }
 
-          return Scrollbar(
-            child: ListView(
-              shrinkWrap: true,
-              padding: EdgeInsets.all(8.0),
-              children:
-                  snapshot.data.documents.map((DocumentSnapshot document) {
-                Entry entry = Entry.fromSnapshot(document);
-                return Dismissible(
-                  key: ObjectKey(entry),
-                  background: Card(
-                    color: Colors.red,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(right: 20.0),
-                          child: Icon(Icons.delete),
-                        )
-                      ],
-                    ),
-                  ),
-                  direction: DismissDirection.endToStart,
-                  onDismissed: (DismissDirection direction) {
-                    onDismissed(entry);
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      duration: Duration(seconds: 5),
-                      content: Text('Entry removed'),
-                      action: SnackBarAction(
-                        label: "UNDO",
-                        onPressed: onUndo,
+          return Expanded(
+            child: Scrollbar(
+              child: ListView(
+                shrinkWrap: true,
+                padding: EdgeInsets.all(8.0),
+                children:
+                    snapshot.data.documents.map((DocumentSnapshot document) {
+                  Entry entry = Entry.fromSnapshot(document);
+                  return Dismissible(
+                    key: ObjectKey(entry),
+                    background: Card(
+                      color: Colors.red,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(right: 20.0),
+                            child: Icon(Icons.delete),
+                          )
+                        ],
                       ),
-                    ));
-                  },
-                  child: InkWell(
-                      onTap: () => showDialog(
-                          context: context,
-                          builder: (context) => EditExpenseScreen(entry)),
-                      enableFeedback: true,
-                      child: Card(child: EntryItem(entry))),
-                );
-              }).toList(),
+                    ),
+                    direction: DismissDirection.endToStart,
+                    onDismissed: (DismissDirection direction) {
+                      onDismissed(entry);
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        duration: Duration(seconds: 5),
+                        content: Text('Entry removed'),
+                        action: SnackBarAction(
+                          label: "UNDO",
+                          onPressed: onUndo,
+                        ),
+                      ));
+                    },
+                    child: InkWell(
+                        onTap: () => showDialog(
+                            context: context,
+                            builder: (context) => EditExpenseScreen(entry)),
+                        enableFeedback: true,
+                        child: Card(child: EntryItem(entry))),
+                  );
+                }).toList(),
+              ),
             ),
           );
         });

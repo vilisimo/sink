@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen>
         body: TabBarView(
           controller: _tabController,
           children: <Widget>[
-            EntryListPage(),
+            EntriesPage(),
             Center(child: Text('Placeholder for statistics')),
           ],
         ),
