@@ -60,4 +60,9 @@ class Entry {
       date.hashCode ^
       category.hashCode ^
       description.hashCode;
+
+  @override
+  String toString() {
+    return 'Entry{id: $id, cost: $cost, date: $date, category: $category, description: $description}';
+  }
 }
