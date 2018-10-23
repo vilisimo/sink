@@ -1,12 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/state.dart';
-import 'package:sink/repository/firestore.dart';
 import 'package:sink/ui/entries/entry_list.dart';
+import 'package:sink/ui/statistics/interval_expense.dart';
 import 'package:sink/utils/calendar.dart';
 
 class EntriesPage extends StatelessWidget {
@@ -17,43 +16,11 @@ class EntriesPage extends StatelessWidget {
       builder: (context, vm) {
         return Container(
           child: Column(
+            // workaround to show shadows
+            verticalDirection: VerticalDirection.up,
             children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(width: 1.0, color: Colors.black12),
-                  ),
-                ),
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: FirestoreRepository.snapshotBetween(
-                      currentFirst(), currentLast()),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                    List<DocumentSnapshot> list = snapshot.data.documents;
-                    var total = 0.0;
-                    list.forEach((doc) => total += doc.data['cost']);
-
-                    return ListTile(
-                        title: Center(
-                            child: Text(
-                                (currentMonth() + " expenses:").toUpperCase(),
-                                style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold))),
-                        subtitle: Center(
-                            child: Text(total.toStringAsFixed(2),
-                                style: TextStyle(
-                                    fontSize: 24.0,
-                                    fontWeight: FontWeight.bold))));
-                  },
-                ),
-              ),
-              EntryList(
-                onDismissed: vm.onDismissed,
-                onUndo: vm.onUndo,
-              ),
+              EntryList(onDismissed: vm.onDismissed, onUndo: vm.onUndo),
+              IntervalExpense(from: currentFirst(), to: currentLast()),
             ],
           ),
         );
