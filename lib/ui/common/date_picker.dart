@@ -32,36 +32,37 @@ class DatePicker extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         Expanded(
-            child: InkWell(
-                onTap: () {
-                  _selectDate(context);
-                },
-                child: InputDecorator(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 2.0, bottom: 2.0),
-                        child: Row(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Icon(Icons.today),
-                            ),
-                            Text(
-                              DateFormat.yMMMMEEEEd().format(selectedDate),
-                              style: TextStyle(fontSize: 18.0),
-                            ),
-                          ],
+          child: InkWell(
+            onTap: () => _selectDate(context),
+            child: InputDecorator(
+              decoration: InputDecoration(
+                border: InputBorder.none,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2.0, bottom: 2.0),
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 12.0, right: 12.0),
+                          child: Icon(Icons.today),
                         ),
-                      )
-                    ],
-                  ),
-                )))
+                        Text(
+                          DateFormat.yMMMMEEEEd().format(selectedDate),
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        )
       ],
     );
   }
