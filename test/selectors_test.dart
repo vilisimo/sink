@@ -1,6 +1,6 @@
 import 'package:sink/models/entry.dart';
-import 'package:sink/models/state.dart';
-import 'package:sink/selectors/selectors.dart';
+import 'package:sink/redux/state.dart';
+import 'package:sink/redux/selectors.dart';
 import 'package:test/test.dart';
 
 main() {

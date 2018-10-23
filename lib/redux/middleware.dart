@@ -1,9 +1,9 @@
 import 'package:redux/redux.dart';
-import 'package:sink/actions/actions.dart';
 import 'package:sink/models/entry.dart';
-import 'package:sink/models/state.dart';
+import 'package:sink/redux/actions.dart';
+import 'package:sink/redux/selectors.dart';
+import 'package:sink/redux/state.dart';
 import 'package:sink/repository/firestore.dart';
-import 'package:sink/selectors/selectors.dart';
 
 class SinkMiddleware extends MiddlewareClass<AppState> {
 

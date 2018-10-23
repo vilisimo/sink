@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/repository/firestore.dart';
-import 'package:sink/ui/containers/add_edit_page.dart';
-import 'package:sink/ui/presentation/entry_item.dart';
+import 'package:sink/ui/entry/add_edit_page.dart';
+import 'package:sink/ui/entry/entry_item.dart';
 
 class EntryList extends StatelessWidget {
   final Function(Entry) onDismissed;

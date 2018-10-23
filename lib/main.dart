@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:sink/middleware/middleware.dart';
-import 'package:sink/models/state.dart';
-import 'package:sink/reducers/reducers.dart';
-
-import 'home.dart';
+import 'package:sink/redux/middleware.dart';
+import 'package:sink/redux/reducers.dart';
+import 'package:sink/redux/state.dart';
+import 'package:sink/ui/home.dart';
 
 void main() {
   final Store store = Store<AppState>(

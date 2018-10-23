@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:sink/actions/actions.dart';
 import 'package:sink/models/entry.dart';
-import 'package:sink/models/state.dart';
+import 'package:sink/redux/actions.dart';
+import 'package:sink/redux/state.dart';
 import 'package:sink/repository/firestore.dart';
-import 'package:sink/ui/presentation/entry_list.dart';
+import 'package:sink/ui/entries/entry_list.dart';
 import 'package:sink/utils/calendar.dart';
 
 class EntriesPage extends StatelessWidget {

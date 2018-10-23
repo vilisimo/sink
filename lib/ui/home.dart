@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sink/ui/containers/add_edit_page.dart';
-import 'package:sink/ui/containers/entries_page.dart';
+import 'package:sink/ui/entries/entries_page.dart';
+import 'package:sink/ui/entry/add_edit_page.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);

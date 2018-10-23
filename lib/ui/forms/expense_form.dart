@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sink/exceptions/InvalidInput.dart';
 import 'package:sink/models/entry.dart';
-import 'package:sink/ui/presentation/date_picker.dart';
+import 'package:sink/ui/common/date_picker.dart';
 import 'package:sink/utils/validations.dart';
 
 class ExpenseForm extends StatefulWidget {
