@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/repository/firestore.dart';
-import 'package:sink/ui/entry/add_edit_page.dart';
+import 'package:sink/ui/entry/edit_entry_page.dart';
 import 'package:sink/ui/entry/entry_item.dart';
 
 class EntryList extends StatelessWidget {
@@ -56,7 +56,7 @@ class EntryList extends StatelessWidget {
                     child: InkWell(
                         onTap: () => showDialog(
                             context: context,
-                            builder: (context) => EditExpenseScreen(entry)),
+                            builder: (context) => EditExpensePage(entry)),
                         enableFeedback: true,
                         child: Card(child: EntryItem(entry))),
                   );

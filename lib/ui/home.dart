@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sink/ui/entries/entries_page.dart';
-import 'package:sink/ui/entry/add_edit_page.dart';
+import 'package:sink/ui/entry/add_entry_page.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen>
           foregroundColor: Colors.black,
           child: Icon(Icons.add),
           onPressed: () => showDialog(
-              context: context, builder: (context) => AddExpenseScreen()),
+              context: context, builder: (context) => AddExpensePage()),
         ),
         bottomNavigationBar: BottomAppBar(
           notchMargin: 5.0,
