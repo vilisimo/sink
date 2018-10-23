@@ -2,9 +2,6 @@ import 'package:meta/meta.dart';
 import 'package:sink/models/entry.dart';
 
 @immutable
-class InitApp {}
-
-@immutable
 class AddEntry {
   final Entry entry;
 
