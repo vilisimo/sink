@@ -16,12 +16,9 @@ class EntryItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
             child: Row(
               children: <Widget>[
-                Expanded(
-                  child: Text(
-                    entry.category.toString(),
-                    style:
-                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                  ),
+                Text(
+                  entry.category.toString(),
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 )
               ],
             ),
