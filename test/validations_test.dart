@@ -1,6 +1,6 @@
-import 'package:sink/exceptions/InvalidInput.dart';
+import 'package:sink/common/exceptions.dart';
+import 'package:sink/common/validations.dart';
 import 'package:test/test.dart';
-import 'package:sink/utils/validations.dart';
 
 void main() {
   test('does not allow an empty string', () {

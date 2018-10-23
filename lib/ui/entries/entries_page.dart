@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:sink/common/calendar.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/ui/entries/entry_list.dart';
 import 'package:sink/ui/statistics/interval_expense.dart';
-import 'package:sink/utils/calendar.dart';
 
 class EntriesPage extends StatelessWidget {
   @override

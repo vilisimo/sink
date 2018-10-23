@@ -1,4 +1,4 @@
-import 'package:sink/exceptions/InvalidInput.dart';
+import 'package:sink/common/exceptions.dart';
 
 notEmpty(String value) {
   if (value == null || value.trim().isEmpty) {
