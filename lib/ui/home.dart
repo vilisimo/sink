@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sink/ui/entries/entries_page.dart';
 import 'package:sink/ui/entry/add_entry_page.dart';
+import 'package:sink/ui/statistics/statistics_page.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -43,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen>
         controller: _tabController,
         children: <Widget>[
           EntriesPage(),
-          Center(child: Text('Placeholder for statistics')),
+          StatisticsPage(),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
