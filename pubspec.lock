@@ -36,6 +36,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.2"
+  charts_common:
+    dependency: transitive
+    description:
+      name: charts_common
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
+  charts_flutter:
+    dependency: "direct main"
+    description:
+      name: charts_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
   cloud_firestore:
     dependency: "direct main"
     description:
@@ -71,13 +85,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.14.6"
-  cupertino_icons:
-    dependency: "direct main"
-    description:
-      name: cupertino_icons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2"
   firebase_core:
     dependency: transitive
     description:
