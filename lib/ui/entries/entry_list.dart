@@ -12,48 +12,29 @@ class EntryList extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: FirestoreRepository.getEntriesSnapshot(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CircularProgressIndicator(),
-            ));
-          }
+      stream: FirestoreRepository.getEntriesSnapshot(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+              child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CircularProgressIndicator(),
+          ));
+        }
 
-          return Expanded(
-            child: Scrollbar(
-              child: ListView(
-                shrinkWrap: true,
-                padding: EdgeInsets.all(8.0),
-                children:
-                    snapshot.data.documents.map((DocumentSnapshot document) {
-                  Entry entry = Entry.fromSnapshot(document);
-                  return Dismissible(
-                    key: ObjectKey(entry),
-                    background: Container(
-                      color: Colors.red,
-                      child: ListTile(
-                      ),
-                    ),
-                    direction: DismissDirection.endToStart,
-                    onDismissed: (DismissDirection direction) {
-                      onDismissed(entry);
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                        duration: Duration(seconds: 5),
-                        content: Text('Entry removed'),
-                        action: SnackBarAction(
-                          label: "UNDO",
-                          onPressed: onUndo,
-                        ),
-                      ));
-                    },
-                    child: EntryItem(entry),
-                  );
-                }).toList(),
-              ),
+        var documents = snapshot.data.documents;
+        return Expanded(
+          child: Scrollbar(
+            child: ListView(
+              shrinkWrap: true,
+              padding: EdgeInsets.all(8.0),
+              children: documents.map((DocumentSnapshot doc) {
+                return EntryItem(Entry.fromSnapshot(doc), onDismissed, onUndo);
+              }).toList(),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }
