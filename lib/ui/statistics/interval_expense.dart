@@ -32,7 +32,7 @@ class IntervalExpense extends StatelessWidget {
 
             return ListTile(
               title: CenteredText(
-                text: (currentMonth() + " damage:").toUpperCase(),
+                text: (currentMonth() + "'s balance:"),
                 fontWeight: FontWeight.bold,
               ),
               subtitle: CenteredText(
