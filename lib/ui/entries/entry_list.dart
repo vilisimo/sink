@@ -13,7 +13,7 @@ class EntryList extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
         stream: FirestoreRepository.getEntriesSnapshot(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(child: Padding(
               padding: const EdgeInsets.all(8.0),
