@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/repository/firestore.dart';
-import 'package:sink/ui/entry/edit_entry_page.dart';
 import 'package:sink/ui/entry/entry_item.dart';
 
 class EntryList extends StatelessWidget {
@@ -29,16 +28,9 @@ class EntryList extends StatelessWidget {
                   Entry entry = Entry.fromSnapshot(document);
                   return Dismissible(
                     key: ObjectKey(entry),
-                    background: Card(
+                    background: Container(
                       color: Colors.red,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(right: 20.0),
-                            child: Icon(Icons.delete),
-                          )
-                        ],
+                      child: ListTile(
                       ),
                     ),
                     direction: DismissDirection.endToStart,
@@ -53,12 +45,7 @@ class EntryList extends StatelessWidget {
                         ),
                       ));
                     },
-                    child: InkWell(
-                        onTap: () => showDialog(
-                            context: context,
-                            builder: (context) => EditExpensePage(entry)),
-                        enableFeedback: true,
-                        child: Card(child: EntryItem(entry))),
+                    child: EntryItem(entry),
                   );
                 }).toList(),
               ),
