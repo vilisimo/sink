@@ -25,7 +25,10 @@ class IntervalExpense extends StatelessWidget {
           stream: FirestoreRepository.snapshotBetween(from, to),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
+              return Center(child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(),
+              ));
             }
 
             double total = totalCost(snapshot.data.documents);
