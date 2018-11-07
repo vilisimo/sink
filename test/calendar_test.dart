@@ -68,4 +68,45 @@ void main() {
       expect(date, equals(DateTime(2020, 02, 29)));
     });
   });
+
+  group("datetime to zeroth hour", () {
+    test("converts datetime to zeroth hour of that day", () {
+      final date = new DateTime.now();
+
+      var zeroth = startOfDay(date);
+
+      expect(zeroth.year, equals(date.year));
+      expect(zeroth.month, equals(date.month));
+      expect(zeroth.day, equals(date.day));
+      expect(zeroth.hour, equals(0));
+      expect(zeroth.minute, equals(0));
+      expect(zeroth.second, equals(0));
+    });
+
+    test("converts almost midnight to zeroth hour of that day", () {
+      final date = new DateTime(2000, 1, 1, 23, 59, 59, 999);
+
+      var zeroth = startOfDay(date);
+
+      expect(zeroth.year, equals(date.year));
+      expect(zeroth.month, equals(date.month));
+      expect(zeroth.day, equals(date.day));
+      expect(zeroth.hour, equals(0));
+      expect(zeroth.minute, equals(0));
+      expect(zeroth.second, equals(0));
+    });
+
+    test("converts slightly over midnight to zeroth hour of that day", () {
+      final date = new DateTime(2000, 1, 1, 0, 0, 0, 0, 1);
+
+      var zeroth = startOfDay(date);
+
+      expect(zeroth.year, equals(date.year));
+      expect(zeroth.month, equals(date.month));
+      expect(zeroth.day, equals(date.day));
+      expect(zeroth.hour, equals(0));
+      expect(zeroth.minute, equals(0));
+      expect(zeroth.second, equals(0));
+    });
+  });
 }
