@@ -4,7 +4,7 @@ import 'package:sink/common/calendar.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/repository/firestore.dart';
 import 'package:sink/ui/common/progress_indicator.dart';
-import 'package:sink/ui/entries/day_summary.dart';
+import 'package:sink/ui/entries/day_entries.dart';
 
 class EntryList extends StatelessWidget {
   final Function(Entry) onDismissed;

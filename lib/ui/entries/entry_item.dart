@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sink/models/entry.dart';
-import 'package:sink/ui/entry/edit_entry_page.dart';
+import 'package:sink/ui/entries/edit_entry_page.dart';
 
 class EntryItem extends StatelessWidget {
   final Entry entry;
