@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sink/models/entry.dart';
 
 class DaySummaryTile extends StatelessWidget {
   final dimBlueGrey = Color(Colors.blueGrey.value).withOpacity(0.7);
@@ -7,7 +8,7 @@ class DaySummaryTile extends StatelessWidget {
   final DateTime _date;
   final double _amount;
 
-  DaySummaryTile(this._date, this._amount);
+  DaySummaryTile(this._date, entries) : this._amount = _totalAmount(entries);
 
   @override
   Widget build(BuildContext context) {
@@ -23,3 +24,6 @@ class DaySummaryTile extends StatelessWidget {
     );
   }
 }
+
+double _totalAmount(List<Entry> entries) =>
+    entries.fold(0.0, (sum, entry) => sum + entry.cost);
