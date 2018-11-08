@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sink/common/calendar.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/repository/firestore.dart';
-import 'package:sink/ui/entry/entry_item.dart';
+import 'package:sink/ui/entries/day_summary.dart';
 
 class EntryList extends StatelessWidget {
   final Function(Entry) onDismissed;
@@ -23,14 +24,15 @@ class EntryList extends StatelessWidget {
           );
         }
 
-        var documents = snapshot.data.documents;
+        var grouped = groupEntries(snapshot.data.documents);
+
         return Expanded(
           child: Scrollbar(
             child: ListView(
               shrinkWrap: true,
               padding: EdgeInsets.all(8.0),
-              children: documents.map((DocumentSnapshot doc) {
-                return EntryItem(Entry.fromSnapshot(doc), onDismissed, onUndo);
+              children: grouped.entries.map((entry) {
+                return DayGroup(entry.value, onDismissed, onUndo, entry.key);
               }).toList(),
             ),
           ),
@@ -38,4 +40,20 @@ class EntryList extends StatelessWidget {
       },
     );
   }
+}
+
+Map<DateTime, List<Entry>> groupEntries(List<DocumentSnapshot> snapshots) {
+  var entries = new Map<DateTime, List<Entry>>();
+  snapshots.forEach((s) {
+    Entry entry = Entry.fromSnapshot(s);
+    DateTime dateKey = startOfDay(entry.date);
+
+    if (!entries.containsKey(dateKey)) {
+      entries[dateKey] = [entry];
+    } else {
+      entries[dateKey].add(entry);
+    }
+  });
+
+  return entries;
 }
