@@ -4,6 +4,7 @@ import 'package:sink/common/calendar.dart';
 import 'package:sink/repository/firestore.dart';
 import 'package:sink/repository/firestore_calculator.dart';
 import 'package:sink/ui/common/centered_text.dart';
+import 'package:sink/ui/common/progress_indicator.dart';
 
 class IntervalExpense extends StatelessWidget {
   final DateTime from;
@@ -25,10 +26,7 @@ class IntervalExpense extends StatelessWidget {
           stream: FirestoreRepository.snapshotBetween(from, to),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return Center(child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircularProgressIndicator(),
-              ));
+              return PaddedCircularProgressIndicator();
             }
 
             double total = totalCost(snapshot.data.documents);
