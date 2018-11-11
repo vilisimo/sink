@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen>
               Tab(icon: Icon(Icons.insert_chart)),
             ],
             controller: _tabController,
-            labelColor: Colors.black,
+            labelColor: Colors.indigo,
             indicatorColor: Colors.white,
             unselectedLabelColor: Colors.blueGrey,
           ),
