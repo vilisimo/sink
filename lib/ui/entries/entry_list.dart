@@ -25,6 +25,7 @@ class EntryList extends StatelessWidget {
         return Expanded(
           child: Scrollbar(
             child: ListView(
+              physics: BouncingScrollPhysics(),
               shrinkWrap: true,
               padding: EdgeInsets.all(8.0),
               children: grouped.entries.map((entry) {
