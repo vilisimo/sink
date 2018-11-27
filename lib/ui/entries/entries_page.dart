@@ -19,7 +19,10 @@ class EntriesPage extends StatelessWidget {
             // workaround to show shadows
             verticalDirection: VerticalDirection.up,
             children: <Widget>[
-              EntryList(onDismissed: vm.onDismissed, onUndo: vm.onUndo),
+              Expanded(
+                child:
+                    EntryList(onDismissed: vm.onDismissed, onUndo: vm.onUndo),
+              ),
               IntervalExpense(from: currentFirst(), to: currentLast()),
             ],
           ),

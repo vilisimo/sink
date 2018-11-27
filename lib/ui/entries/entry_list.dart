@@ -22,16 +22,14 @@ class EntryList extends StatelessWidget {
 
         var grouped = groupEntries(snapshot.data.documents);
 
-        return Expanded(
-          child: Scrollbar(
-            child: ListView(
-              physics: BouncingScrollPhysics(),
-              shrinkWrap: true,
-              padding: EdgeInsets.all(8.0),
-              children: grouped.entries.map((entry) {
-                return DayGroup(entry.value, onDismissed, onUndo, entry.key);
-              }).toList(),
-            ),
+        return Scrollbar(
+          child: ListView(
+            physics: BouncingScrollPhysics(),
+            shrinkWrap: true,
+            padding: EdgeInsets.all(8.0),
+            children: grouped.entries.map((entry) {
+              return DayGroup(entry.value, onDismissed, onUndo, entry.key);
+            }).toList(),
           ),
         );
       },
