@@ -7,10 +7,6 @@ import 'package:sink/ui/common/progress_indicator.dart';
 import 'package:sink/ui/entries/day_entries.dart';
 
 class EntryList extends StatelessWidget {
-  final Function(Entry) onDismissed;
-  final Function onUndo;
-
-  EntryList({this.onDismissed, this.onUndo});
 
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -28,7 +24,7 @@ class EntryList extends StatelessWidget {
             shrinkWrap: true,
             padding: EdgeInsets.all(8.0),
             children: grouped.entries.map((entry) {
-              return DayGroup(entry.value, onDismissed, onUndo, entry.key);
+              return DayGroup(entry.value, entry.key);
             }).toList(),
           ),
         );
