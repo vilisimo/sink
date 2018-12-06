@@ -13,9 +13,10 @@ class DaySummaryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      dense: true,
       title: Text(
         DateFormat.yMMMMd().format(_date),
-        style: TextStyle(fontSize: 14.0, color: dimBlueGrey),
+        style: TextStyle(fontSize: 12.0, color: dimBlueGrey),
       ),
       trailing: Text(
         _amount.toString(),

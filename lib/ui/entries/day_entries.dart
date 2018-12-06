@@ -11,15 +11,18 @@ class DayGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        DaySummaryTile(_date, _entries),
-        Column(
-          children: _entries
-              .map((entry) => EntryItem(entry))
-              .toList(),
-        ),
-      ],
+    return Card(
+      child: Column(
+        children: <Widget>[
+          DaySummaryTile(_date, _entries),
+          Divider(height: 1.0,),
+          Column(
+            children: _entries
+                .map((entry) => EntryItem(entry))
+                .toList(),
+          ),
+        ],
+      ),
     );
   }
 }
