@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sink/ui/entries/entries_page.dart';
 import 'package:sink/ui/entries/add_entry_page.dart';
+import 'package:sink/ui/entries/entries_page.dart';
 import 'package:sink/ui/statistics/statistics_page.dart';
 
 class HomeScreen extends StatefulWidget {

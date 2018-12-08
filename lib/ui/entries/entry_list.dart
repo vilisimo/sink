@@ -5,6 +5,7 @@ import 'package:sink/models/entry.dart';
 import 'package:sink/repository/firestore.dart';
 import 'package:sink/ui/common/progress_indicator.dart';
 import 'package:sink/ui/entries/day_entries.dart';
+import 'package:sink/ui/statistics/balance.dart';
 
 class EntryList extends StatelessWidget {
 
@@ -17,15 +18,18 @@ class EntryList extends StatelessWidget {
         }
 
         var grouped = groupEntries(snapshot.data.documents);
+        var children = grouped.entries.map((entry) {
+          return DayGroup(entry.value, entry.key);
+        }).toList();
+        List<Widget> ch = [BalanceCard(from: currentFirst(), to: currentLast())];
+        ch.addAll(children);
 
         return Scrollbar(
           child: ListView(
             physics: BouncingScrollPhysics(),
             shrinkWrap: true,
             padding: EdgeInsets.all(8.0),
-            children: grouped.entries.map((entry) {
-              return DayGroup(entry.value, entry.key);
-            }).toList(),
+            children: ch,
           ),
         );
       },
