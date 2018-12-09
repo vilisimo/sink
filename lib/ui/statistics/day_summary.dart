@@ -11,13 +11,19 @@ class DaySummaryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      dense: true,
-      title: Text(
-        DateFormat.yMMMMd().format(_date),
-        style: TextStyle(fontSize: 12.0, color: dimBlueGrey),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 16.0),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              DateFormat.yMMMMd().format(_date),
+              style: TextStyle(fontSize: 12.0, color: dimBlueGrey),
+            ),
+          ),
+          Text(_amount.toString(), style: TextStyle(color: dimBlueGrey)),
+        ],
       ),
-      trailing: Text(_amount.toString(), style: TextStyle(color: dimBlueGrey)),
     );
   }
 }

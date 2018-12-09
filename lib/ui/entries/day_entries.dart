@@ -15,11 +15,9 @@ class DayGroup extends StatelessWidget {
       child: Column(
         children: <Widget>[
           DaySummaryTile(_date, _entries),
-          Divider(height: 1.0,),
+          Divider(height: 0.0),
           Column(
-            children: _entries
-                .map((entry) => EntryItem(entry))
-                .toList(),
+            children: _entries.map((entry) => EntryItem(entry)).toList(),
           ),
         ],
       ),
