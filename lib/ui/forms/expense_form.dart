@@ -6,29 +6,39 @@ import 'package:sink/ui/common/date_picker.dart';
 
 class ExpenseForm extends StatefulWidget {
   final Function(Entry) onSave;
+  final List<String> categories;
   final Entry entry;
 
-  ExpenseForm({this.onSave, this.entry});
+  ExpenseForm({this.onSave, this.categories, this.entry});
 
   @override
   ExpenseFormState createState() {
-    return ExpenseFormState(onSave: this.onSave, entry: this.entry);
+    return ExpenseFormState(
+      onSave: this.onSave,
+      categories: this.categories,
+      entry: this.entry,
+    );
   }
 }
 
 class ExpenseFormState extends State {
   final _formKey = GlobalKey<FormState>();
-  final _category = GlobalKey<FormFieldState<String>>();
   final _description = GlobalKey<FormFieldState<String>>();
   final _cost = GlobalKey<FormFieldState<String>>();
 
   final Function(Entry) onSave;
+  final List<String> categories;
   final Entry entry;
+  String _category;
 
   DateTime _date;
 
-  ExpenseFormState({@required this.onSave, this.entry})
-      : _date = entry.date ?? DateTime.now();
+  ExpenseFormState({
+    @required this.onSave,
+    @required this.categories,
+    this.entry,
+  })  : _date = entry.date ?? DateTime.now(),
+        _category = entry.category;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +55,7 @@ class ExpenseFormState extends State {
                 Entry newEntry = Entry(
                     date: _date,
                     cost: double.parse(_cost.currentState.value),
-                    category: _category.currentState.value,
+                    category: _category,
                     description: _description.currentState.value,
                     id: entry.id);
                 onSave(newEntry);
@@ -81,11 +91,11 @@ class ExpenseFormState extends State {
                   key: _cost,
                   initialValue:
                       entry.cost == null ? null : entry.cost.toString(),
-                  style: TextStyle(fontSize: 20.0, color: Colors.black),
+                  style: TextStyle(fontSize: 16.0, color: Colors.black),
                   decoration: InputDecoration(
                     hintText: "Enter a price",
-                    prefixIcon: Icon(Icons.attach_money),
                     border: InputBorder.none,
+                    contentPadding: EdgeInsets.all(16.0),
                   ),
                   keyboardType: TextInputType.number,
                   validator: (value) => _validatePrice(value),
@@ -95,17 +105,25 @@ class ExpenseFormState extends State {
             Padding(
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Card(
-                child: TextFormField(
-                  key: _category,
-                  initialValue: entry.category,
-                  textCapitalization: TextCapitalization.sentences,
-                  style: TextStyle(fontSize: 20.0, color: Colors.black),
-                  decoration: InputDecoration(
-                    hintText: "Enter a category",
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.all(16.0),
+                child: DropdownButtonHideUnderline(
+                  child: ButtonTheme(
+                    alignedDropdown: true,
+                    child: DropdownButton(
+                      value: entry.category == "" ? null : entry.category,
+                      hint: Text("Select a category",
+                          style:
+                              TextStyle(fontSize: 16.0, color: Colors.black54)),
+                      items: categories.map((val) {
+                        return DropdownMenuItem(
+                            value: val, child: new Text(val));
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          _category = newValue;
+                        });
+                      },
+                    ),
                   ),
-                  validator: (value) => _validateNotEmpty(value),
                 ),
               ),
             ),
@@ -116,7 +134,7 @@ class ExpenseFormState extends State {
                   key: _description,
                   textCapitalization: TextCapitalization.sentences,
                   initialValue: entry.description,
-                  style: TextStyle(fontSize: 20.0, color: Colors.black),
+                  style: TextStyle(fontSize: 16.0, color: Colors.black),
                   maxLines: 3,
                   decoration: InputDecoration(
                     hintText: "Provide a description",
@@ -143,6 +161,7 @@ class ExpenseFormState extends State {
   }
 
   String _validatePrice(String value) {
+    //TODO: validate number - stateful component?
     try {
       nonNegative(value);
       return null;
