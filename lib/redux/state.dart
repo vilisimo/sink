@@ -4,21 +4,16 @@ import 'package:sink/models/entry.dart';
 @immutable
 class AppState {
   final List<Entry> removed;
-  final List<String> categories = [
-    "Food",
-    "Clothes",
-    "Sweets",
-    "Bills",
-    "PC",
-    "Car",
-    "Travel",
-  ];
+  final List<String> categories;
 
-  AppState({removed}) : this.removed = removed ?? List();
+  AppState({removed, categories})
+      : this.removed = removed ?? List(),
+        this.categories = categories ?? List();
 
-  AppState copyWith({List<Entry> removed}) {
+  AppState copyWith({List<Entry> removed, List<String> categories}) {
     return AppState(
       removed: removed ?? this.removed,
+      categories: categories ?? this.categories,
     );
   }
 }

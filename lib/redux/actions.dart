@@ -1,6 +1,8 @@
 import 'package:meta/meta.dart';
 import 'package:sink/models/entry.dart';
 
+/// Entries
+
 @immutable
 class AddEntry {
   final Entry entry;
@@ -24,3 +26,15 @@ class DeleteEntry {
 
 @immutable
 class UndoDelete {}
+
+/// Categories
+
+@immutable
+class InitState {}
+
+@immutable
+class LoadCategories {
+  final List<String> categories;
+
+  LoadCategories(this.categories);
+}

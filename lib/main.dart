@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/middleware.dart';
 import 'package:sink/redux/reducers.dart';
 import 'package:sink/redux/state.dart';
@@ -24,6 +25,8 @@ class Sink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    store.dispatch(InitState());
+
     return StoreProvider<AppState>(
       store: store,
       child: MaterialApp(

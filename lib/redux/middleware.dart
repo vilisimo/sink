@@ -6,10 +6,12 @@ import 'package:sink/redux/state.dart';
 import 'package:sink/repository/firestore.dart';
 
 class SinkMiddleware extends MiddlewareClass<AppState> {
-
   @override
-  void call(Store<AppState> store, dynamic action, NextDispatcher next) {
-    if (action is AddEntry) {
+  void call(Store<AppState> store, dynamic action, NextDispatcher next) async {
+    if (action is InitState) {
+      var categories = await loadCategories();
+      store.dispatch(LoadCategories(categories));
+    } else if (action is AddEntry) {
       FirestoreRepository.create(action.entry);
     } else if (action is DeleteEntry) {
       FirestoreRepository.delete(action.entry);
@@ -21,5 +23,14 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
     }
 
     next(action);
+  }
+
+  Future<List<String>> loadCategories() async {
+    List<String> categories = [];
+
+    await FirestoreRepository.getCategories().then((val) =>
+        val.documents.forEach((ds) => categories.add(ds.data["name"])));
+
+    return categories;
   }
 }
