@@ -3,6 +3,7 @@ import 'package:sink/common/exceptions.dart';
 import 'package:sink/common/validations.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/ui/common/date_picker.dart';
+import 'package:sink/ui/forms/tile.dart';
 
 class ExpenseForm extends StatefulWidget {
   final Function(Entry) onSave;
@@ -68,7 +69,7 @@ class ExpenseFormState extends State {
       ),
       body: Form(
         key: _formKey,
-        child: ListView(
+        child: Column(
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -142,6 +143,18 @@ class ExpenseFormState extends State {
                     contentPadding: EdgeInsets.all(16.0),
                   ),
                   validator: (value) => _validateNotEmpty(value),
+                ),
+              ),
+            ),
+            Flexible(
+              child: Card(
+                margin: EdgeInsets.all(20.0),
+                child: Tiles(
+                  onTap: (category) {
+                    setState(() {
+                      _category = category;
+                    });
+                  },
                 ),
               ),
             ),

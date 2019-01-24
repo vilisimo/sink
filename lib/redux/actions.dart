@@ -38,3 +38,13 @@ class LoadCategories {
 
   LoadCategories(this.categories);
 }
+
+@immutable
+class SelectCategory {
+  final String category;
+
+  SelectCategory(this.category);
+}
+
+@immutable
+class ClearCategory {}

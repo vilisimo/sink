@@ -13,6 +13,7 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
       store.dispatch(LoadCategories(categories));
     } else if (action is AddEntry) {
       FirestoreRepository.create(action.entry);
+      store.dispatch(ClearCategory());
     } else if (action is DeleteEntry) {
       FirestoreRepository.delete(action.entry);
     } else if (action is UndoDelete) {
@@ -20,6 +21,7 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
       FirestoreRepository.create(lastRemoved);
     } else if (action is EditEntry) {
       FirestoreRepository.create(action.entry);
+      store.dispatch(ClearCategory());
     }
 
     next(action);
