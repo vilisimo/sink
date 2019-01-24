@@ -87,24 +87,6 @@ class ExpenseFormState extends State {
             Padding(
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Card(
-                child: TextFormField(
-                  key: _cost,
-                  initialValue:
-                      entry.cost == null ? null : entry.cost.toString(),
-                  style: TextStyle(fontSize: 16.0, color: Colors.black),
-                  decoration: InputDecoration(
-                    hintText: "Enter a price",
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.all(16.0),
-                  ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) => _validatePrice(value),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-              child: Card(
                 child: DropdownButtonHideUnderline(
                   child: ButtonTheme(
                     alignedDropdown: true,
@@ -124,6 +106,24 @@ class ExpenseFormState extends State {
                       },
                     ),
                   ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Card(
+                child: TextFormField(
+                  key: _cost,
+                  initialValue:
+                      entry.cost == null ? null : entry.cost.toString(),
+                  style: TextStyle(fontSize: 16.0, color: Colors.black),
+                  decoration: InputDecoration(
+                    hintText: "Enter a price",
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.all(16.0),
+                  ),
+                  keyboardType: TextInputType.number,
+                  validator: (value) => _validatePrice(value),
                 ),
               ),
             ),
