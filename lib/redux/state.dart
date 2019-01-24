@@ -4,6 +4,7 @@ import 'package:sink/models/entry.dart';
 @immutable
 class AppState {
   final List<Entry> removed;
+  //TODO: proper classes with ids?
   final List<String> categories;
 
   AppState({removed, categories})
