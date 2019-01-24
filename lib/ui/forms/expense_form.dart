@@ -109,7 +109,7 @@ class ExpenseFormState extends State {
                   child: ButtonTheme(
                     alignedDropdown: true,
                     child: DropdownButton(
-                      value: entry.category == "" ? null : entry.category,
+                      value: _category == "" ? null : _category,
                       hint: Text("Select a category",
                           style:
                               TextStyle(fontSize: 16.0, color: Colors.black54)),
