@@ -3,7 +3,7 @@ import 'package:sink/common/exceptions.dart';
 import 'package:sink/common/validations.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/ui/common/date_picker.dart';
-import 'package:sink/ui/forms/tile.dart';
+import 'package:sink/ui/forms/grid.dart';
 
 class ExpenseForm extends StatefulWidget {
   final Function(Entry) onSave;
@@ -30,7 +30,7 @@ class ExpenseFormState extends State {
   final Function(Entry) onSave;
   final List<String> categories;
   final Entry entry;
-  String _category;
+  String _selectedCategory;
 
   DateTime _date;
 
@@ -39,7 +39,7 @@ class ExpenseFormState extends State {
     @required this.categories,
     this.entry,
   })  : _date = entry.date ?? DateTime.now(),
-        _category = entry.category;
+        _selectedCategory = entry.category;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class ExpenseFormState extends State {
                 Entry newEntry = Entry(
                     date: _date,
                     cost: double.parse(_cost.currentState.value),
-                    category: _category,
+                    category: _selectedCategory,
                     description: _description.currentState.value,
                     id: entry.id);
                 onSave(newEntry);
@@ -92,7 +92,7 @@ class ExpenseFormState extends State {
                   child: ButtonTheme(
                     alignedDropdown: true,
                     child: DropdownButton(
-                      value: _category == "" ? null : _category,
+                      value: _selectedCategory == "" ? null : _selectedCategory,
                       hint: Text("Select a category",
                           style:
                               TextStyle(fontSize: 16.0, color: Colors.black54)),
@@ -102,7 +102,7 @@ class ExpenseFormState extends State {
                       }).toList(),
                       onChanged: (newValue) {
                         setState(() {
-                          _category = newValue;
+                          _selectedCategory = newValue;
                         });
                       },
                     ),
@@ -149,13 +149,14 @@ class ExpenseFormState extends State {
             Flexible(
               child: Card(
                 margin: EdgeInsets.all(20.0),
-                child: Tiles(
-                  onTap: (category) {
-                    setState(() {
-                      _category = category;
-                    });
-                  },
-                ),
+                child: CategoryGrid(
+                    categories: categories,
+                    selected: _selectedCategory,
+                    onTap: (selected) {
+                      setState(() {
+                        _selectedCategory = selected;
+                      });
+                    }),
               ),
             ),
           ],

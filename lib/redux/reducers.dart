@@ -18,13 +18,6 @@ AppState reduce(AppState state, dynamic action) {
     case LoadCategories:
       return state.copyWith(categories: List.from(action.categories));
 
-    case SelectCategory:
-      return state.copyWith(chosenCategory: action.category);
-
-    case ClearCategory:
-      AppState st = state.copyWith(chosenCategory: null);
-      return st;
-
     default:
       return state;
   }
