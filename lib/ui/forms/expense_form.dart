@@ -3,7 +3,7 @@ import 'package:sink/common/exceptions.dart';
 import 'package:sink/common/validations.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/ui/common/date_picker.dart';
-import 'package:sink/ui/forms/grid.dart';
+import 'package:sink/ui/forms/category_grid.dart';
 
 class ExpenseForm extends StatefulWidget {
   final Function(Entry) onSave;
