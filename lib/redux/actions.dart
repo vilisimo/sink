@@ -34,7 +34,7 @@ class InitState {}
 
 @immutable
 class LoadCategories {
-  final List<String> categories;
+  final Set<String> categories;
 
   LoadCategories(this.categories);
 }

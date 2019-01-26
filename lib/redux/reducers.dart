@@ -16,7 +16,7 @@ AppState reduce(AppState state, dynamic action) {
       return state.copyWith(removed: removed);
 
     case LoadCategories:
-      return state.copyWith(categories: List.from(action.categories));
+      return state.copyWith(categories: Set.from(action.categories));
 
     default:
       return state;

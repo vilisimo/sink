@@ -29,7 +29,7 @@ class EditExpensePage extends StatelessWidget {
 
 class _EditViewModel {
   final Function(Entry) onSave;
-  final List<String> categories;
+  final Set<String> categories;
 
   _EditViewModel({@required this.onSave, @required this.categories});
 

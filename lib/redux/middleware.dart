@@ -25,8 +25,8 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
     next(action);
   }
 
-  Future<List<String>> loadCategories() async {
-    List<String> categories = [];
+  Future<Set<String>> loadCategories() async {
+    Set<String> categories = Set();
 
     await FirestoreRepository.getCategories().then((val) =>
         val.documents.forEach((ds) => categories.add(ds.data["name"])));

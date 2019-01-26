@@ -7,7 +7,7 @@ import 'package:sink/ui/forms/category_grid.dart';
 
 class ExpenseForm extends StatefulWidget {
   final Function(Entry) onSave;
-  final List<String> categories;
+  final Set<String> categories;
   final Entry entry;
 
   ExpenseForm({this.onSave, this.categories, this.entry});
@@ -28,7 +28,7 @@ class ExpenseFormState extends State {
   final _cost = GlobalKey<FormFieldState<String>>();
 
   final Function(Entry) onSave;
-  final List<String> categories;
+  final Set<String> categories;
   final Entry entry;
   String _selectedCategory;
 

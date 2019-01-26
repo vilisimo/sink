@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CategoryGrid extends StatefulWidget {
   final Function(String) onTap;
-  final List<String> categories;
+  final Set<String> categories;
   final String selected;
 
   CategoryGrid({
@@ -19,7 +19,7 @@ class CategoryGrid extends StatefulWidget {
 
 class _CategoryGridState extends State<CategoryGrid> {
   final Function(String) onTap;
-  final List<String> categories;
+  final Set<String> categories;
   final String selected;
 
   List<Widget> categoryTiles;

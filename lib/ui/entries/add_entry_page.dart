@@ -25,7 +25,7 @@ class AddExpensePage extends StatelessWidget {
 
 class _AddViewModel {
   final Function(Entry) onSave;
-  final List<String> categories;
+  final Set<String> categories;
 
   _AddViewModel({@required this.onSave, @required this.categories});
 

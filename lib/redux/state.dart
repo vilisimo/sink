@@ -5,15 +5,15 @@ import 'package:sink/models/entry.dart';
 class AppState {
   final List<Entry> removed;
   //TODO: proper classes with ids?
-  final List<String> categories;
+  final Set<String> categories;
 
   AppState({removed, categories, chosenCategory})
       : this.removed = removed ?? List(),
-        this.categories = categories ?? List();
+        this.categories = categories ?? Set();
 
   AppState copyWith({
     List<Entry> removed,
-    List<String> categories,
+    Set<String> categories,
   }) {
     return AppState(
       removed: removed ?? this.removed,
