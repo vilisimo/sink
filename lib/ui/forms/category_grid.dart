@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:sink/ui/forms/category_form.dart';
 
 class CategoryGrid extends StatefulWidget {
   final Function(String) onTap;
@@ -32,7 +33,7 @@ class _CategoryGridState extends State<CategoryGrid> {
     onTap(selected);
     setState(() {
       categoryTiles = categories
-          .map((category) => new CategoryTile(
+          .map((category) => CategoryTile(
                 handleTap: _handleTap,
                 category: category,
                 selected: selected == category,
@@ -45,7 +46,7 @@ class _CategoryGridState extends State<CategoryGrid> {
   void initState() {
     super.initState();
     categoryTiles = categories
-        .map((category) => new CategoryTile(
+        .map((category) => CategoryTile(
               key: ValueKey(category), //TODO: should be IDs, might repeat?
               handleTap: _handleTap,
               category: category,
@@ -56,6 +57,17 @@ class _CategoryGridState extends State<CategoryGrid> {
 
   @override
   Widget build(BuildContext context) {
+    Widget addCategoryTile = CategoryTile(
+      handleTap: (filler) => showDialog(
+            context: context,
+            builder: (context) => CategoryForm(),
+          ),
+      category: "Add",
+      selected: false,
+    );
+
+    categoryTiles.add(addCategoryTile);
+
     return GridView.count(
       shrinkWrap: true,
       primary: true,
@@ -66,6 +78,7 @@ class _CategoryGridState extends State<CategoryGrid> {
   }
 }
 
+// TODO: could be generic circular tile
 class CategoryTile extends StatelessWidget {
   final Function(String) handleTap;
   final String category;
@@ -98,7 +111,8 @@ class CategoryTile extends StatelessWidget {
                       : Color.fromRGBO(211, 211, 211, 0.7),
                 ),
                 child: Icon(
-                  Icons.add_shopping_cart,
+                  // TODO: refactor when categories get their own icons
+                  category == "Add" ? Icons.add : Icons.add_shopping_cart,
                   color: selected ? Colors.white : Colors.black,
                 ),
               ),
