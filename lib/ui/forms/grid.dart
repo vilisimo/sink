@@ -79,7 +79,7 @@ class CategoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: InkResponse(
+      child: GestureDetector(
         onTap: () => handleTap(category),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
