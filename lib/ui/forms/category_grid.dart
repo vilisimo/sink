@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class CategoryGrid extends StatefulWidget {
@@ -91,10 +93,14 @@ class CategoryTile extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: selected
-                      ? Color.fromRGBO(211, 211, 211, 0.7)
-                      : Colors.white,
+                      ? Color.fromRGBO(Random().nextInt(255),
+                          Random().nextInt(255), Random().nextInt(255), 0.8)
+                      : Color.fromRGBO(211, 211, 211, 0.7),
                 ),
-                child: Icon(Icons.add_shopping_cart),
+                child: Icon(
+                  Icons.add_shopping_cart,
+                  color: selected ? Colors.white : Colors.black,
+                ),
               ),
             ),
             Padding(
