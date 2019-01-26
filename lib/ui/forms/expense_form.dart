@@ -88,31 +88,6 @@ class ExpenseFormState extends State {
             Padding(
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Card(
-                child: DropdownButtonHideUnderline(
-                  child: ButtonTheme(
-                    alignedDropdown: true,
-                    child: DropdownButton(
-                      value: _selectedCategory == "" ? null : _selectedCategory,
-                      hint: Text("Select a category",
-                          style:
-                              TextStyle(fontSize: 16.0, color: Colors.black54)),
-                      items: categories.map((val) {
-                        return DropdownMenuItem(
-                            value: val, child: new Text(val));
-                      }).toList(),
-                      onChanged: (newValue) {
-                        setState(() {
-                          _selectedCategory = newValue;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-              child: Card(
                 child: TextFormField(
                   key: _cost,
                   initialValue:
@@ -147,16 +122,19 @@ class ExpenseFormState extends State {
               ),
             ),
             Flexible(
-              child: Card(
-                margin: EdgeInsets.all(20.0),
-                child: CategoryGrid(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Card(
+                  child: CategoryGrid(
                     categories: categories,
                     selected: _selectedCategory,
                     onTap: (selected) {
                       setState(() {
                         _selectedCategory = selected;
                       });
-                    }),
+                    },
+                  ),
+                ),
               ),
             ),
           ],
