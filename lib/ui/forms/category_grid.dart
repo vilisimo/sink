@@ -106,6 +106,7 @@ class CategoryTile extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: selected
+                      // TODO: refactor when categories get their own colors
                       ? Color.fromRGBO(Random().nextInt(255),
                           Random().nextInt(255), Random().nextInt(255), 0.8)
                       : Color.fromRGBO(211, 211, 211, 0.7),
