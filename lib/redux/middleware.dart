@@ -9,8 +9,14 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
   @override
   void call(Store<AppState> store, dynamic action, NextDispatcher next) async {
     if (action is InitState) {
-      var categories = await loadCategories();
-      store.dispatch(LoadCategories(categories));
+      FirestoreRepository.categories
+          .orderBy('name', descending: false)
+          .snapshots()
+          .listen((qs) {
+        Set<String> categories = Set();
+        qs.documents.forEach((ds) => categories.add(ds.data["name"]));
+        store.dispatch(LoadCategories(categories));
+      });
     } else if (action is AddEntry) {
       FirestoreRepository.create(action.entry);
     } else if (action is DeleteEntry) {
@@ -20,6 +26,8 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
       FirestoreRepository.create(lastRemoved);
     } else if (action is EditEntry) {
       FirestoreRepository.create(action.entry);
+    } else if (action is CreateCategory) {
+      FirestoreRepository.createCategory(action.category);
     }
 
     next(action);

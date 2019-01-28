@@ -30,4 +30,9 @@ class FirestoreRepository {
   static Future<QuerySnapshot> getCategories() async {
     return categories.orderBy('name', descending: false).getDocuments();
   }
+
+  static void createCategory(String category) {
+    // TODO: should have a proper ID
+    categories.reference().document().setData({"name": category});
+  }
 }

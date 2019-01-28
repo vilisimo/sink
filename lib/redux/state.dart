@@ -7,7 +7,7 @@ class AppState {
   //TODO: proper classes with ids?
   final Set<String> categories;
 
-  AppState({removed, categories, chosenCategory})
+  AppState({removed, categories})
       : this.removed = removed ?? List(),
         this.categories = categories ?? Set();
 

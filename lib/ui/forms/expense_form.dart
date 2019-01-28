@@ -126,7 +126,6 @@ class ExpenseFormState extends State {
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Card(
                   child: CategoryGrid(
-                    categories: categories,
                     selected: _selectedCategory,
                     onTap: (selected) {
                       setState(() {

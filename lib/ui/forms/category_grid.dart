@@ -1,58 +1,19 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+import 'package:sink/redux/state.dart';
 import 'package:sink/ui/forms/category_form.dart';
 
-class CategoryGrid extends StatefulWidget {
+class CategoryGrid extends StatelessWidget {
   final Function(String) onTap;
-  final Set<String> categories;
   final String selected;
 
-  CategoryGrid({
-    @required this.onTap,
-    @required this.categories,
-    @required this.selected,
-  });
-
-  @override
-  State<StatefulWidget> createState() {
-    return _CategoryGridState(onTap, categories, selected);
-  }
-}
-
-class _CategoryGridState extends State<CategoryGrid> {
-  final Function(String) onTap;
-  final Set<String> categories;
-  final String selected;
-
-  List<Widget> categoryTiles;
-
-  _CategoryGridState(this.onTap, this.categories, this.selected);
+  CategoryGrid({@required this.onTap, @required this.selected});
 
   void _handleTap(String selected) {
     onTap(selected);
-    setState(() {
-      categoryTiles = categories
-          .map((category) => CategoryTile(
-                handleTap: _handleTap,
-                category: category,
-                selected: selected == category,
-              ))
-          .toList();
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    categoryTiles = categories
-        .map((category) => CategoryTile(
-              key: ValueKey(category), //TODO: should be IDs, might repeat?
-              handleTap: _handleTap,
-              category: category,
-              selected: selected == category,
-            ))
-        .toList();
   }
 
   @override
@@ -63,18 +24,40 @@ class _CategoryGridState extends State<CategoryGrid> {
             builder: (context) => CategoryForm(),
           ),
       category: "Add",
-      selected: false,
+      isSelected: false,
     );
 
-    categoryTiles.add(addCategoryTile);
+    return StoreConnector(
+      converter: _CategoryGridViewModel.fromState,
+      builder: (BuildContext context, _CategoryGridViewModel vm) {
+        var cats = vm.categories
+            .map((category) => CategoryTile(
+                key: ValueKey(category),
+                handleTap: (_handleTap),
+                category: category,
+                isSelected: selected == category))
+            .toList();
+        cats.add(addCategoryTile);
 
-    return GridView.count(
-      shrinkWrap: true,
-      primary: true,
-      physics: NeverScrollableScrollPhysics(),
-      crossAxisCount: 4,
-      children: categoryTiles,
+        return GridView.count(
+          shrinkWrap: true,
+          primary: true,
+          physics: NeverScrollableScrollPhysics(),
+          crossAxisCount: 4,
+          children: cats,
+        );
+      },
     );
+  }
+}
+
+class _CategoryGridViewModel {
+  final Set<String> categories;
+
+  _CategoryGridViewModel({@required this.categories});
+
+  static _CategoryGridViewModel fromState(Store<AppState> store) {
+    return _CategoryGridViewModel(categories: store.state.categories);
   }
 }
 
@@ -82,20 +65,22 @@ class _CategoryGridState extends State<CategoryGrid> {
 class CategoryTile extends StatelessWidget {
   final Function(String) handleTap;
   final String category;
-  final bool selected;
+  final bool isSelected;
 
   CategoryTile({
     Key key,
     @required this.handleTap,
     @required this.category,
-    @required this.selected,
-  });
+    @required this.isSelected,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: GestureDetector(
-        onTap: () => handleTap(category),
+        onTap: () {
+          handleTap(category);
+        },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -105,7 +90,7 @@ class CategoryTile extends StatelessWidget {
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: selected
+                  color: isSelected
                       // TODO: refactor when categories get their own colors
                       ? Color.fromRGBO(Random().nextInt(255),
                           Random().nextInt(255), Random().nextInt(255), 0.8)
@@ -114,7 +99,7 @@ class CategoryTile extends StatelessWidget {
                 child: Icon(
                   // TODO: refactor when categories get their own icons
                   category == "Add" ? Icons.add : Icons.add_shopping_cart,
-                  color: selected ? Colors.white : Colors.black,
+                  color: isSelected ? Colors.white : Colors.black,
                 ),
               ),
             ),
