@@ -28,7 +28,7 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
     } else if (action is EditEntry) {
       FirestoreRepository.create(action.entry);
     } else if (action is CreateCategory) {
-      FirestoreRepository.createCategory(action.category, action.color);
+      FirestoreRepository.createCategory(action.category);
     }
 
     next(action);

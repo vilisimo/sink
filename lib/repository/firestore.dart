@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 
 class FirestoreRepository {
@@ -31,11 +32,12 @@ class FirestoreRepository {
     return categories.orderBy('name', descending: false).getDocuments();
   }
 
-  static void createCategory(String category, int color) {
+  static void createCategory(Category category) {
     // TODO: should have a proper ID
-    categories.reference().document().setData({
-      'name': category,
-      'color': color,
+    categories.reference().document(category.id).setData({
+      'id': category.id,
+      'name': category.name,
+      'color': category.color.value,
     });
   }
 }

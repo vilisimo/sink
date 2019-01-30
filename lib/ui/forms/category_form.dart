@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:sink/models/category.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/state.dart';
+import 'package:uuid/uuid.dart';
 
 class CategoryForm extends StatefulWidget {
   @override
@@ -68,12 +70,15 @@ class _CategoryFormViewModel {
   _CategoryFormViewModel({@required this.onSave});
 
   static _CategoryFormViewModel fromState(Store<AppState> store) {
-    return _CategoryFormViewModel(onSave: (category) {
-      store.dispatch(CreateCategory(
-        category: category,
-        // TODO: introduce color picker? Should show available and used
-        color: Colors.grey.value,
-      ));
-    });
+    return _CategoryFormViewModel(
+      onSave: (category) {
+        store.dispatch(CreateCategory(Category(
+          id: Uuid().v4(),
+          name: category,
+          // TODO: introduce color picker? Should show available and used
+          color: Colors.grey,
+        )));
+      },
+    );
   }
 }

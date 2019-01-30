@@ -3,18 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 class Category {
+  final String id;
   final String name;
   final Color color;
 
-  Category({@required this.name, @required this.color});
+  Category({
+    @required this.id,
+    @required this.name,
+    @required this.color,
+  });
 
   static fromSnapshot(DocumentSnapshot document) {
-    return Category(name: document['name'], color: Color(document['color']));
+    return Category(
+      id: document['id'],
+      name: document['name'],
+      color: Color(document['color']),
+    );
   }
 
   @override
   String toString() {
-    return 'Category{name: $name, color: $color}';
+    return 'Category{id: $id, name: $name, color: $color}';
   }
 
   @override
@@ -22,9 +31,10 @@ class Category {
       identical(this, other) ||
       other is Category &&
           runtimeType == other.runtimeType &&
+          id == other.id &&
           name == other.name &&
           color == other.color;
 
   @override
-  int get hashCode => name.hashCode ^ color.hashCode;
+  int get hashCode => id.hashCode ^ name.hashCode ^ color.hashCode;
 }

@@ -42,8 +42,7 @@ class LoadCategories {
 
 @immutable
 class CreateCategory {
-  final String category;
-  final int color;
+  final Category category;
 
-  CreateCategory({@required this.category, @required this.color});
+  CreateCategory(this.category);
 }
