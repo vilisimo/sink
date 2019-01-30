@@ -1,4 +1,5 @@
 import 'package:redux/redux.dart';
+import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
@@ -13,8 +14,8 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
           .orderBy('name', descending: false)
           .snapshots()
           .listen((qs) {
-        Set<String> categories = Set();
-        qs.documents.forEach((ds) => categories.add(ds.data["name"]));
+        Set<Category> categories = Set();
+        qs.documents.forEach((ds) => categories.add(Category.fromSnapshot(ds)));
         store.dispatch(LoadCategories(categories));
       });
     } else if (action is AddEntry) {
@@ -27,18 +28,9 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
     } else if (action is EditEntry) {
       FirestoreRepository.create(action.entry);
     } else if (action is CreateCategory) {
-      FirestoreRepository.createCategory(action.category);
+      FirestoreRepository.createCategory(action.category, action.color);
     }
 
     next(action);
-  }
-
-  Future<Set<String>> loadCategories() async {
-    Set<String> categories = Set();
-
-    await FirestoreRepository.getCategories().then((val) =>
-        val.documents.forEach((ds) => categories.add(ds.data["name"])));
-
-    return categories;
   }
 }

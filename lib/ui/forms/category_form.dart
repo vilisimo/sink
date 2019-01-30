@@ -69,7 +69,11 @@ class _CategoryFormViewModel {
 
   static _CategoryFormViewModel fromState(Store<AppState> store) {
     return _CategoryFormViewModel(onSave: (category) {
-      store.dispatch(CreateCategory(category));
+      store.dispatch(CreateCategory(
+        category: category,
+        // TODO: introduce color picker? Should show available and used
+        color: Colors.grey.value,
+      ));
     });
   }
 }

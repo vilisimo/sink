@@ -31,8 +31,11 @@ class FirestoreRepository {
     return categories.orderBy('name', descending: false).getDocuments();
   }
 
-  static void createCategory(String category) {
+  static void createCategory(String category, int color) {
     // TODO: should have a proper ID
-    categories.reference().document().setData({"name": category});
+    categories.reference().document().setData({
+      'name': category,
+      'color': color,
+    });
   }
 }

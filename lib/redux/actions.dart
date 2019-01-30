@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 
 /// Entries
@@ -34,7 +35,7 @@ class InitState {}
 
 @immutable
 class LoadCategories {
-  final Set<String> categories;
+  final Set<Category> categories;
 
   LoadCategories(this.categories);
 }
@@ -42,6 +43,7 @@ class LoadCategories {
 @immutable
 class CreateCategory {
   final String category;
+  final int color;
 
-  CreateCategory(this.category);
+  CreateCategory({@required this.category, @required this.color});
 }

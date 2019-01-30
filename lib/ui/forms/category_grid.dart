@@ -1,8 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:sink/models/category.dart';
+import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/ui/forms/category_form.dart';
 
@@ -32,10 +32,11 @@ class CategoryGrid extends StatelessWidget {
       builder: (BuildContext context, _CategoryGridViewModel vm) {
         var cats = vm.categories
             .map((category) => CategoryTile(
-                key: ValueKey(category),
+                key: ObjectKey(category),
                 handleTap: (_handleTap),
-                category: category,
-                isSelected: selected == category))
+                category: category.name,
+                color: category.color,
+                isSelected: selected == category.name))
             .toList();
         cats.add(addCategoryTile);
 
@@ -52,12 +53,12 @@ class CategoryGrid extends StatelessWidget {
 }
 
 class _CategoryGridViewModel {
-  final Set<String> categories;
+  final Set<Category> categories;
 
   _CategoryGridViewModel({@required this.categories});
 
   static _CategoryGridViewModel fromState(Store<AppState> store) {
-    return _CategoryGridViewModel(categories: store.state.categories);
+    return _CategoryGridViewModel(categories: getCategories(store.state));
   }
 }
 
@@ -66,12 +67,14 @@ class CategoryTile extends StatelessWidget {
   final Function(String) handleTap;
   final String category;
   final bool isSelected;
+  final Color color;
 
   CategoryTile({
     Key key,
     @required this.handleTap,
     @required this.category,
     @required this.isSelected,
+    @required this.color,
   }) : super(key: key);
 
   @override
@@ -90,11 +93,8 @@ class CategoryTile extends StatelessWidget {
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: isSelected
-                      // TODO: refactor when categories get their own colors
-                      ? Color.fromRGBO(Random().nextInt(255),
-                          Random().nextInt(255), Random().nextInt(255), 0.8)
-                      : Color.fromRGBO(211, 211, 211, 0.7),
+                  color:
+                      isSelected ? color : Color.fromRGBO(211, 211, 211, 0.7),
                 ),
                 child: Icon(
                   // TODO: refactor when categories get their own icons

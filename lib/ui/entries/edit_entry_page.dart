@@ -3,7 +3,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
-import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/ui/forms/expense_form.dart';
 
@@ -19,7 +18,6 @@ class EditExpensePage extends StatelessWidget {
       builder: (context, vm) {
         return ExpenseForm(
           onSave: vm.onSave,
-          categories: vm.categories,
           entry: this.entry,
         );
       },
@@ -29,14 +27,12 @@ class EditExpensePage extends StatelessWidget {
 
 class _EditViewModel {
   final Function(Entry) onSave;
-  final Set<String> categories;
 
-  _EditViewModel({@required this.onSave, @required this.categories});
+  _EditViewModel({@required this.onSave});
 
   static _EditViewModel fromState(Store<AppState> store) {
     return _EditViewModel(
       onSave: (entry) => store.dispatch(EditEntry(entry)),
-      categories: getCategories(store.state),
     );
   }
 }
