@@ -45,7 +45,7 @@ class CategoryGrid extends StatelessWidget {
         return GridView.count(
           shrinkWrap: true,
           primary: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           crossAxisCount: 4,
           children: cats,
         );
