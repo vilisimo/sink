@@ -24,6 +24,7 @@ class CategoryGrid extends StatelessWidget {
             builder: (context) => CategoryForm(),
           ),
       category: "Add",
+      color: null,
       isSelected: false,
     );
 
