@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:sink/common/colors.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
@@ -94,8 +95,7 @@ class CategoryTile extends StatelessWidget {
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color:
-                      isSelected ? color : Color.fromRGBO(211, 211, 211, 0.7),
+                  color: isSelected ? color : lightGrey,
                 ),
                 child: Icon(
                   // TODO: refactor when categories get their own icons
