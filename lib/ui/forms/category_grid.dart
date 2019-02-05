@@ -95,7 +95,9 @@ class CategoryTile extends StatelessWidget {
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: isSelected ? color : lightGrey,
+                  color: isSelected
+                      ? Color.fromRGBO(color.red, color.green, color.blue, .8)
+                      : lightGrey,
                 ),
                 child: Icon(
                   // TODO: refactor when categories get their own icons
