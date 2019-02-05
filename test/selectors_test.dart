@@ -23,8 +23,8 @@ main() {
 
     var categories = getCategories(state);
 
-    expect(categories.length, equals(1));
-    expect(categories.first, equals(category));
+    expect(categories.length, 1);
+    expect(categories.first, category);
   });
 
   test('retrieves used colors', () {

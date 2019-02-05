@@ -91,6 +91,6 @@ main() {
 
     var newState = reduce(state, LoadCategories(categories));
 
-    expect(newState.categories, equals(categories));
+    expect(newState.categories, categories);
   });
 }
