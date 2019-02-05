@@ -26,4 +26,19 @@ main() {
     expect(categories.length, equals(1));
     expect(categories.first, equals(category));
   });
+
+  test('retrieves used colors', () {
+    var state = AppState(
+        categories: Set<Category>.from([
+      Category(id: "1", name: "category 1", color: Colors.white),
+      Category(id: "1", name: "category 1", color: Colors.blue),
+      Category(id: "1", name: "category 1", color: Colors.black),
+    ]));
+
+    var colors = getUsedColors(state);
+
+    var expected = Set<Color>.from([Colors.white, Colors.blue, Colors.black]);
+    expect(colors.length, 3);
+    expect(colors, expected);
+  });
 }
