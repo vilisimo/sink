@@ -1,18 +1,30 @@
-import 'package:sink/redux/actions.dart';
+import 'package:flutter/material.dart';
+import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
-import 'package:sink/redux/state.dart';
+import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/reducers.dart';
+import 'package:sink/redux/state.dart';
 import 'package:test/test.dart';
 
 main() {
-
   test('DeleteEntry action appends an entry to a entries kept for undo', () {
     var entries = [
-      Entry(id: '1', cost: 1.0, date: DateTime.now(), category: 'a', description: 'b',),
+      Entry(
+        id: '1',
+        cost: 1.0,
+        date: DateTime.now(),
+        category: 'a',
+        description: 'b',
+      ),
     ];
     var state = AppState(removed: entries);
 
-    var entry = Entry(id: '2', cost: 2.0, date: DateTime.now(), category: 'c', description: 'd');
+    var entry = Entry(
+        id: '2',
+        cost: 2.0,
+        date: DateTime.now(),
+        category: 'c',
+        description: 'd');
     var newState = reduce(state, DeleteEntry(entry));
 
     expect(newState.removed.length, 2);
@@ -21,8 +33,20 @@ main() {
 
   test('UndoDelete action removes last entry from a list', () {
     var entries = [
-      Entry(id: '2', cost: 2.0, date: DateTime.now(), category: 'c', description: 'd',),
-      Entry(id: '3', cost: 3.0, date: DateTime.now(), category: 'e', description: 'f',)
+      Entry(
+        id: '2',
+        cost: 2.0,
+        date: DateTime.now(),
+        category: 'c',
+        description: 'd',
+      ),
+      Entry(
+        id: '3',
+        cost: 3.0,
+        date: DateTime.now(),
+        category: 'e',
+        description: 'f',
+      )
     ];
 
     var state = AppState(removed: entries);
@@ -35,13 +59,38 @@ main() {
 
   test('Non-existent action results in the same state', () {
     var entries = [
-      Entry(id: '1', cost: 1.0, date: DateTime.now(), category: 'a', description: 'b',),
-      Entry(id: '2', cost: 2.0, date: DateTime.now(), category: 'c', description: 'd',)
+      Entry(
+        id: '1',
+        cost: 1.0,
+        date: DateTime.now(),
+        category: 'a',
+        description: 'b',
+      ),
+      Entry(
+        id: '2',
+        cost: 2.0,
+        date: DateTime.now(),
+        category: 'c',
+        description: 'd',
+      )
     ];
     var state = AppState(removed: entries);
 
     var newState = reduce(state, null);
 
     expect(newState, state);
+  });
+
+  test('LoadCategories returns a state with categories from an action', () {
+    Set<Category> categories = new Set.from([
+      Category(id: "1", name: "category 1", color: Colors.grey),
+      Category(id: "2", name: "category 2", color: Colors.blue),
+    ]);
+
+    var state = AppState();
+
+    var newState = reduce(state, LoadCategories(categories));
+
+    expect(newState.categories, equals(categories));
   });
 }
