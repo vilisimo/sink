@@ -68,7 +68,7 @@ class ExpenseFormState extends State {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
               child: Card(
                 child: DatePicker(
                   labelText: 'From',
