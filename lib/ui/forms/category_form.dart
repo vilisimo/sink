@@ -63,6 +63,7 @@ class CategoryFormState extends State<CategoryForm> {
                 padding: const EdgeInsets.all(16.0),
                 child: TextField(
                   //TODO: create a custom component with clear icon on the right
+                  textCapitalization: TextCapitalization.sentences,
                   onChanged: (value) {
                     setState(() {
                       categoryName = value;
