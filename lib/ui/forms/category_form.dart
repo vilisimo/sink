@@ -18,6 +18,10 @@ class CategoryForm extends StatefulWidget {
 class CategoryFormState extends State<CategoryForm> {
   String category;
 
+  bool isDisabled() {
+    return category == null || category == "";
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector(
@@ -34,12 +38,15 @@ class CategoryFormState extends State<CategoryForm> {
             title: Text('New Category'),
             actions: <Widget>[
               IconButton(
+                disabledColor: Colors.grey,
                 iconSize: 28.0,
                 icon: Icon(Icons.check),
-                onPressed: () {
-                  vm.onSave(category);
-                  Navigator.pop(context);
-                },
+                onPressed: isDisabled()
+                    ? null
+                    : () {
+                        vm.onSave(category);
+                        Navigator.pop(context);
+                      },
               ),
             ],
           ),
