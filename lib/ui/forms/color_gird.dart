@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 
 class ColorGrid extends StatefulWidget {
-  final List<Color> _colors;
+  final List<Color> colors;
+  final Function(Color) handleTap;
 
-  ColorGrid(this._colors);
+  ColorGrid({@required this.colors, @required this.handleTap});
 
   @override
   ColorGridState createState() {
-    return ColorGridState(_colors);
+    return ColorGridState(colors, handleTap);
   }
 }
 
 class ColorGridState extends State<StatefulWidget> {
   List<Color> _colors;
   Color _selectedColor;
+  Function(Color) _handleColorTap;
 
-  ColorGridState(this._colors) : _selectedColor = _colors[0];
+  ColorGridState(this._colors, this._handleColorTap)
+      : _selectedColor = _colors[0];
 
-  void _handleTap(Color _selectedColor) {
+  void _handleTap(Color newColor) {
+    _handleColorTap(newColor);
+
     setState(() {
-      this._selectedColor = _selectedColor;
+      _selectedColor = newColor;
     });
   }
 
@@ -46,6 +51,9 @@ class ColorGridState extends State<StatefulWidget> {
 }
 
 class ColorButton extends StatelessWidget {
+  static const SELECTED_OPACITY = 1.0;
+  static const UNSELECTED_OPACITY = 0.6;
+
   final Color _color;
   final bool _isSelected;
   final Function(Color) _handleTap;
@@ -60,7 +68,11 @@ class ColorButton extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: Color.fromRGBO(
-                _color.red, _color.green, _color.blue, _isSelected ? 1.0 : 0.6),
+              _color.red,
+              _color.green,
+              _color.blue,
+              _isSelected ? SELECTED_OPACITY : UNSELECTED_OPACITY,
+            ),
           ),
           child: _isSelected ? Icon(Icons.check) : null,
         ),

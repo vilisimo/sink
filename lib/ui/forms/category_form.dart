@@ -16,10 +16,17 @@ class CategoryForm extends StatefulWidget {
 }
 
 class CategoryFormState extends State<CategoryForm> {
-  String category;
+  String categoryName;
+  Color color;
 
   bool isDisabled() {
-    return category == null || category == "";
+    return categoryName == null || categoryName == "";
+  }
+
+  void handleColorTap(Color color) {
+    setState(() {
+      this.color = color;
+    });
   }
 
   @override
@@ -44,7 +51,7 @@ class CategoryFormState extends State<CategoryForm> {
                 onPressed: isDisabled()
                     ? null
                     : () {
-                        vm.onSave(category);
+                        vm.onSave(categoryName, color);
                         Navigator.pop(context);
                       },
               ),
@@ -58,7 +65,7 @@ class CategoryFormState extends State<CategoryForm> {
                   //TODO: create a custom component with clear icon on the right
                   onChanged: (value) {
                     setState(() {
-                      category = value;
+                      categoryName = value;
                     });
                   },
                   decoration: InputDecoration(
@@ -70,7 +77,7 @@ class CategoryFormState extends State<CategoryForm> {
                   maxLength: 24,
                 ),
               ),
-              ColorGrid(colors),
+              ColorGrid(colors: colors, handleTap: handleColorTap),
             ],
           ),
         );
@@ -80,20 +87,19 @@ class CategoryFormState extends State<CategoryForm> {
 }
 
 class _CategoryFormViewModel {
-  final Function(String) onSave;
+  final Function(String, Color) onSave;
   final Set<Color> usedColors;
 
   _CategoryFormViewModel({@required this.onSave, @required this.usedColors});
 
   static _CategoryFormViewModel fromState(Store<AppState> store) {
     return _CategoryFormViewModel(
-      onSave: (category) {
-        store.dispatch(CreateCategory(Category(
-          id: Uuid().v4(),
-          name: category,
-          // TODO: introduce color picker? Should show available and used
-          color: Colors.grey,
-        )));
+      onSave: (category, color) {
+        store.dispatch(
+          CreateCategory(
+            Category(id: Uuid().v4(), name: category, color: color),
+          ),
+        );
       },
       usedColors: getUsedColors(store.state),
     );
