@@ -33,7 +33,6 @@ class FirestoreRepository {
   }
 
   static void createCategory(Category category) {
-    // TODO: should have a proper ID
     categories.reference().document(category.id).setData({
       'id': category.id,
       'name': category.name,

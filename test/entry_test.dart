@@ -9,6 +9,6 @@ void main() {
     expect(entry.date, isNotNull);
     expect(entry.cost, isNull);
     expect(entry.description, '');
-    expect(entry.category, '');
+    expect(entry.categoryId, '');
   });
 }

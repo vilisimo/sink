@@ -27,7 +27,7 @@ class ExpenseFormState extends State {
 
   final Function(Entry) onSave;
   final Entry entry;
-  String _selectedCategory;
+  String _selectedCategoryId;
 
   DateTime _date;
 
@@ -35,7 +35,7 @@ class ExpenseFormState extends State {
     @required this.onSave,
     this.entry,
   })  : _date = entry.date ?? DateTime.now(),
-        _selectedCategory = entry.category;
+        _selectedCategoryId = entry.categoryId;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class ExpenseFormState extends State {
                 Entry newEntry = Entry(
                     date: _date,
                     cost: double.parse(_cost.currentState.value),
-                    category: _selectedCategory,
+                    categoryId: _selectedCategoryId,
                     description: _description.currentState.value,
                     id: entry.id);
                 onSave(newEntry);
@@ -122,10 +122,10 @@ class ExpenseFormState extends State {
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Card(
                   child: CategoryGrid(
-                    selected: _selectedCategory,
+                    selected: _selectedCategoryId,
                     onTap: (selected) {
                       setState(() {
-                        _selectedCategory = selected;
+                        _selectedCategoryId = selected;
                       });
                     },
                   ),

@@ -8,6 +8,8 @@ import 'package:sink/redux/state.dart';
 import 'package:sink/ui/forms/category_form.dart';
 
 class CategoryGrid extends StatelessWidget {
+  static const ADD_CATEGORY_ID = "Add";
+
   final Function(String) onTap;
   final String selected;
 
@@ -24,8 +26,11 @@ class CategoryGrid extends StatelessWidget {
             context: context,
             builder: (context) => CategoryForm(),
           ),
-      category: "Add",
-      color: null,
+      category: Category(
+        id: ADD_CATEGORY_ID,
+        name: ADD_CATEGORY_ID,
+        color: null,
+      ),
       isSelected: false,
     );
 
@@ -34,11 +39,11 @@ class CategoryGrid extends StatelessWidget {
       builder: (BuildContext context, _CategoryGridViewModel vm) {
         var cats = vm.categories
             .map((category) => CategoryTile(
-                key: ObjectKey(category),
-                handleTap: (_handleTap),
-                category: category.name,
-                color: category.color,
-                isSelected: selected == category.name))
+                  key: ObjectKey(category),
+                  handleTap: (_handleTap),
+                  category: category,
+                  isSelected: selected == category.id,
+                ))
             .toList();
         cats.add(addCategoryTile);
 
@@ -67,24 +72,24 @@ class _CategoryGridViewModel {
 // TODO: could be generic circular tile
 class CategoryTile extends StatelessWidget {
   final Function(String) handleTap;
-  final String category;
+  final Category category;
   final bool isSelected;
-  final Color color;
 
   CategoryTile({
     Key key,
     @required this.handleTap,
     @required this.category,
     @required this.isSelected,
-    @required this.color,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var color = category.color;
+
     return Center(
       child: GestureDetector(
         onTap: () {
-          handleTap(category);
+          handleTap(category.id);
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -100,15 +105,17 @@ class CategoryTile extends StatelessWidget {
                       : lightGrey,
                 ),
                 child: Icon(
-                  // TODO: refactor when categories get their own icons
-                  category == "Add" ? Icons.add : Icons.add_shopping_cart,
+                  category.id == CategoryGrid.ADD_CATEGORY_ID
+                      ? Icons.add
+                      // TODO: change it when categories get their own icons
+                      : Icons.add_shopping_cart,
                   color: isSelected ? Colors.white : Colors.black,
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(category, overflow: TextOverflow.ellipsis),
+              child: Text(category.name, overflow: TextOverflow.ellipsis),
             ),
           ],
         ),

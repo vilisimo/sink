@@ -6,20 +6,20 @@ class Entry {
   final String id;
   final double cost;
   final DateTime date;
-  final String category;
+  final String categoryId;
   final String description;
 
   Entry(
       {@required this.cost,
       @required this.date,
-      @required this.category,
+      @required this.categoryId,
       this.description,
       id})
       : this.id = id ?? Uuid().v4();
 
   static empty() {
     final now = DateTime.now();
-    return Entry(cost: null, date: now, category: '', description: '');
+    return Entry(cost: null, date: now, categoryId: '', description: '');
   }
 
   static fromSnapshot(DocumentSnapshot document) {
@@ -27,7 +27,7 @@ class Entry {
       id: document['id'],
       cost: document['cost'],
       date: document['date'],
-      category: document['category'],
+      categoryId: document['categoryId'],
       description: document['description'],
     );
   }
@@ -37,7 +37,7 @@ class Entry {
       'id': this.id,
       'cost': this.cost,
       'date': this.date,
-      'category': this.category,
+      'categoryId': this.categoryId,
       'description': this.description,
     };
   }
@@ -50,7 +50,7 @@ class Entry {
           id == other.id &&
           cost == other.cost &&
           date == other.date &&
-          category == other.category &&
+          categoryId == other.categoryId &&
           description == other.description;
 
   @override
@@ -58,11 +58,11 @@ class Entry {
       id.hashCode ^
       cost.hashCode ^
       date.hashCode ^
-      category.hashCode ^
+      categoryId.hashCode ^
       description.hashCode;
 
   @override
   String toString() {
-    return 'Entry{id: $id, cost: $cost, date: $date, category: $category, description: $description}';
+    return 'Entry{id: $id, cost: $cost, date: $date, category: $categoryId, description: $description}';
   }
 }

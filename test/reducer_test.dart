@@ -13,7 +13,7 @@ main() {
         id: '1',
         cost: 1.0,
         date: DateTime.now(),
-        category: 'a',
+        categoryId: 'a',
         description: 'b',
       ),
     ];
@@ -23,7 +23,7 @@ main() {
         id: '2',
         cost: 2.0,
         date: DateTime.now(),
-        category: 'c',
+        categoryId: 'c',
         description: 'd');
     var newState = reduce(state, DeleteEntry(entry));
 
@@ -37,14 +37,14 @@ main() {
         id: '2',
         cost: 2.0,
         date: DateTime.now(),
-        category: 'c',
+        categoryId: 'c',
         description: 'd',
       ),
       Entry(
         id: '3',
         cost: 3.0,
         date: DateTime.now(),
-        category: 'e',
+        categoryId: 'e',
         description: 'f',
       )
     ];
@@ -63,14 +63,14 @@ main() {
         id: '1',
         cost: 1.0,
         date: DateTime.now(),
-        category: 'a',
+        categoryId: 'a',
         description: 'b',
       ),
       Entry(
         id: '2',
         cost: 2.0,
         date: DateTime.now(),
-        category: 'c',
+        categoryId: 'c',
         description: 'd',
       )
     ];
