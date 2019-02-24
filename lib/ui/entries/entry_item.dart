@@ -9,9 +9,10 @@ import 'package:sink/redux/state.dart';
 import 'package:sink/ui/entries/edit_entry_page.dart';
 
 class EntryItem extends StatelessWidget {
+  final Key key;
   final Entry entry;
 
-  EntryItem(this.entry);
+  EntryItem(this.entry) : key = ObjectKey(entry);
 
   @override
   Widget build(BuildContext context) {
