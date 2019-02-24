@@ -2,26 +2,25 @@ import 'package:flutter/material.dart';
 
 class ColorGrid extends StatefulWidget {
   final List<Color> colors;
-  final Function(Color) handleTap;
+  final Function(Color) onTap;
 
-  ColorGrid({@required this.colors, @required this.handleTap});
+  ColorGrid({@required this.colors, @required this.onTap});
 
   @override
   ColorGridState createState() {
-    return ColorGridState(colors, handleTap);
+    return ColorGridState(colors, onTap);
   }
 }
 
 class ColorGridState extends State<StatefulWidget> {
   List<Color> _colors;
   Color _selectedColor;
-  Function(Color) _handleColorTap;
+  Function(Color) _onTap;
 
-  ColorGridState(this._colors, this._handleColorTap)
-      : _selectedColor = _colors[0];
+  ColorGridState(this._colors, this._onTap) : _selectedColor = _colors[0];
 
   void _handleTap(Color newColor) {
-    _handleColorTap(newColor);
+    _onTap(newColor);
 
     setState(() {
       _selectedColor = newColor;
@@ -56,9 +55,9 @@ class ColorButton extends StatelessWidget {
 
   final Color _color;
   final bool _isSelected;
-  final Function(Color) _handleTap;
+  final Function(Color) _onTap;
 
-  ColorButton(this._color, this._isSelected, this._handleTap);
+  ColorButton(this._color, this._isSelected, this._onTap);
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +76,7 @@ class ColorButton extends StatelessWidget {
           child: _isSelected ? Icon(Icons.check) : null,
         ),
       ),
-      onTap: () => _handleTap(_color),
+      onTap: () => _onTap(_color),
     );
   }
 }
