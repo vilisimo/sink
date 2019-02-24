@@ -5,7 +5,8 @@ import 'package:sink/models/category.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
-import 'package:sink/ui/forms/color_gird.dart';
+import 'package:sink/ui/common/text_input.dart';
+import 'package:sink/ui/forms/color_grid.dart';
 import 'package:uuid/uuid.dart';
 
 class CategoryForm extends StatefulWidget {
@@ -16,11 +17,24 @@ class CategoryForm extends StatefulWidget {
 }
 
 class CategoryFormState extends State<CategoryForm> {
+  List<Color> colors;
+
   String categoryName;
   Color color;
+  bool saveable = false;
 
-  bool isDisabled() {
-    return categoryName == null || categoryName == "";
+  @override
+  void initState() {
+    colors = List.from(Colors.primaries);
+    colors.addAll(Colors.accents);
+    super.initState();
+  }
+
+  void handleNameChange(String newName) {
+    setState(() {
+      this.categoryName = newName;
+      this.saveable = categoryName != null && categoryName != "";
+    });
   }
 
   void handleColorTap(Color color) {
@@ -29,13 +43,16 @@ class CategoryFormState extends State<CategoryForm> {
     });
   }
 
+  void handleSave(Function(String, Color) onSave, BuildContext context) {
+    onSave(categoryName, color == null ? colors[0] : color);
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector(
       converter: _CategoryFormViewModel.fromState,
       builder: (BuildContext context, _CategoryFormViewModel vm) {
-        List<Color> colors = List.from(Colors.primaries);
-        colors.addAll(Colors.accents);
         colors.removeWhere((color) => vm.usedColors
             .contains(Color.fromRGBO(color.red, color.green, color.blue, 1.0)));
 
@@ -48,12 +65,8 @@ class CategoryFormState extends State<CategoryForm> {
                 disabledColor: Colors.grey,
                 iconSize: 28.0,
                 icon: Icon(Icons.check),
-                onPressed: isDisabled()
-                    ? null
-                    : () {
-                        vm.onSave(categoryName, color);
-                        Navigator.pop(context);
-                      },
+                onPressed:
+                    saveable ? () => handleSave(vm.onSave, context) : null,
               ),
             ],
           ),
@@ -61,24 +74,12 @@ class CategoryFormState extends State<CategoryForm> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: TextField(
-                  //TODO: create a custom component with clear icon on the right
-                  textCapitalization: TextCapitalization.sentences,
-                  onChanged: (value) {
-                    setState(() {
-                      categoryName = value;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Category name",
-                    border: OutlineInputBorder(),
-                    isDense: true,
-                  ),
-                  style: TextStyle(fontSize: 16.0, color: Colors.black),
-                  maxLength: 24,
+                child: ClearableTextInput(
+                  hintText: "Category Name",
+                  onChange: (value) => handleNameChange(value),
                 ),
               ),
-              ColorGrid(colors: colors, handleTap: handleColorTap),
+              ColorGrid(colors: colors, onTap: handleColorTap),
             ],
           ),
         );
