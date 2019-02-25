@@ -29,11 +29,12 @@ main() {
 
   test('retrieves used colors', () {
     var state = AppState(
-        categories: Set<Category>.from([
-      Category(id: "1", name: "category 1", color: Colors.white),
-      Category(id: "1", name: "category 1", color: Colors.blue),
-      Category(id: "1", name: "category 1", color: Colors.black),
-    ]));
+      categories: Set<Category>.from([
+        Category(id: "1", name: "category 1", color: Colors.white),
+        Category(id: "1", name: "category 1", color: Colors.blue),
+        Category(id: "1", name: "category 1", color: Colors.black),
+      ]),
+    );
 
     var colors = getUsedColors(state);
 
