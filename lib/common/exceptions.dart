@@ -3,3 +3,9 @@ class InvalidInput implements Exception {
 
   InvalidInput(this.cause);
 }
+
+class CategoryNotFound implements Exception {
+  String cause;
+
+  CategoryNotFound(this.cause);
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sink/common/exceptions.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/state.dart';
@@ -11,6 +12,6 @@ Category getCategory(AppState state, String id) =>
     state.categories.firstWhere((category) {
       return category.id == id;
     }, orElse: () {
-      throw "Could not find a category with id[$id]";
+      throw CategoryNotFound("Could not find a category with id[$id]");
     });
 bool areCategoriesLoading(AppState state) => state.areCategoriesLoading;
