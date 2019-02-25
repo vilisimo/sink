@@ -5,7 +5,6 @@ import 'package:sink/models/entry.dart';
 @immutable
 class AppState {
   final List<Entry> removed;
-  //TODO: proper classes with ids?
   final Set<Category> categories;
   // TODO: must be at least one default category
   final bool areCategoriesLoading;

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/state.dart';
 import 'package:test/test.dart';
@@ -28,5 +30,34 @@ main() {
     final result = state.copyWith(removed: null);
 
     expect(result.removed, state.removed);
+  });
+
+  test('returns state with new categories', () {
+    var state = AppState(
+      categories: Set<Category>.from([
+        Category(id: "1", name: "category 1", color: Colors.white),
+        Category(id: "2", name: "category 2", color: Colors.blue),
+        Category(id: "3", name: "category 3", color: Colors.black),
+      ]),
+    );
+
+    final category = Category(id: "4", name: "category 4", color: Colors.pink);
+    final result = state.copyWith(categories: Set<Category>.from([category]));
+
+    expect(result.categories, Set.from([category]));
+  });
+
+  test('returns state with old categories', () {
+    var state = AppState(
+      categories: Set<Category>.from([
+        Category(id: "1", name: "category 1", color: Colors.white),
+        Category(id: "2", name: "category 2", color: Colors.blue),
+        Category(id: "3", name: "category 3", color: Colors.black),
+      ]),
+    );
+
+    final result = state.copyWith(categories: null);
+
+    expect(result.categories, state.categories);
   });
 }
