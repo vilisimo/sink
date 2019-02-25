@@ -33,8 +33,8 @@ main() {
     var state = AppState(
       categories: Set<Category>.from([
         Category(id: "1", name: "category 1", color: Material.Colors.white),
-        Category(id: "1", name: "category 1", color: Material.Colors.blue),
-        Category(id: "1", name: "category 1", color: Material.Colors.black),
+        Category(id: "2", name: "category 2", color: Material.Colors.blue),
+        Category(id: "3", name: "category 3", color: Material.Colors.black),
       ]),
     );
 
@@ -50,23 +50,23 @@ main() {
     var state = AppState(
       categories: Set<Category>.from([
         Category(id: "1", name: "category 1", color: Material.Colors.white),
-        Category(id: "2", name: "category 1", color: Material.Colors.blue),
-        Category(id: "3", name: "category 1", color: Material.Colors.black),
+        Category(id: "2", name: "category 2", color: Material.Colors.blue),
+        Category(id: "3", name: "category 3", color: Material.Colors.black),
       ]),
     );
 
     var category = getCategory(state, "2");
 
     expect(category,
-        Category(id: "2", name: "category 1", color: Material.Colors.blue));
+        Category(id: "2", name: "category 2", color: Material.Colors.blue));
   });
 
   test('should indicate that a category could not be found', () {
     var state = AppState(
       categories: Set<Category>.from([
         Category(id: "1", name: "category 1", color: Material.Colors.white),
-        Category(id: "2", name: "category 1", color: Material.Colors.blue),
-        Category(id: "3", name: "category 1", color: Material.Colors.black),
+        Category(id: "2", name: "category 2", color: Material.Colors.blue),
+        Category(id: "3", name: "category 3", color: Material.Colors.black),
       ]),
     );
 
