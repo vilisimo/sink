@@ -11,7 +11,6 @@ Category getCategory(AppState state, String id) =>
     state.categories.firstWhere((category) {
       return category.id == id;
     }, orElse: () {
-      // TODO: what to do in a case where retrieval of categories fails, but
-      //  retrieval of entries does not?
       throw "Could not find a category with id[$id]";
     });
+bool areCategoriesLoading(AppState state) => state.areCategoriesLoading;

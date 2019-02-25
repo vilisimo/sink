@@ -87,10 +87,11 @@ main() {
       Category(id: "2", name: "category 2", color: Colors.blue),
     ]);
 
-    var state = AppState();
+    var state = AppState(areCategoriesLoading: true);
 
     var newState = reduce(state, LoadCategories(categories));
 
     expect(newState.categories, categories);
+    expect(newState.areCategoriesLoading, false);
   });
 }

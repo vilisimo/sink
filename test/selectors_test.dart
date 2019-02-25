@@ -41,4 +41,12 @@ main() {
     expect(colors.length, 3);
     expect(colors, expected);
   });
+
+  test('indicates wheter the categories are loading', () {
+    var state = AppState();
+    expect(areCategoriesLoading(state), true);
+
+    state = state.copyWith(areCategoriesLoading: false);
+    expect(areCategoriesLoading(state), false);
+  });
 }

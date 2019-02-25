@@ -11,7 +11,7 @@ void main() {
   final Store store = Store<AppState>(
     reduce,
     distinct: true,
-    initialState: AppState(),
+    initialState: AppState(areCategoriesLoading: true),
     middleware: [SinkMiddleware()],
   );
 
