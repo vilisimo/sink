@@ -17,38 +17,39 @@ class EntryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
-        converter: (state) => _ViewModel.fromState(state, entry.categoryId),
-        builder: (context, vm) {
-          return Dismissible(
-              key: ObjectKey(entry),
-              background: Container(
-                color: Colors.red,
-                child: ListTile(),
+      converter: (state) => _ViewModel.fromState(state, entry.categoryId),
+      builder: (context, vm) {
+        return Dismissible(
+          key: ObjectKey(entry),
+          background: Container(
+            color: Colors.red,
+            child: ListTile(),
+          ),
+          direction: DismissDirection.endToStart,
+          onDismissed: (DismissDirection direction) {
+            vm.onDismissed(entry);
+            Scaffold.of(context).showSnackBar(SnackBar(
+              duration: Duration(seconds: 5),
+              content: Text('Entry removed'),
+              action: SnackBarAction(
+                label: "UNDO",
+                onPressed: vm.onUndo,
               ),
-              direction: DismissDirection.endToStart,
-              onDismissed: (DismissDirection direction) {
-                vm.onDismissed(entry);
-                Scaffold.of(context).showSnackBar(SnackBar(
-                  duration: Duration(seconds: 5),
-                  content: Text('Entry removed'),
-                  action: SnackBarAction(
-                    label: "UNDO",
-                    onPressed: vm.onUndo,
-                  ),
-                ));
-              },
-              child: ListTile(
-                title: Text(vm.category.name),
-                subtitle: Text(entry.description),
-                trailing: Text(
-                  "${entry.cost}",
-                  style: TextStyle(fontSize: 16.0),
-                ),
-                onTap: () => showDialog(
-                    context: context,
-                    builder: (context) => EditExpensePage(entry)),
-              ));
-        });
+            ));
+          },
+          child: ListTile(
+            title: Text(vm.category.name),
+            subtitle: Text(entry.description),
+            trailing: Text(
+              "${entry.cost}",
+              style: TextStyle(fontSize: 16.0),
+            ),
+            onTap: () => showDialog(
+                context: context, builder: (context) => EditExpensePage(entry)),
+          ),
+        );
+      },
+    );
   }
 }
 
