@@ -60,4 +60,20 @@ main() {
 
     expect(result.categories, state.categories);
   });
+
+  test('returns state with a new categories loading indicator', () {
+    var state = AppState(areCategoriesLoading: true);
+
+    final result = state.copyWith(areCategoriesLoading: false);
+
+    expect(result.areCategoriesLoading, false);
+  });
+
+  test('returns state with old categories loading indicator', () {
+    var state = AppState(areCategoriesLoading: true);
+
+    final result = state.copyWith(areCategoriesLoading: null);
+
+    expect(result.areCategoriesLoading, state.areCategoriesLoading);
+  });
 }
