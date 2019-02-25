@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as Material;
+import 'package:sink/common/exceptions.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/selectors.dart';
@@ -18,7 +19,8 @@ main() {
   });
 
   test('retrieves a list of categories', () {
-    var category = Category(id: "1", name: "category", color: Colors.red);
+    var category =
+        Category(id: "1", name: "category", color: Material.Colors.red);
     var state = AppState(categories: Set<Category>.from([category]));
 
     var categories = getCategories(state);
@@ -30,17 +32,48 @@ main() {
   test('retrieves used colors', () {
     var state = AppState(
       categories: Set<Category>.from([
-        Category(id: "1", name: "category 1", color: Colors.white),
-        Category(id: "1", name: "category 1", color: Colors.blue),
-        Category(id: "1", name: "category 1", color: Colors.black),
+        Category(id: "1", name: "category 1", color: Material.Colors.white),
+        Category(id: "1", name: "category 1", color: Material.Colors.blue),
+        Category(id: "1", name: "category 1", color: Material.Colors.black),
       ]),
     );
 
     var colors = getUsedColors(state);
 
-    var expected = Set<Color>.from([Colors.white, Colors.blue, Colors.black]);
+    var expected = Set<Material.Color>.from(
+        [Material.Colors.white, Material.Colors.blue, Material.Colors.black]);
     expect(colors.length, 3);
     expect(colors, expected);
+  });
+
+  test('should retrieve a category by id', () {
+    var state = AppState(
+      categories: Set<Category>.from([
+        Category(id: "1", name: "category 1", color: Material.Colors.white),
+        Category(id: "2", name: "category 1", color: Material.Colors.blue),
+        Category(id: "3", name: "category 1", color: Material.Colors.black),
+      ]),
+    );
+
+    var category = getCategory(state, "2");
+
+    expect(category,
+        Category(id: "2", name: "category 1", color: Material.Colors.blue));
+  });
+
+  test('should indicate that a category could not be found', () {
+    var state = AppState(
+      categories: Set<Category>.from([
+        Category(id: "1", name: "category 1", color: Material.Colors.white),
+        Category(id: "2", name: "category 1", color: Material.Colors.blue),
+        Category(id: "3", name: "category 1", color: Material.Colors.black),
+      ]),
+    );
+
+    expect(
+      () => getCategory(state, "51"),
+      throwsA(TypeMatcher<CategoryNotFound>()),
+    );
   });
 
   test('indicates wheter the categories are loading', () {
