@@ -5,7 +5,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cloud_firestore: ^0.8.2+3
+  cloud_firestore: ^0.9.5+2
   flutter_redux: ^0.5.2
   charts_flutter: ^0.5.0
   intl: ^0.15.6
