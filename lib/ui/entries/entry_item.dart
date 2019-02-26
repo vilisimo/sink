@@ -37,15 +37,19 @@ class EntryItem extends StatelessWidget {
               ),
             ));
           },
-          child: ListTile(
-            title: Text(vm.category.name),
-            subtitle: Text(entry.description),
-            trailing: Text(
-              "${entry.cost}",
-              style: TextStyle(fontSize: 16.0),
+          child: Container(
+            color: Colors.white,
+            child: ListTile(
+              title: Text(vm.category.name),
+              subtitle: Text(entry.description),
+              trailing: Text(
+                "${entry.cost}",
+                style: TextStyle(fontSize: 16.0),
+              ),
+              onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => EditExpensePage(entry)),
             ),
-            onTap: () => showDialog(
-                context: context, builder: (context) => EditExpensePage(entry)),
           ),
         );
       },
