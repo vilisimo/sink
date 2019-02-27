@@ -15,16 +15,19 @@ main() {
         date: DateTime.now(),
         categoryId: 'a',
         description: 'b',
+        type: EntryType.EXPENSE,
       ),
     ];
     var state = AppState(removed: entries);
 
     var entry = Entry(
-        id: '2',
-        cost: 2.0,
-        date: DateTime.now(),
-        categoryId: 'c',
-        description: 'd');
+      id: '2',
+      cost: 2.0,
+      date: DateTime.now(),
+      categoryId: 'c',
+      description: 'd',
+      type: EntryType.INCOME,
+    );
     var newState = reduce(state, DeleteEntry(entry));
 
     expect(newState.removed.length, 2);
@@ -39,6 +42,7 @@ main() {
         date: DateTime.now(),
         categoryId: 'c',
         description: 'd',
+        type: EntryType.EXPENSE,
       ),
       Entry(
         id: '3',
@@ -46,6 +50,7 @@ main() {
         date: DateTime.now(),
         categoryId: 'e',
         description: 'f',
+        type: EntryType.INCOME,
       )
     ];
 
@@ -65,6 +70,7 @@ main() {
         date: DateTime.now(),
         categoryId: 'a',
         description: 'b',
+        type: EntryType.EXPENSE,
       ),
       Entry(
         id: '2',
@@ -72,6 +78,7 @@ main() {
         date: DateTime.now(),
         categoryId: 'c',
         description: 'd',
+        type: EntryType.INCOME,
       )
     ];
     var state = AppState(removed: entries);

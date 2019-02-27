@@ -2,24 +2,33 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
 
+enum EntryType { EXPENSE, INCOME }
+
 class Entry {
   final String id;
   final double cost;
   final DateTime date;
   final String categoryId;
   final String description;
+  final EntryType type;
 
-  Entry(
-      {@required this.cost,
-      @required this.date,
-      @required this.categoryId,
-      this.description,
-      id})
-      : this.id = id ?? Uuid().v4();
+  Entry({
+    @required this.cost,
+    @required this.date,
+    @required this.categoryId,
+    @required this.type,
+    this.description,
+    id,
+  }) : this.id = id ?? Uuid().v4();
 
   static empty() {
-    final now = DateTime.now();
-    return Entry(cost: null, date: now, categoryId: '', description: '');
+    return Entry(
+      cost: null,
+      date: DateTime.now(),
+      categoryId: '',
+      type: EntryType.EXPENSE,
+      description: '',
+    );
   }
 
   static fromSnapshot(DocumentSnapshot document) {
@@ -29,6 +38,9 @@ class Entry {
       date: document['date'],
       categoryId: document['categoryId'],
       description: document['description'],
+      type: document['type'] != null
+          ? EntryType.values[document['type']]
+          : EntryType.values[0],
     );
   }
 
@@ -39,6 +51,7 @@ class Entry {
       'date': this.date,
       'categoryId': this.categoryId,
       'description': this.description,
+      'type': this.type.index,
     };
   }
 
@@ -51,7 +64,8 @@ class Entry {
           cost == other.cost &&
           date == other.date &&
           categoryId == other.categoryId &&
-          description == other.description;
+          description == other.description &&
+          type == other.type;
 
   @override
   int get hashCode =>
@@ -59,10 +73,11 @@ class Entry {
       cost.hashCode ^
       date.hashCode ^
       categoryId.hashCode ^
-      description.hashCode;
+      description.hashCode ^
+      type.hashCode;
 
   @override
   String toString() {
-    return 'Entry{id: $id, cost: $cost, date: $date, category: $categoryId, description: $description}';
+    return 'Entry{id: $id, cost: $cost, date: $date, categoryId: $categoryId, description: $description, type: $type}';
   }
 }

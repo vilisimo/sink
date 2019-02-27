@@ -50,11 +50,14 @@ class ExpenseFormState extends State {
             onPressed: () {
               if (_formKey.currentState.validate()) {
                 Entry newEntry = Entry(
-                    date: _date,
-                    cost: double.parse(_cost.currentState.value),
-                    categoryId: _selectedCategoryId,
-                    description: _description.currentState.value,
-                    id: entry.id);
+                  id: entry.id,
+                  date: _date,
+                  cost: double.parse(_cost.currentState.value),
+                  categoryId: _selectedCategoryId,
+                  // TODO: should depend on the type of form
+                  type: EntryType.EXPENSE,
+                  description: _description.currentState.value,
+                );
                 onSave(newEntry);
 
                 Navigator.pop(context);
