@@ -16,7 +16,7 @@ class DatePicker extends StatelessWidget {
   Future<Null> _selectDate(BuildContext context) async {
     // Following two lines are a hack to stop calendar widget vomiting errors
     // when keyboard is present on a screen.
-    FocusScope.of(context).requestFocus(new FocusNode());
+    FocusScope.of(context).requestFocus(FocusNode());
     await Future.delayed(Duration(milliseconds: 100));
     final DateTime picked = await showDatePicker(
       context: context,

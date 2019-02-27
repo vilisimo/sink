@@ -89,7 +89,7 @@ main() {
   });
 
   test('LoadCategories returns a state with categories from an action', () {
-    Set<Category> categories = new Set.from([
+    Set<Category> categories = Set.from([
       Category(id: "1", name: "category 1", color: Colors.grey),
       Category(id: "2", name: "category 2", color: Colors.blue),
     ]);

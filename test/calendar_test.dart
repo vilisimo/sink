@@ -3,7 +3,6 @@ import 'package:sink/common/calendar.dart';
 import 'package:test/test.dart';
 
 void main() {
-
   group("current month's name", () {
     test("name matches current month", () {
       final actual = currentMonth();
@@ -71,7 +70,7 @@ void main() {
 
   group("datetime to zeroth hour", () {
     test("converts datetime to zeroth hour of that day", () {
-      final date = new DateTime.now();
+      final date = DateTime.now();
 
       var zeroth = startOfDay(date);
 
@@ -84,7 +83,7 @@ void main() {
     });
 
     test("converts almost midnight to zeroth hour of that day", () {
-      final date = new DateTime(2000, 1, 1, 23, 59, 59, 999);
+      final date = DateTime(2000, 1, 1, 23, 59, 59, 999);
 
       var zeroth = startOfDay(date);
 
@@ -97,7 +96,7 @@ void main() {
     });
 
     test("converts slightly over midnight to zeroth hour of that day", () {
-      final date = new DateTime(2000, 1, 1, 0, 0, 0, 0, 1);
+      final date = DateTime(2000, 1, 1, 0, 0, 0, 0, 1);
 
       var zeroth = startOfDay(date);
 

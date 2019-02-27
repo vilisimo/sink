@@ -8,7 +8,6 @@ import 'package:sink/ui/entries/day_entries.dart';
 import 'package:sink/ui/statistics/balance.dart';
 
 class EntryList extends StatelessWidget {
-
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: FirestoreRepository.getEntriesSnapshot(),
@@ -21,7 +20,9 @@ class EntryList extends StatelessWidget {
         var children = grouped.entries.map((entry) {
           return DayGroup(entry.value, entry.key);
         }).toList();
-        List<Widget> ch = [BalanceCard(from: currentFirst(), to: currentLast())];
+        List<Widget> ch = [
+          BalanceCard(from: currentFirst(), to: currentLast())
+        ];
         ch.addAll(children);
 
         return Scrollbar(
@@ -38,7 +39,7 @@ class EntryList extends StatelessWidget {
 }
 
 Map<DateTime, List<Entry>> groupEntries(List<DocumentSnapshot> snapshots) {
-  var entries = new Map<DateTime, List<Entry>>();
+  var entries = Map<DateTime, List<Entry>>();
   snapshots.forEach((s) {
     Entry entry = Entry.fromSnapshot(s);
     DateTime dateKey = startOfDay(entry.date);

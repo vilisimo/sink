@@ -12,7 +12,7 @@ import 'package:uuid/uuid.dart';
 class CategoryForm extends StatefulWidget {
   @override
   CategoryFormState createState() {
-    return new CategoryFormState();
+    return CategoryFormState();
   }
 }
 

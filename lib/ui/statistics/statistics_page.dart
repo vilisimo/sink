@@ -27,7 +27,7 @@ class DonutAutoLabelChart extends StatelessWidget {
   DonutAutoLabelChart(this.seriesList, {this.animate});
 
   factory DonutAutoLabelChart.withSampleData() {
-    return new DonutAutoLabelChart(
+    return DonutAutoLabelChart(
       _createSampleData(),
       animate: true,
     );
@@ -35,11 +35,10 @@ class DonutAutoLabelChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new charts.PieChart(seriesList,
+    return charts.PieChart(seriesList,
         animate: animate,
-        defaultRenderer: new charts.ArcRendererConfig(
-            arcWidth: 60,
-            arcRendererDecorators: [new charts.ArcLabelDecorator()]));
+        defaultRenderer: charts.ArcRendererConfig(
+            arcWidth: 60, arcRendererDecorators: [charts.ArcLabelDecorator()]));
   }
 
   static List<charts.Series<Expense, String>> _createSampleData() {
@@ -51,7 +50,7 @@ class DonutAutoLabelChart extends StatelessWidget {
     ];
 
     return [
-      new charts.Series<Expense, String>(
+      charts.Series<Expense, String>(
         id: 'Sales',
         domainFn: (Expense sales, _) => sales.label,
         measureFn: (Expense sales, _) => sales.sales,
