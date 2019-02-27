@@ -47,12 +47,15 @@ class CategoryGrid extends StatelessWidget {
             .toList();
         cats.add(addCategoryTile);
 
-        return GridView.count(
-          shrinkWrap: true,
-          primary: true,
-          physics: BouncingScrollPhysics(),
-          crossAxisCount: 4,
-          children: cats,
+        return Padding(
+          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+          child: GridView.count(
+            shrinkWrap: true,
+            primary: true,
+            physics: BouncingScrollPhysics(),
+            crossAxisCount: 4,
+            children: cats,
+          ),
         );
       },
     );
