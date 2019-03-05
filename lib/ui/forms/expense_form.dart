@@ -3,6 +3,7 @@ import 'package:sink/common/exceptions.dart';
 import 'package:sink/common/validations.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/ui/common/date_picker.dart';
+import 'package:sink/ui/common/number_input.dart';
 import 'package:sink/ui/forms/category_grid.dart';
 
 class ExpenseForm extends StatefulWidget {
@@ -21,21 +22,26 @@ class ExpenseForm extends StatefulWidget {
 }
 
 class ExpenseFormState extends State {
+  static const style = TextStyle(fontSize: 16.0, color: Colors.black);
+  static const inputPadding = EdgeInsets.all(16.0);
+  static const cardPadding = EdgeInsets.only(left: 16.0, right: 16.0);
+
   final _formKey = GlobalKey<FormState>();
   final _description = GlobalKey<FormFieldState<String>>();
-  final _cost = GlobalKey<FormFieldState<String>>();
 
   final Function(Entry) onSave;
   final Entry entry;
-  String _selectedCategoryId;
 
+  String _selectedCategoryId;
   DateTime _date;
+  double _cost;
 
   ExpenseFormState({
     @required this.onSave,
     this.entry,
   })  : _date = entry.date ?? DateTime.now(),
-        _selectedCategoryId = entry.categoryId;
+        _selectedCategoryId = entry.categoryId,
+        _cost = entry.cost;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +58,7 @@ class ExpenseFormState extends State {
                 Entry newEntry = Entry(
                   id: entry.id,
                   date: _date,
-                  cost: double.parse(_cost.currentState.value),
+                  cost: _cost,
                   categoryId: _selectedCategoryId,
                   // TODO: should depend on the type of form
                   type: EntryType.EXPENSE,
@@ -85,36 +91,35 @@ class ExpenseFormState extends State {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              padding: cardPadding,
               child: Card(
-                child: TextFormField(
-                  key: _cost,
-                  initialValue:
-                      entry.cost == null ? null : entry.cost.toString(),
-                  style: TextStyle(fontSize: 16.0, color: Colors.black),
-                  decoration: InputDecoration(
-                    hintText: "Enter a price",
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.all(16.0),
-                  ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) => _validatePrice(value),
+                child: ClearableNumberInput(
+                  onChange: (value) {
+                    setState(() {
+                      this._cost = value;
+                    });
+                  },
+                  value: _cost,
+                  hintText: "0.0",
+                  style: style,
+                  contentPadding: inputPadding,
+                  border: InputBorder.none,
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              padding: cardPadding,
               child: Card(
                 child: TextFormField(
                   key: _description,
                   textCapitalization: TextCapitalization.sentences,
                   initialValue: entry.description,
-                  style: TextStyle(fontSize: 16.0, color: Colors.black),
+                  style: style,
                   maxLines: 3,
                   decoration: InputDecoration(
-                    hintText: "Provide a description",
+                    hintText: "Description",
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.all(16.0),
+                    contentPadding: inputPadding,
                   ),
                   validator: (value) => _validateNotEmpty(value),
                 ),
@@ -122,7 +127,7 @@ class ExpenseFormState extends State {
             ),
             Flexible(
               child: Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                padding: cardPadding,
                 child: Card(
                   child: CategoryGrid(
                     selected: _selectedCategoryId,
@@ -144,16 +149,6 @@ class ExpenseFormState extends State {
   String _validateNotEmpty(String value) {
     try {
       notEmpty(value);
-      return null;
-    } on InvalidInput catch (e) {
-      return e.cause;
-    }
-  }
-
-  String _validatePrice(String value) {
-    //TODO: validate number - stateful component?
-    try {
-      nonNegative(value);
       return null;
     } on InvalidInput catch (e) {
       return e.cause;
