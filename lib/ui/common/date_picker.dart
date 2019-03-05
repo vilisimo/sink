@@ -43,24 +43,19 @@ class DatePicker extends StatelessWidget {
                 border: InputBorder.none,
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(top: 2.0, bottom: 2.0),
-                    child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 12.0, right: 12.0),
-                          child: Icon(Icons.today),
-                        ),
-                        Text(
-                          DateFormat.yMMMMEEEEd().format(selectedDate),
-                          style: TextStyle(fontSize: 18.0),
-                        ),
-                      ],
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Text(
+                      DateFormat.yMMMMEEEEd().format(selectedDate),
+                      style: TextStyle(fontSize: 18.0),
                     ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                    child: Icon(Icons.today),
                   )
                 ],
               ),
