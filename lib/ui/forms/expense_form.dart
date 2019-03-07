@@ -15,14 +15,11 @@ class ExpenseForm extends StatefulWidget {
 
   @override
   ExpenseFormState createState() {
-    return ExpenseFormState(
-      onSave: this.onSave,
-      entry: this.entry,
-    );
+    return ExpenseFormState(entry: this.entry);
   }
 }
 
-class ExpenseFormState extends State {
+class ExpenseFormState extends State<ExpenseForm> {
   static const style = TextStyle(fontSize: 16.0, color: Colors.black);
   static const inputPadding = EdgeInsets.all(16.0);
   static const cardPadding = EdgeInsets.only(left: 16.0, right: 16.0);
@@ -30,17 +27,14 @@ class ExpenseFormState extends State {
   final _formKey = GlobalKey<FormState>();
   final _description = GlobalKey<FormFieldState<String>>();
 
-  final Function(Entry) onSave;
   final Entry entry;
 
   String _selectedCategoryId;
   DateTime _date;
   double _cost;
 
-  ExpenseFormState({
-    @required this.onSave,
-    this.entry,
-  })  : _date = entry.date ?? DateTime.now(),
+  ExpenseFormState({this.entry})
+      : _date = entry.date ?? DateTime.now(),
         _selectedCategoryId = entry.categoryId,
         _cost = entry.cost;
 
@@ -55,7 +49,7 @@ class ExpenseFormState extends State {
         type: EntryType.EXPENSE,
         description: _description.currentState.value,
       );
-      onSave(newEntry);
+      widget.onSave(newEntry);
 
       Navigator.pop(context);
     }
