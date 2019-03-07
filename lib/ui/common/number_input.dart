@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sink/common/checks.dart';
 import 'package:sink/common/input_formatter.dart';
 
 class ClearableNumberInput extends StatefulWidget {
@@ -26,10 +27,8 @@ class ClearableNumberInput extends StatefulWidget {
 class _ClearableNumberInputState extends State<ClearableNumberInput> {
   final _controller;
 
-  bool clearable = false;
-
   _ClearableNumberInputState(value)
-      : _controller = value == null
+      : _controller = isEmpty(value)
             ? TextEditingController()
             : TextEditingController.fromValue(
                 TextEditingValue(text: value.toString()),
@@ -37,7 +36,6 @@ class _ClearableNumberInputState extends State<ClearableNumberInput> {
 
   @override
   void initState() {
-    _controller.addListener(() => isClearable());
     _controller.addListener(() => handleChange());
     super.initState();
   }
@@ -49,15 +47,12 @@ class _ClearableNumberInputState extends State<ClearableNumberInput> {
   }
 
   void handleChange() {
-    if (_controller.text != null && _controller.text != "") {
-      widget.onChange(double.parse(_controller.text));
-    }
+    var number = _controller.text;
+    widget.onChange(isEmpty(number) ? null : double.parse(number));
   }
 
-  void isClearable() {
-    setState(() {
-      clearable = _controller.text != null && _controller.text != "";
-    });
+  bool isClearable() {
+    return !isEmpty(_controller.text);
   }
 
   @override
@@ -75,7 +70,7 @@ class _ClearableNumberInputState extends State<ClearableNumberInput> {
         suffixIcon: IconButton(
           icon: Icon(Icons.clear),
           disabledColor: Colors.transparent,
-          onPressed: clearable ? () => _controller.clear() : null,
+          onPressed: isClearable() ? () => _controller.clear() : null,
         ),
       ),
     );

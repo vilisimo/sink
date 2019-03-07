@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sink/common/checks.dart';
 import 'package:sink/common/exceptions.dart';
 import 'package:sink/common/validations.dart';
 import 'package:sink/models/entry.dart';
@@ -43,6 +44,27 @@ class ExpenseFormState extends State {
         _selectedCategoryId = entry.categoryId,
         _cost = entry.cost;
 
+  void handlePressed(BuildContext context) {
+    if (_formKey.currentState.validate()) {
+      Entry newEntry = Entry(
+        id: entry.id,
+        date: _date,
+        cost: _cost,
+        categoryId: _selectedCategoryId,
+        // TODO: should depend on the type of form
+        type: EntryType.EXPENSE,
+        description: _description.currentState.value,
+      );
+      onSave(newEntry);
+
+      Navigator.pop(context);
+    }
+  }
+
+  bool isSaveable() {
+    return _cost != null && !isEmpty(_selectedCategoryId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,22 +75,7 @@ class ExpenseFormState extends State {
           IconButton(
             iconSize: 28.0,
             icon: Icon(Icons.save),
-            onPressed: () {
-              if (_formKey.currentState.validate()) {
-                Entry newEntry = Entry(
-                  id: entry.id,
-                  date: _date,
-                  cost: _cost,
-                  categoryId: _selectedCategoryId,
-                  // TODO: should depend on the type of form
-                  type: EntryType.EXPENSE,
-                  description: _description.currentState.value,
-                );
-                onSave(newEntry);
-
-                Navigator.pop(context);
-              }
-            },
+            onPressed: isSaveable() ? () => handlePressed(context) : null,
           )
         ],
       ),
