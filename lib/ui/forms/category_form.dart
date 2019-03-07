@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:sink/common/checks.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
@@ -18,10 +19,8 @@ class CategoryForm extends StatefulWidget {
 
 class CategoryFormState extends State<CategoryForm> {
   List<Color> colors;
-
   String categoryName;
   Color color;
-  bool saveable = false;
 
   @override
   void initState() {
@@ -33,7 +32,6 @@ class CategoryFormState extends State<CategoryForm> {
   void handleNameChange(String newName) {
     setState(() {
       this.categoryName = newName;
-      this.saveable = categoryName != null && categoryName != "";
     });
   }
 
@@ -65,8 +63,9 @@ class CategoryFormState extends State<CategoryForm> {
                 disabledColor: Colors.grey,
                 iconSize: 28.0,
                 icon: Icon(Icons.check),
-                onPressed:
-                    saveable ? () => handleSave(vm.onSave, context) : null,
+                onPressed: !isEmpty(categoryName)
+                    ? () => handleSave(vm.onSave, context)
+                    : null,
               ),
             ],
           ),
