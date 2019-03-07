@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sink/common/checks.dart';
 
 class ClearableTextInput extends StatefulWidget {
   final String hintText;
@@ -34,7 +35,7 @@ class _TextInputState extends State<ClearableTextInput> {
 
   void isClearable() {
     setState(() {
-      clearable = _controller.text != null && _controller.text != "";
+      clearable = !isEmpty(_controller.text);
     });
   }
 
