@@ -55,8 +55,9 @@ class _TextInputState extends State<ClearableTextInput> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      textCapitalization: TextCapitalization.sentences,
       controller: _controller,
+      textInputAction: TextInputAction.done,
+      textCapitalization: TextCapitalization.sentences,
       style: widget.style,
       maxLines: widget.maxLines ?? 1,
       decoration: InputDecoration(
