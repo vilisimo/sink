@@ -28,7 +28,7 @@ class _ClearableNumberInputState extends State<ClearableNumberInput> {
   final _controller;
 
   _ClearableNumberInputState(value)
-      : _controller = isEmpty(value)
+      : _controller = value == null
             ? TextEditingController()
             : TextEditingController.fromValue(
                 TextEditingValue(text: value.toString()),
