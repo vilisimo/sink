@@ -25,7 +25,10 @@ class ClearableNumberInput extends StatefulWidget {
 }
 
 class _ClearableNumberInputState extends State<ClearableNumberInput> {
+  final _focus = FocusNode();
   final _controller;
+
+  bool focused = false;
 
   _ClearableNumberInputState(value)
       : _controller = value == null
@@ -37,6 +40,7 @@ class _ClearableNumberInputState extends State<ClearableNumberInput> {
   @override
   void initState() {
     _controller.addListener(() => handleChange());
+    _focus.addListener(() => focused = !focused);
     super.initState();
   }
 
@@ -62,16 +66,19 @@ class _ClearableNumberInputState extends State<ClearableNumberInput> {
       keyboardType: TextInputType.numberWithOptions(decimal: true),
       inputFormatters: [DecimalInputFormatter()],
       style: widget.style,
+      focusNode: _focus,
       decoration: InputDecoration(
         contentPadding: widget.contentPadding ?? EdgeInsets.all(16.0),
         hintText: widget.hintText,
         border: widget.border ?? InputBorder.none,
         isDense: true,
-        suffixIcon: IconButton(
-          icon: Icon(Icons.clear),
-          disabledColor: Colors.transparent,
-          onPressed: isClearable() ? () => _controller.clear() : null,
-        ),
+        suffixIcon: focused
+            ? IconButton(
+                icon: Icon(Icons.clear),
+                disabledColor: Colors.transparent,
+                onPressed: isClearable() ? () => _controller.clear() : null,
+              )
+            : null,
       ),
     );
   }

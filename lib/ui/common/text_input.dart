@@ -25,8 +25,11 @@ class ClearableTextInput extends StatefulWidget {
 }
 
 class _TextInputState extends State<ClearableTextInput> {
+  final _focus = new FocusNode();
   final _controller;
+
   bool clearable = false;
+  bool focused = false;
 
   _TextInputState(value)
       : _controller = isEmpty(value)
@@ -37,6 +40,7 @@ class _TextInputState extends State<ClearableTextInput> {
   void initState() {
     _controller.addListener(() => isClearable());
     _controller.addListener(() => widget.onChange(_controller.text));
+    _focus.addListener(() => focused = !focused);
     super.initState();
   }
 
@@ -60,16 +64,19 @@ class _TextInputState extends State<ClearableTextInput> {
       textCapitalization: TextCapitalization.sentences,
       style: widget.style,
       maxLines: widget.maxLines ?? 1,
+      focusNode: _focus,
       decoration: InputDecoration(
         contentPadding: widget.contentPadding,
         hintText: widget.hintText,
         border: widget.border ?? OutlineInputBorder(),
         isDense: true,
-        suffixIcon: IconButton(
-          icon: Icon(Icons.clear),
-          disabledColor: Colors.transparent,
-          onPressed: clearable ? () => _controller.clear() : null,
-        ),
+        suffixIcon: focused
+            ? IconButton(
+                icon: Icon(Icons.clear),
+                disabledColor: Colors.transparent,
+                onPressed: clearable ? () => _controller.clear() : null,
+              )
+            : null,
       ),
     );
   }
