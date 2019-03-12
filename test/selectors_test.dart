@@ -9,8 +9,20 @@ import 'package:test/test.dart';
 main() {
   test('retrieves last removed entry', () {
     var state = AppState(removed: [
-      Entry(cost: 1.0, date: DateTime.now(), categoryId: 'a', description: 'b'),
-      Entry(cost: 2.0, date: DateTime.now(), categoryId: 'c', description: 'd'),
+      Entry(
+        cost: 1.0,
+        date: DateTime.now(),
+        categoryId: 'a',
+        description: 'b',
+        type: EntryType.EXPENSE,
+      ),
+      Entry(
+        cost: 2.0,
+        date: DateTime.now(),
+        categoryId: 'c',
+        description: 'd',
+        type: EntryType.EXPENSE,
+      ),
     ]);
 
     var entry = getLastRemoved(state);

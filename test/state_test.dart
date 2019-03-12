@@ -9,7 +9,13 @@ main() {
     final state = AppState(removed: List<Entry>());
     final now = DateTime.now();
     final removed = [
-      Entry(cost: 1.0, categoryId: 'a', description: 'b', date: now)
+      Entry(
+        cost: 1.0,
+        categoryId: 'a',
+        description: 'b',
+        date: now,
+        type: EntryType.EXPENSE,
+      )
     ];
     final entries = List<Entry>();
     entries.add(removed[0]);
@@ -23,8 +29,13 @@ main() {
 
   test('returns state with old values', () {
     final now = DateTime.now();
-    final entry =
-        Entry(cost: 1.0, categoryId: 'a', description: 'b', date: now);
+    final entry = Entry(
+      cost: 1.0,
+      categoryId: 'a',
+      description: 'b',
+      date: now,
+      type: EntryType.EXPENSE,
+    );
     final state = AppState(removed: [entry]);
 
     final result = state.copyWith(removed: null);
