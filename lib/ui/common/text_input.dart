@@ -2,28 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:sink/common/checks.dart';
 
 class ClearableTextInput extends StatefulWidget {
-  final String hintText;
   final Function(String) onChange;
+  final String value;
+  final String hintText;
+  final TextStyle style;
+  final int maxLines;
+  final EdgeInsetsGeometry contentPadding;
+  final InputBorder border;
 
-  ClearableTextInput({@required this.hintText, @required this.onChange});
+  ClearableTextInput({
+    @required this.onChange,
+    @required this.hintText,
+    this.value,
+    this.style,
+    this.maxLines,
+    this.contentPadding,
+    this.border,
+  });
 
   @override
-  State<StatefulWidget> createState() => _TextInputState(hintText, onChange);
+  State<StatefulWidget> createState() => _TextInputState(value);
 }
 
 class _TextInputState extends State<ClearableTextInput> {
-  final _controller = TextEditingController();
+  final _controller;
   bool clearable = false;
 
-  final String hintText;
-  Function(String) onChange;
-
-  _TextInputState(this.hintText, this.onChange);
+  _TextInputState(value)
+      : _controller = isEmpty(value)
+            ? TextEditingController()
+            : TextEditingController.fromValue(TextEditingValue(text: value));
 
   @override
   void initState() {
     _controller.addListener(() => isClearable());
-    _controller.addListener(() => onChange(_controller.text));
+    _controller.addListener(() => widget.onChange(_controller.text));
     super.initState();
   }
 
@@ -44,9 +57,12 @@ class _TextInputState extends State<ClearableTextInput> {
     return TextField(
       textCapitalization: TextCapitalization.sentences,
       controller: _controller,
+      style: widget.style,
+      maxLines: widget.maxLines ?? 1,
       decoration: InputDecoration(
-        hintText: hintText,
-        border: OutlineInputBorder(),
+        contentPadding: widget.contentPadding,
+        hintText: widget.hintText,
+        border: widget.border ?? OutlineInputBorder(),
         isDense: true,
         suffixIcon: IconButton(
           icon: Icon(Icons.clear),
