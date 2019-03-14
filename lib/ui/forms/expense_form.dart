@@ -74,7 +74,6 @@ class ExpenseFormState extends State<ExpenseForm> {
             padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
             child: Card(
               child: DatePicker(
-                labelText: 'From',
                 selectedDate: _date,
                 onChanged: ((DateTime date) {
                   setState(() {

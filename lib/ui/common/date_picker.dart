@@ -6,10 +6,9 @@ import 'package:intl/intl.dart';
 class DatePicker extends StatelessWidget {
   static const _YEAR = 365;
 
-  const DatePicker({Key key, this.labelText, this.selectedDate, this.onChanged})
+  const DatePicker({Key key, this.selectedDate, this.onChanged})
       : super(key: key);
 
-  final String labelText;
   final DateTime selectedDate;
   final ValueChanged<DateTime> onChanged;
 
