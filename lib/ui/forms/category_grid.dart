@@ -30,6 +30,7 @@ class CategoryGrid extends StatelessWidget {
         id: ADD_CATEGORY_ID,
         name: ADD_CATEGORY_ID,
         color: null,
+        type: null,
       ),
       isSelected: false,
     );

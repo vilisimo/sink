@@ -98,7 +98,13 @@ class _CategoryFormViewModel {
       onSave: (category, color) {
         store.dispatch(
           CreateCategory(
-            Category(id: Uuid().v4(), name: category, color: color),
+            Category(
+              id: Uuid().v4(),
+              name: category,
+              color: color,
+              // TODO: should depend on which type of entry is being created
+              type: CategoryType.EXPENSE,
+            ),
           ),
         );
       },

@@ -37,6 +37,7 @@ class FirestoreRepository {
       'id': category.id,
       'name': category.name,
       'color': category.color.value,
+      'type': category.type.index,
     });
   }
 }

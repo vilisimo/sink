@@ -46,13 +46,18 @@ main() {
   test('returns state with new categories', () {
     var state = AppState(
       categories: Set<Category>.from([
-        Category(id: "1", name: "category 1", color: Colors.white),
-        Category(id: "2", name: "category 2", color: Colors.blue),
-        Category(id: "3", name: "category 3", color: Colors.black),
+        Category(id: "1", name: "category 1", color: Colors.white, type: null),
+        Category(id: "2", name: "category 2", color: Colors.blue, type: null),
+        Category(id: "3", name: "category 3", color: Colors.black, type: null),
       ]),
     );
 
-    final category = Category(id: "4", name: "category 4", color: Colors.pink);
+    final category = Category(
+      id: "4",
+      name: "category 4",
+      color: Colors.pink,
+      type: null,
+    );
     final result = state.copyWith(categories: Set<Category>.from([category]));
 
     expect(result.categories, Set.from([category]));
@@ -61,9 +66,9 @@ main() {
   test('returns state with old categories', () {
     var state = AppState(
       categories: Set<Category>.from([
-        Category(id: "1", name: "category 1", color: Colors.white),
-        Category(id: "2", name: "category 2", color: Colors.blue),
-        Category(id: "3", name: "category 3", color: Colors.black),
+        Category(id: "1", name: "category 1", color: Colors.white, type: null),
+        Category(id: "2", name: "category 2", color: Colors.blue, type: null),
+        Category(id: "3", name: "category 3", color: Colors.black, type: null),
       ]),
     );
 

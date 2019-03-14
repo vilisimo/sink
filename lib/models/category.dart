@@ -2,15 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+enum CategoryType { EXPENSE, INCOME }
+
 class Category {
   final String id;
   final String name;
   final Color color;
+  final CategoryType type;
 
   Category({
     @required this.id,
     @required this.name,
     @required this.color,
+    @required this.type,
   });
 
   static fromSnapshot(DocumentSnapshot document) {
@@ -18,12 +22,15 @@ class Category {
       id: document['id'],
       name: document['name'],
       color: Color(document['color']),
+      type: document['type'] != null
+          ? CategoryType.values[document['type']]
+          : CategoryType.values[0],
     );
   }
 
   @override
   String toString() {
-    return 'Category{id: $id, name: $name, color: $color}';
+    return 'Category{id: $id, name: $name, color: $color, type: $type}';
   }
 
   @override
@@ -33,8 +40,10 @@ class Category {
           runtimeType == other.runtimeType &&
           id == other.id &&
           name == other.name &&
-          color == other.color;
+          color == other.color &&
+          type == other.type;
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode ^ color.hashCode;
+  int get hashCode =>
+      id.hashCode ^ name.hashCode ^ color.hashCode ^ type.hashCode;
 }
