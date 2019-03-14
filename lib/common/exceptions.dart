@@ -9,3 +9,9 @@ class CategoryNotFound implements Exception {
 
   CategoryNotFound(this.cause);
 }
+
+class EnumNotFound implements Exception {
+  String cause;
+
+  EnumNotFound(this.cause);
+}
