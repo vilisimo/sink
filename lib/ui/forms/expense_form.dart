@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sink/common/checks.dart';
+import 'package:sink/common/enums.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/ui/common/date_picker.dart';
 import 'package:sink/ui/common/number_input.dart';
@@ -25,16 +26,22 @@ class ExpenseFormState extends State<ExpenseForm> {
 
   final Entry entry;
 
+  static List<String> options = toCapitalizedStringList(EntryType.values);
+
+  String _type;
   String _selectedCategoryId;
   DateTime _date;
   double _cost;
-  String desc;
+  String _description;
 
   ExpenseFormState({this.entry})
       : _date = entry.date ?? DateTime.now(),
         _selectedCategoryId = entry.categoryId,
         _cost = entry.cost,
-        desc = entry.description;
+        _description = entry.description,
+        _type = entry.type == null
+            ? toCapitalizedString(EntryType.EXPENSE)
+            : toCapitalizedString(entry.type);
 
   void handlePressed(BuildContext context) {
     Entry newEntry = Entry(
@@ -42,9 +49,8 @@ class ExpenseFormState extends State<ExpenseForm> {
       date: _date,
       cost: _cost,
       categoryId: _selectedCategoryId,
-      // TODO: should depend on the type of form
-      type: EntryType.EXPENSE,
-      description: desc,
+      type: toEntryType(_type),
+      description: _description,
     );
     widget.onSave(newEntry);
     Navigator.pop(context);
@@ -59,7 +65,7 @@ class ExpenseFormState extends State<ExpenseForm> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
-        title: Text('New Entry'),
+        title: buildThemedDropdown(context),
         actions: <Widget>[
           IconButton(
             iconSize: 28.0,
@@ -106,10 +112,10 @@ class ExpenseFormState extends State<ExpenseForm> {
               child: ClearableTextInput(
                 onChange: (value) {
                   setState(() {
-                    this.desc = value;
+                    this._description = value;
                   });
                 },
-                value: desc,
+                value: _description,
                 hintText: 'Description',
                 style: style,
                 maxLines: 3,
@@ -135,6 +141,42 @@ class ExpenseFormState extends State<ExpenseForm> {
           ),
         ],
       ),
+    );
+  }
+
+  Theme buildThemedDropdown(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(
+        canvasColor: Theme.of(context).backgroundColor,
+        brightness: Brightness.dark,
+      ),
+      child: buildDropdown(context),
+    );
+  }
+
+  DropdownButtonHideUnderline buildDropdown(BuildContext context) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton(
+        isExpanded: true,
+        value: _type,
+        items: options.map((type) => buildDropdownItem(type, context)).toList(),
+        onChanged: (newType) {
+          setState(() {
+            // TODO: category should either be nulled or otherwise changed
+            _type = newType;
+          });
+        },
+      ),
+    );
+  }
+
+  DropdownMenuItem<String> buildDropdownItem(String txt, BuildContext context) {
+    return DropdownMenuItem(
+      child: Text(
+        txt,
+        style: Theme.of(context).textTheme.title.copyWith(color: Colors.white),
+      ),
+      value: txt,
     );
   }
 }
