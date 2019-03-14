@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sink/common/checks.dart';
 import 'package:sink/common/enums.dart';
+import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/ui/common/date_picker.dart';
 import 'package:sink/ui/common/number_input.dart';
@@ -23,6 +24,7 @@ class ExpenseFormState extends State<ExpenseForm> {
   static const style = TextStyle(fontSize: 16.0, color: Colors.black);
   static const inputPadding = EdgeInsets.all(16.0);
   static const cardPadding = EdgeInsets.only(left: 16.0, right: 16.0);
+  static const datePadding = EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0);
 
   final Entry entry;
 
@@ -77,7 +79,7 @@ class ExpenseFormState extends State<ExpenseForm> {
       body: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
+            padding: datePadding,
             child: Card(
               child: DatePicker(
                 selectedDate: _date,
@@ -130,6 +132,7 @@ class ExpenseFormState extends State<ExpenseForm> {
               child: Card(
                 child: CategoryGrid(
                   selected: _selectedCategoryId,
+                  type: matchingCategoryType(),
                   onTap: (selected) {
                     setState(() {
                       _selectedCategoryId = selected;
@@ -178,5 +181,11 @@ class ExpenseFormState extends State<ExpenseForm> {
       ),
       value: txt,
     );
+  }
+
+  CategoryType matchingCategoryType() {
+    return toEntryType(_type) == EntryType.EXPENSE
+        ? CategoryType.EXPENSE
+        : CategoryType.INCOME;
   }
 }

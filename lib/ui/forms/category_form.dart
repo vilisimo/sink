@@ -11,10 +11,12 @@ import 'package:sink/ui/forms/color_grid.dart';
 import 'package:uuid/uuid.dart';
 
 class CategoryForm extends StatefulWidget {
+  final CategoryType type;
+
+  CategoryForm({@required this.type});
+
   @override
-  CategoryFormState createState() {
-    return CategoryFormState();
-  }
+  CategoryFormState createState() => CategoryFormState();
 }
 
 class CategoryFormState extends State<CategoryForm> {
@@ -48,9 +50,9 @@ class CategoryFormState extends State<CategoryForm> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector(
-      converter: _CategoryFormViewModel.fromState,
-      builder: (BuildContext context, _CategoryFormViewModel vm) {
+    return StoreConnector<AppState, _ViewModel>(
+      converter: (state) => _ViewModel.fromState(state, widget.type),
+      builder: (BuildContext context, _ViewModel vm) {
         colors.removeWhere((color) => vm.usedColors
             .contains(Color.fromRGBO(color.red, color.green, color.blue, 1.0)));
 
@@ -87,24 +89,21 @@ class CategoryFormState extends State<CategoryForm> {
   }
 }
 
-class _CategoryFormViewModel {
+class _ViewModel {
   final Function(String, Color) onSave;
   final Set<Color> usedColors;
 
-  _CategoryFormViewModel({@required this.onSave, @required this.usedColors});
+  _ViewModel({@required this.onSave, @required this.usedColors});
 
-  static _CategoryFormViewModel fromState(Store<AppState> store) {
-    return _CategoryFormViewModel(
+  static _ViewModel fromState(
+    Store<AppState> store,
+    CategoryType type,
+  ) {
+    return _ViewModel(
       onSave: (category, color) {
         store.dispatch(
           CreateCategory(
-            Category(
-              id: Uuid().v4(),
-              name: category,
-              color: color,
-              // TODO: should depend on which type of entry is being created
-              type: CategoryType.EXPENSE,
-            ),
+            Category(id: Uuid().v4(), name: category, color: color, type: type),
           ),
         );
       },

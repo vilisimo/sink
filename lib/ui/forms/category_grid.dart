@@ -12,8 +12,13 @@ class CategoryGrid extends StatelessWidget {
 
   final Function(String) onTap;
   final String selected;
+  final CategoryType type;
 
-  CategoryGrid({@required this.onTap, @required this.selected});
+  CategoryGrid({
+    @required this.onTap,
+    @required this.selected,
+    @required this.type,
+  });
 
   void _handleTap(String selected) {
     onTap(selected);
@@ -24,7 +29,7 @@ class CategoryGrid extends StatelessWidget {
     Widget addCategoryTile = CategoryTile(
       handleTap: (filler) => showDialog(
             context: context,
-            builder: (context) => CategoryForm(),
+            builder: (context) => CategoryForm(type: type),
           ),
       category: Category(
         id: ADD_CATEGORY_ID,
@@ -73,7 +78,6 @@ class _CategoryGridViewModel {
   }
 }
 
-// TODO: could be generic circular tile
 class CategoryTile extends StatelessWidget {
   final Function(String) handleTap;
   final Category category;
