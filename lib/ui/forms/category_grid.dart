@@ -27,9 +27,9 @@ class CategoryGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget addCategoryTile = CategoryTile(
-      handleTap: (filler) => showDialog(
-            context: context,
-            builder: (context) => CategoryForm(type: type),
+      handleTap: (filler) => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CategoryForm(type: type)),
           ),
       category: Category(
         id: ADD_CATEGORY_ID,
@@ -40,6 +40,9 @@ class CategoryGrid extends StatelessWidget {
       isSelected: false,
     );
 
+    return StoreConnector<AppState, _ViewModel>(
+      converter: _ViewModel.fromState,
+      builder: (BuildContext context, _ViewModel vm) {
         var cats = vm
             .categories(type)
             .map((category) => CategoryTile(

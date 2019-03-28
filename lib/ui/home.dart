@@ -53,8 +53,10 @@ class _HomeScreenState extends State<HomeScreen>
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         child: Icon(Icons.add),
-        onPressed: () => showDialog(
-            context: context, builder: (context) => AddExpensePage()),
+        onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddExpensePage()),
+            ),
       ),
       bottomNavigationBar: BottomAppBar(
         notchMargin: 5.0,

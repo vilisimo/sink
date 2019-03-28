@@ -46,9 +46,12 @@ class EntryItem extends StatelessWidget {
                 "${entry.cost}",
                 style: TextStyle(fontSize: 16.0),
               ),
-              onTap: () => showDialog(
-                  context: context,
-                  builder: (context) => EditExpensePage(entry)),
+              onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditExpensePage(entry),
+                    ),
+                  ),
             ),
           ),
         );
