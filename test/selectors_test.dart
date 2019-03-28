@@ -34,21 +34,6 @@ main() {
     expect(entry, state.removed[1]);
   });
 
-  test('retrieves a list of categories', () {
-    var category = Category(
-      id: "1",
-      name: "category",
-      color: Material.Colors.red,
-      type: null,
-    );
-    var state = AppState(categories: Set<Category>.from([category]));
-
-    var categories = getCategories(state);
-
-    expect(categories.length, 1);
-    expect(categories.first, category);
-  });
-
   test('retrieves used colors', () {
     var state = AppState(
       categories: Set<Category>.from([
@@ -63,6 +48,91 @@ main() {
     var expected = Set<Material.Color>.from([white, blue, black]);
     expect(colors.length, 3);
     expect(colors, expected);
+  });
+
+  test('retrieves a set of categories', () {
+    var category = Category(
+      id: "1",
+      name: "category",
+      color: Material.Colors.red,
+      type: null,
+    );
+    var state = AppState(categories: Set<Category>.from([category]));
+
+    var categories = getCategories(state);
+
+    expect(categories.length, 1);
+    expect(categories.first, category);
+  });
+
+  test('retrieves a set of expense categories', () {
+    var first = Category(
+        id: "1",
+        name: "expense 1",
+        color: Material.Colors.red,
+        type: CategoryType.EXPENSE);
+
+    var second = Category(
+        id: "2",
+        name: "expense 2",
+        color: Material.Colors.red,
+        type: CategoryType.INCOME);
+
+    var third = Category(
+        id: "3",
+        name: "income",
+        color: Material.Colors.red,
+        type: CategoryType.EXPENSE);
+
+    var st = AppState(categories: Set<Category>.from([first, second, third]));
+
+    var result = getExpenseCategories(st);
+
+    expect(result.length, 2);
+    expect(result, Set.from([first, third]));
+  });
+
+  test('does not retrieve any expense categories from empty set', () {
+    var state = AppState(categories: Set<Category>.from([]));
+
+    var result = getExpenseCategories(state);
+
+    expect(result.length, 0);
+  });
+
+  test('retrieves a set of income categories', () {
+    var first = Category(
+        id: "1",
+        name: "expense 1",
+        color: Material.Colors.red,
+        type: CategoryType.EXPENSE);
+
+    var second = Category(
+        id: "2",
+        name: "expense 2",
+        color: Material.Colors.red,
+        type: CategoryType.INCOME);
+
+    var third = Category(
+        id: "3",
+        name: "income",
+        color: Material.Colors.red,
+        type: CategoryType.EXPENSE);
+
+    var st = AppState(categories: Set<Category>.from([first, second, third]));
+
+    var result = getIncomeCategories(st);
+
+    expect(result.length, 1);
+    expect(result, Set.from([second]));
+  });
+
+  test('does not retrieve any income categories from empty set', () {
+    var state = AppState(categories: Set<Category>.from([]));
+
+    var result = getIncomeCategories(state);
+
+    expect(result.length, 0);
   });
 
   test('should retrieve a category by id', () {

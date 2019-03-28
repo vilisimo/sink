@@ -5,13 +5,25 @@ import 'package:sink/models/entry.dart';
 import 'package:sink/redux/state.dart';
 
 Entry getLastRemoved(AppState state) => state.removed.last;
-Set<Category> getCategories(AppState state) => state.categories;
+
 Set<Color> getUsedColors(AppState state) =>
     state.categories.map((category) => category.color).toSet();
+
+Set<Category> getCategories(AppState state) => state.categories;
+
+Set<Category> getExpenseCategories(AppState state) => state.categories
+    .where((category) => category.type == CategoryType.EXPENSE)
+    .toSet();
+
+Set<Category> getIncomeCategories(AppState state) => state.categories
+    .where((category) => category.type == CategoryType.INCOME)
+    .toSet();
+
 Category getCategory(AppState state, String id) =>
     state.categories.firstWhere((category) {
       return category.id == id;
     }, orElse: () {
       throw CategoryNotFound("Could not find a category with id[$id]");
     });
+
 bool areCategoriesLoading(AppState state) => state.areCategoriesLoading;
