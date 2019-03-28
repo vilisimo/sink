@@ -167,6 +167,7 @@ class ExpenseFormState extends State<ExpenseForm> {
           setState(() {
             // TODO: category should either be nulled or otherwise changed
             _type = newType;
+            _selectedCategoryId = null;
           });
         },
       ),

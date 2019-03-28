@@ -40,10 +40,8 @@ class CategoryGrid extends StatelessWidget {
       isSelected: false,
     );
 
-    return StoreConnector(
-      converter: _CategoryGridViewModel.fromState,
-      builder: (BuildContext context, _CategoryGridViewModel vm) {
-        var cats = vm.categories
+        var cats = vm
+            .categories(type)
             .map((category) => CategoryTile(
                   key: ObjectKey(category),
                   handleTap: (_handleTap),
@@ -68,13 +66,20 @@ class CategoryGrid extends StatelessWidget {
   }
 }
 
-class _CategoryGridViewModel {
-  final Set<Category> categories;
+class _ViewModel {
+  final AppState state;
 
-  _CategoryGridViewModel({@required this.categories});
+  _ViewModel({@required this.state});
 
-  static _CategoryGridViewModel fromState(Store<AppState> store) {
-    return _CategoryGridViewModel(categories: getCategories(store.state));
+  static _ViewModel fromState(Store<AppState> store) {
+    return _ViewModel(state: store.state);
+  }
+
+  /// A hack since [StoreConnector] does not update on type change.
+  Set<Category> categories(CategoryType type) {
+    return type == CategoryType.INCOME
+        ? getIncomeCategories(state)
+        : getExpenseCategories(state);
   }
 }
 
