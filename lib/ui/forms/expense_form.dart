@@ -165,9 +165,8 @@ class ExpenseFormState extends State<ExpenseForm> {
         items: options.map((type) => buildDropdownItem(type, context)).toList(),
         onChanged: (newType) {
           setState(() {
-            // TODO: category should either be nulled or otherwise changed
+            _selectedCategoryId = _type == newType ? _selectedCategoryId : null;
             _type = newType;
-            _selectedCategoryId = null;
           });
         },
       ),
