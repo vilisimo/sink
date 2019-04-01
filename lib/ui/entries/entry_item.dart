@@ -6,6 +6,7 @@ import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
+import 'package:sink/ui/common/amount.dart';
 import 'package:sink/ui/entries/edit_entry_page.dart';
 
 class EntryItem extends StatelessWidget {
@@ -42,9 +43,9 @@ class EntryItem extends StatelessWidget {
             child: ListTile(
               title: Text(vm.category.name),
               subtitle: Text(entry.description),
-              trailing: Text(
-                "${entry.cost}",
-                style: TextStyle(fontSize: 16.0),
+              trailing: VisualizedAmount(
+                amount: entry.cost,
+                entryType: entry.type,
               ),
               onTap: () => Navigator.push(
                     context,
