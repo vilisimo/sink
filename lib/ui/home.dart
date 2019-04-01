@@ -32,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
@@ -50,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen>
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         tooltip: 'Add an expense',
+        isExtended: true,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         child: Icon(Icons.add),
