@@ -45,7 +45,7 @@ class EntryItem extends StatelessWidget {
               subtitle: Text(entry.description),
               trailing: VisualizedAmount(
                 amount: entry.cost,
-                entryType: entry.type,
+                income: entry.type == EntryType.INCOME,
               ),
               onTap: () => Navigator.push(
                     context,
