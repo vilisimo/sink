@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sink/common/calendar.dart';
-import 'package:sink/common/colors.dart';
+import 'package:sink/common/palette.dart' as Palette;
 import 'package:sink/repository/firestore.dart';
 import 'package:sink/repository/firestore_calculator.dart';
 import 'package:sink/ui/common/centered_text.dart';
@@ -59,7 +59,13 @@ Widget summary(String text, double amount) => Padding(
       padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: Column(
         children: <Widget>[
-          Text(text, style: TextStyle(fontSize: 14.0, color: dimBlueGrey)),
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 14.0,
+              color: Palette.dimBlueGrey,
+            ),
+          ),
           Text(
             amount.toStringAsFixed(2),
             style: TextStyle(fontSize: 16.0),

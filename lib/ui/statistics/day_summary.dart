@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sink/common/colors.dart';
+import 'package:sink/common/palette.dart' as Palette;
 import 'package:sink/models/entry.dart';
 
 class DaySummaryTile extends StatelessWidget {
@@ -18,10 +18,15 @@ class DaySummaryTile extends StatelessWidget {
           Expanded(
             child: Text(
               DateFormat.yMMMMd().format(_date),
-              style: TextStyle(fontSize: 12.0, color: dimBlueGrey),
+              style: TextStyle(fontSize: 12.0, color: Palette.dimBlueGrey),
             ),
           ),
-          Text(_amount.toString(), style: TextStyle(color: dimBlueGrey)),
+          Text(
+            _amount.toString(),
+            style: TextStyle(
+              color: Palette.dimBlueGrey,
+            ),
+          ),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sink/common/palette.dart' as Palette;
 import 'package:sink/models/entry.dart';
 
 /// Displays expense/income amount. Depending on type of entry, shows an icon
@@ -13,7 +14,8 @@ class VisualizedAmount extends StatelessWidget {
       : iconData = entryType == EntryType.EXPENSE
             ? Icons.keyboard_arrow_down
             : Icons.keyboard_arrow_up,
-        color = entryType == EntryType.EXPENSE ? Colors.red : Colors.lightGreen;
+        color =
+            entryType == EntryType.EXPENSE ? Palette.income : Palette.expense;
 
   @override
   Widget build(BuildContext context) {

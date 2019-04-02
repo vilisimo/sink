@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:sink/common/colors.dart';
+import 'package:sink/common/palette.dart' as Palette;
 import 'package:sink/models/category.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
@@ -118,7 +118,7 @@ class CategoryTile extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: isSelected
                       ? Color.fromRGBO(color.red, color.green, color.blue, .8)
-                      : lightGrey,
+                      : Palette.lightGrey,
                 ),
                 child: Icon(
                   category.id == CategoryGrid.ADD_CATEGORY_ID
