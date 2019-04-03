@@ -23,7 +23,7 @@ class BalanceCard extends StatelessWidget {
             return PaddedCircularProgressIndicator();
           }
 
-          double income = 1500.0;
+          double income = totalIncome(snapshot.data.documents);
           double expenses = totalCost(snapshot.data.documents);
           double balance = income - expenses;
 
