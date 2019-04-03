@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sink/common/palette.dart' as Palette;
 import 'package:sink/models/entry.dart';
+import 'package:sink/ui/common/amount.dart';
 
 class DaySummaryTile extends StatelessWidget {
   final DateTime _date;
@@ -18,15 +19,20 @@ class DaySummaryTile extends StatelessWidget {
           Expanded(
             child: Text(
               DateFormat.yMMMMd().format(_date),
-              style: TextStyle(fontSize: 12.0, color: Palette.dimBlueGrey),
+              style: TextStyle(
+                fontSize: 12.0,
+                color: Palette.dimBlueGrey,
+              ),
             ),
           ),
-          Text(
-            _amount.toString(),
+          VisualizedAmount(
+            amount: _amount,
+            income: _amount >= 0.0,
             style: TextStyle(
               color: Palette.dimBlueGrey,
+              fontSize: 12.0,
             ),
-          ),
+          )
         ],
       ),
     );
@@ -34,4 +40,7 @@ class DaySummaryTile extends StatelessWidget {
 }
 
 double _totalAmount(List<Entry> entries) =>
-    entries.fold(0.0, (sum, entry) => sum + entry.cost);
+    entries.fold(0.0, (sum, entry) => sum + _signedCost(entry));
+
+double _signedCost(Entry entry) =>
+    entry.type == EntryType.INCOME ? entry.cost : entry.cost * (-1);
