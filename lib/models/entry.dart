@@ -35,7 +35,7 @@ class Entry {
     return Entry(
       id: document['id'],
       cost: document['cost'],
-      date: document['date'],
+      date: document['date'].toDate(),
       categoryId: document['categoryId'],
       description: document['description'],
       type: document['type'] != null
