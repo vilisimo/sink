@@ -24,7 +24,7 @@ class BalanceCard extends StatelessWidget {
           }
 
           double income = totalIncome(snapshot.data.documents);
-          double expenses = totalCost(snapshot.data.documents);
+          double expenses = totalExpense(snapshot.data.documents);
           double balance = income - expenses;
 
           return Container(

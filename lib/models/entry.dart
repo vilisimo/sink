@@ -6,14 +6,14 @@ enum EntryType { EXPENSE, INCOME }
 
 class Entry {
   final String id;
-  final double cost;
+  final double amount;
   final DateTime date;
   final String categoryId;
   final String description;
   final EntryType type;
 
   Entry({
-    @required this.cost,
+    @required this.amount,
     @required this.date,
     @required this.categoryId,
     @required this.type,
@@ -23,7 +23,7 @@ class Entry {
 
   static empty() {
     return Entry(
-      cost: null,
+      amount: null,
       date: DateTime.now(),
       categoryId: '',
       type: EntryType.EXPENSE,
@@ -34,7 +34,7 @@ class Entry {
   static fromSnapshot(DocumentSnapshot document) {
     return Entry(
       id: document['id'],
-      cost: document['cost'],
+      amount: document['amount'],
       date: document['date'].toDate(),
       categoryId: document['categoryId'],
       description: document['description'],
@@ -47,7 +47,7 @@ class Entry {
   Map<String, dynamic> toMap() {
     return {
       'id': this.id,
-      'cost': this.cost,
+      'amount': this.amount,
       'date': this.date,
       'categoryId': this.categoryId,
       'description': this.description,
@@ -61,7 +61,7 @@ class Entry {
       other is Entry &&
           runtimeType == other.runtimeType &&
           id == other.id &&
-          cost == other.cost &&
+          amount == other.amount &&
           date == other.date &&
           categoryId == other.categoryId &&
           description == other.description &&
@@ -70,7 +70,7 @@ class Entry {
   @override
   int get hashCode =>
       id.hashCode ^
-      cost.hashCode ^
+      amount.hashCode ^
       date.hashCode ^
       categoryId.hashCode ^
       description.hashCode ^
@@ -78,6 +78,6 @@ class Entry {
 
   @override
   String toString() {
-    return 'Entry{id: $id, cost: $cost, date: $date, categoryId: $categoryId, description: $description, type: $type}';
+    return 'Entry{id: $id, amount: $amount, date: $date, categoryId: $categoryId, description: $description, type: $type}';
   }
 }

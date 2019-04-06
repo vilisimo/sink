@@ -14,14 +14,14 @@ main() {
   test('retrieves last removed entry', () {
     var state = AppState(removed: [
       Entry(
-        cost: 1.0,
+        amount: 1.0,
         date: DateTime.now(),
         categoryId: 'a',
         description: 'b',
         type: EntryType.EXPENSE,
       ),
       Entry(
-        cost: 2.0,
+        amount: 2.0,
         date: DateTime.now(),
         categoryId: 'c',
         description: 'd',

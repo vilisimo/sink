@@ -7,7 +7,7 @@ void main() {
 
     expect(entry.id, isNotNull);
     expect(entry.date, isNotNull);
-    expect(entry.cost, isNull);
+    expect(entry.amount, isNull);
     expect(entry.description, '');
     expect(entry.categoryId, '');
   });

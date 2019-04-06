@@ -33,13 +33,13 @@ class ExpenseFormState extends State<ExpenseForm> {
   String _type;
   String _selectedCategoryId;
   DateTime _date;
-  double _cost;
+  double _amount;
   String _description;
 
   ExpenseFormState({this.entry})
       : _date = entry.date ?? DateTime.now(),
         _selectedCategoryId = entry.categoryId,
-        _cost = entry.cost,
+        _amount = entry.amount,
         _description = entry.description,
         _type = entry.type == null
             ? toCapitalizedString(EntryType.EXPENSE)
@@ -49,7 +49,7 @@ class ExpenseFormState extends State<ExpenseForm> {
     Entry newEntry = Entry(
       id: entry.id,
       date: _date,
-      cost: _cost,
+      amount: _amount,
       categoryId: _selectedCategoryId,
       type: toEntryType(_type),
       description: _description,
@@ -59,7 +59,7 @@ class ExpenseFormState extends State<ExpenseForm> {
   }
 
   bool isSaveable() {
-    return _cost != null && !isEmpty(_selectedCategoryId);
+    return _amount != null && !isEmpty(_selectedCategoryId);
   }
 
   @override
@@ -97,10 +97,10 @@ class ExpenseFormState extends State<ExpenseForm> {
               child: ClearableNumberInput(
                 onChange: (value) {
                   setState(() {
-                    this._cost = value;
+                    this._amount = value;
                   });
                 },
-                value: _cost,
+                value: _amount,
                 hintText: '0.0',
                 style: style,
                 contentPadding: inputPadding,

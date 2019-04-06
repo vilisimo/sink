@@ -10,7 +10,7 @@ main() {
     final now = DateTime.now();
     final removed = [
       Entry(
-        cost: 1.0,
+        amount: 1.0,
         categoryId: 'a',
         description: 'b',
         date: now,
@@ -30,7 +30,7 @@ main() {
   test('returns state with old values', () {
     final now = DateTime.now();
     final entry = Entry(
-      cost: 1.0,
+      amount: 1.0,
       categoryId: 'a',
       description: 'b',
       date: now,

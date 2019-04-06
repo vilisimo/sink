@@ -40,7 +40,7 @@ class DaySummaryTile extends StatelessWidget {
 }
 
 double _totalAmount(List<Entry> entries) =>
-    entries.fold(0.0, (sum, entry) => sum + _signedCost(entry));
+    entries.fold(0.0, (sum, entry) => sum + _signedAmount(entry));
 
-double _signedCost(Entry entry) =>
-    entry.type == EntryType.INCOME ? entry.cost : entry.cost * (-1);
+double _signedAmount(Entry entry) =>
+    entry.type == EntryType.INCOME ? entry.amount : entry.amount * (-1);

@@ -11,7 +11,7 @@ main() {
     var entries = [
       Entry(
         id: '1',
-        cost: 1.0,
+        amount: 1.0,
         date: DateTime.now(),
         categoryId: 'a',
         description: 'b',
@@ -22,7 +22,7 @@ main() {
 
     var entry = Entry(
       id: '2',
-      cost: 2.0,
+      amount: 2.0,
       date: DateTime.now(),
       categoryId: 'c',
       description: 'd',
@@ -38,7 +38,7 @@ main() {
     var entries = [
       Entry(
         id: '2',
-        cost: 2.0,
+        amount: 2.0,
         date: DateTime.now(),
         categoryId: 'c',
         description: 'd',
@@ -46,7 +46,7 @@ main() {
       ),
       Entry(
         id: '3',
-        cost: 3.0,
+        amount: 3.0,
         date: DateTime.now(),
         categoryId: 'e',
         description: 'f',
@@ -66,7 +66,7 @@ main() {
     var entries = [
       Entry(
         id: '1',
-        cost: 1.0,
+        amount: 1.0,
         date: DateTime.now(),
         categoryId: 'a',
         description: 'b',
@@ -74,7 +74,7 @@ main() {
       ),
       Entry(
         id: '2',
-        cost: 2.0,
+        amount: 2.0,
         date: DateTime.now(),
         categoryId: 'c',
         description: 'd',
