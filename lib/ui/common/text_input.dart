@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sink/common/checks.dart';
+import 'package:quiver/strings.dart';
 
 class ClearableTextInput extends StatefulWidget {
   final Function(String) onChange;
@@ -32,7 +32,7 @@ class _TextInputState extends State<ClearableTextInput> {
   bool focused = false;
 
   _TextInputState(value)
-      : _controller = isEmpty(value)
+      : _controller = isBlank(value)
             ? TextEditingController()
             : TextEditingController.fromValue(TextEditingValue(text: value));
 
@@ -52,7 +52,7 @@ class _TextInputState extends State<ClearableTextInput> {
 
   void isClearable() {
     setState(() {
-      clearable = !isEmpty(_controller.text);
+      clearable = !isBlank(_controller.text);
     });
   }
 

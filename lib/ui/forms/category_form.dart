@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:quiver/strings.dart';
 import 'package:redux/redux.dart';
-import 'package:sink/common/checks.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
@@ -65,7 +65,7 @@ class CategoryFormState extends State<CategoryForm> {
                 disabledColor: Colors.grey,
                 iconSize: 28.0,
                 icon: Icon(Icons.check),
-                onPressed: !isEmpty(categoryName)
+                onPressed: !isBlank(categoryName)
                     ? () => handleSave(vm.onSave, context)
                     : null,
               ),

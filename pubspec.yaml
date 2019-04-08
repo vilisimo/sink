@@ -10,6 +10,7 @@ dependencies:
   charts_flutter: ^0.6.0
   intl: ^0.15.8
   uuid: ^1.0.3
+  quiver: ^2.0.2
 
 dev_dependencies:
   flutter_test:

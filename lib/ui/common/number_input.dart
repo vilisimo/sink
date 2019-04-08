@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sink/common/checks.dart';
+import 'package:quiver/strings.dart';
 import 'package:sink/common/input_formatter.dart';
 
 class ClearableNumberInput extends StatefulWidget {
@@ -52,11 +52,11 @@ class _ClearableNumberInputState extends State<ClearableNumberInput> {
 
   void handleChange() {
     var number = _controller.text;
-    widget.onChange(isEmpty(number) ? null : double.parse(number));
+    widget.onChange(isBlank(number) ? null : double.parse(number));
   }
 
   bool isClearable() {
-    return !isEmpty(_controller.text);
+    return !isBlank(_controller.text);
   }
 
   @override

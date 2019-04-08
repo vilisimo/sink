@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sink/common/checks.dart';
+import 'package:quiver/strings.dart';
 import 'package:sink/common/enums.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
@@ -59,7 +59,7 @@ class ExpenseFormState extends State<ExpenseForm> {
   }
 
   bool isSaveable() {
-    return _amount != null && !isEmpty(_selectedCategoryId);
+    return _amount != null && !isBlank(_selectedCategoryId);
   }
 
   @override
