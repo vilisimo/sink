@@ -31,7 +31,7 @@ class Entry {
     );
   }
 
-  static fromSnapshot(DocumentSnapshot document) {
+  static Entry fromSnapshot(DocumentSnapshot document) {
     return Entry(
       id: document['id'],
       amount: document['amount'],

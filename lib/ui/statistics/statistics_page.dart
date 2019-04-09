@@ -1,5 +1,6 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:sink/ui/statistics/year_summary.dart';
 
 class StatisticsPage extends StatelessWidget {
   @override
@@ -14,6 +15,10 @@ class StatisticsPage extends StatelessWidget {
               height: 250.0,
             ),
           ),
+        ),
+        YearExpenses(
+          from: DateTime(2018, 5, 0),
+          to: DateTime.now(),
         ),
       ],
     );
