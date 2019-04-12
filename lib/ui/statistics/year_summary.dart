@@ -5,6 +5,7 @@ import 'package:sink/models/entry.dart';
 import 'package:sink/repository/firestore.dart';
 import 'package:sink/ui/common/progress_indicator.dart';
 
+//TODO: show in bar chart?
 class YearExpenses extends StatelessWidget {
   final DateTime from; // TODO: calculate -12 months from now
   final DateTime to;
@@ -23,6 +24,7 @@ class YearExpenses extends StatelessWidget {
 
           List<Entry> entries = snapshot.data.documents
               .map((ds) => Entry.fromSnapshot(ds))
+              .where((entry) => entry.type != EntryType.INCOME)
               .toList();
 
           Map<String, double> months = group(entries);

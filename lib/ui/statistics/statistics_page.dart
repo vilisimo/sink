@@ -6,7 +6,7 @@ import 'package:sink/ui/statistics/year_summary.dart';
 class StatisticsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: <Widget>[
         Card(
           child: Padding(
@@ -17,12 +17,12 @@ class StatisticsPage extends StatelessWidget {
             ),
           ),
         ),
-        YearExpenses(
-          from: DateTime(2018, 5, 0),
-          to: DateTime.now(),
-        ),
         MonthExpenses(
           from: DateTime.now().subtract(Duration(days: 300)),
+          to: DateTime.now(),
+        ),
+        YearExpenses(
+          from: DateTime(2018, 5, 0),
           to: DateTime.now(),
         ),
       ],
