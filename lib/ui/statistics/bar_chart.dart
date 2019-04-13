@@ -1,5 +1,24 @@
 import 'package:flutter/material.dart';
 
+class HorizontalBarChart extends StatelessWidget {
+  final List<Bar> bars;
+
+  HorizontalBarChart._(this.bars);
+
+  factory HorizontalBarChart(List<Bar> bars, {bool ascending}) {
+    bars.sort();
+    var result = ascending ?? false ? bars.toList() : bars.reversed.toList();
+    return new HorizontalBarChart._(result);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: bars,
+    );
+  }
+}
+
 class Bar extends StatelessWidget implements Comparable<Bar> {
   final String label;
   final double amount;

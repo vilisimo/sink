@@ -10,7 +10,6 @@ import 'package:sink/repository/firestore.dart';
 import 'package:sink/ui/common/progress_indicator.dart';
 import 'package:sink/ui/statistics/bar_chart.dart';
 
-//TODO: also show in bar chart?
 class MonthExpenses extends StatelessWidget {
   final DateTime from; // TODO: calculate month's start
   final DateTime to;
@@ -36,10 +35,11 @@ class MonthExpenses extends StatelessWidget {
                   .where((entry) => entry.type != EntryType.INCOME)
                   .toList();
 
-              var expenditures = toSortedBars(entries, vm.toCategory);
+              var expenditures = toBars(entries, vm.toCategory);
 
-              return Column(
-                children: expenditures.toList(),
+              return HorizontalBarChart(
+                expenditures,
+                ascending: false,
               );
             },
           ),
@@ -60,7 +60,7 @@ class _ViewModel {
   }
 }
 
-Iterable<Bar> toSortedBars(List<Entry> entries, Function(String) toCategory) {
+List<Bar> toBars(List<Entry> entries, Function(String) toCategory) {
   var categories = Map<Category, double>();
   entries.forEach(
     (entry) => categories.update(
@@ -68,14 +68,11 @@ Iterable<Bar> toSortedBars(List<Entry> entries, Function(String) toCategory) {
         ifAbsent: () => entry.amount),
   );
 
-  var result = categories.entries
+  return categories.entries
       .map((entry) => Bar(
             label: entry.key.name,
             amount: entry.value,
             color: entry.key.color,
           ))
       .toList();
-  result.sort();
-
-  return result.reversed;
 }
