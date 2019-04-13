@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:sink/common/calendar.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/repository/firestore.dart';
 import 'package:sink/ui/common/progress_indicator.dart';
@@ -49,12 +49,8 @@ class YearExpenses extends StatelessWidget {
 Map<String, double> group(List<Entry> entries) {
   var months = Map<String, double>();
   entries.forEach((entry) => months.update(
-      toMonth(entry.date), (value) => value + entry.amount,
+      monthsName(entry.date), (value) => value + entry.amount,
       ifAbsent: () => entry.amount));
 
   return months;
-}
-
-String toMonth(DateTime date) {
-  return new DateFormat.MMMM().format(date).toString();
 }
