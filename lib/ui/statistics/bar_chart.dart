@@ -48,63 +48,19 @@ class Bar extends StatelessWidget implements Comparable<Bar> {
   @override
   Widget build(BuildContext context) {
     final widthPercentage = amount / maxAmount;
-    final partOfTotal = amount / totalAmount * 100;
+    final percent = amount / totalAmount * 100;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2.0),
       child: Column(
         children: <Widget>[
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 14.0, vertical: 4.0),
-            child: Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Text(
-                    "$label",
-                    style: TextStyle(
-                      fontSize: 14.0,
-                    ),
-                  ),
-                ),
-                Text(
-                  "${partOfTotal.toStringAsFixed(2)}%",
-                  style: TextStyle(
-                    fontSize: 12.0,
-                    color: Palette.dimBlueGrey,
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      "$amount",
-                      style: TextStyle(
-                        fontSize: 12.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          _BarLabel(
+            label: label,
+            percent: percent.toStringAsFixed(2),
+            amount: amount,
           ),
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * widthPercentage,
-                height: 20.0,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(9.0),
-                    ),
-                    color: color,
-                  ),
-                ),
-              ),
-            ),
+          _ColoredBar(
+            color: color,
+            percentOfScreen: widthPercentage,
           ),
         ],
       ),
@@ -133,5 +89,87 @@ class Bar extends StatelessWidget implements Comparable<Bar> {
     } else {
       return -1;
     }
+  }
+}
+
+class _BarLabel extends StatelessWidget {
+  final String label;
+  final String percent;
+  final double amount;
+
+  _BarLabel({
+    @required this.label,
+    @required this.percent,
+    @required this.amount,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 4.0),
+      child: Row(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 14.0,
+              ),
+            ),
+          ),
+          Text(
+            percent,
+            style: TextStyle(
+              fontSize: 12.0,
+              color: Palette.dimBlueGrey,
+            ),
+          ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "$amount",
+                style: TextStyle(
+                  fontSize: 12.0,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ColoredBar extends StatelessWidget {
+  final Color color;
+  final percentOfScreen;
+
+  _ColoredBar({
+    @required this.color,
+    @required this.percentOfScreen,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * percentOfScreen,
+          height: 20.0,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(9.0),
+              ),
+              color: color,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
