@@ -7,8 +7,16 @@ class HorizontalBarChart extends StatelessWidget {
 
   factory HorizontalBarChart(List<Bar> bars, {bool ascending}) {
     bars.sort();
-    var result = ascending ?? false ? bars.toList() : bars.reversed.toList();
-    return new HorizontalBarChart._(result);
+    var asc = ascending ?? false;
+    var sorted = asc ? bars.toList() : bars.reversed.toList();
+    var maxAmount = asc ? sorted.last.amount : sorted.first.amount;
+    var total = sorted.fold(0.0, (prev, next) => prev + next.amount);
+
+    return new HorizontalBarChart._(
+      sorted
+          .map((b) => b.copyWith(maxAmount: maxAmount, totalAmount: total))
+          .toList(),
+    );
   }
 
   @override
@@ -23,15 +31,22 @@ class Bar extends StatelessWidget implements Comparable<Bar> {
   final String label;
   final double amount;
   final Color color;
+  final double maxAmount;
+  final double totalAmount;
 
   Bar({
     @required this.label,
     @required this.amount,
     @required this.color,
-  });
+    maxAmount,
+    totalAmount,
+  })  : this.maxAmount = maxAmount ?? amount,
+        this.totalAmount = totalAmount ?? amount;
 
   @override
   Widget build(BuildContext context) {
+    final widthPercentage = amount / maxAmount;
+    final partOfTotal = amount / totalAmount * 100;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
@@ -40,8 +55,7 @@ class Bar extends StatelessWidget implements Comparable<Bar> {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             //TODO: largest expense = 100%; others = 100 * x (given x < 1.0);
             child: SizedBox(
-              width: MediaQuery.of(context).size.width *
-                  0.4, //TODO: adjust bar width for category amount
+              width: MediaQuery.of(context).size.width * 0.6 * widthPercentage,
               height: 20.0,
               child: DecoratedBox(
                 decoration: BoxDecoration(
@@ -53,9 +67,22 @@ class Bar extends StatelessWidget implements Comparable<Bar> {
               ),
             ),
           ),
-          Text("$label: $amount")
+          Text("$label : $amount : ${partOfTotal.roundToDouble()}%")
         ],
       ),
+    );
+  }
+
+  Bar copyWith({
+    double maxAmount,
+    double totalAmount,
+  }) {
+    return Bar(
+      label: this.label,
+      amount: this.amount,
+      color: this.color,
+      maxAmount: maxAmount ?? this.maxAmount,
+      totalAmount: totalAmount ?? this.totalAmount,
     );
   }
 
