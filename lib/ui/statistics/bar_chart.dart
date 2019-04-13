@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:sink/common/palette.dart' as Palette;
 
 class HorizontalBarChart extends StatelessWidget {
   final List<Bar> bars;
@@ -48,26 +50,62 @@ class Bar extends StatelessWidget implements Comparable<Bar> {
     final widthPercentage = amount / maxAmount;
     final partOfTotal = amount / totalAmount * 100;
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
+      padding: EdgeInsets.symmetric(vertical: 2.0),
+      child: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            //TODO: largest expense = 100%; others = 100 * x (given x < 1.0);
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.6 * widthPercentage,
-              height: 20.0,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(9.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 14.0, vertical: 4.0),
+            child: Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                    "$label",
+                    style: TextStyle(
+                      fontSize: 14.0,
+                    ),
                   ),
-                  color: color,
+                ),
+                Text(
+                  "${partOfTotal.toStringAsFixed(2)}%",
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Palette.dimBlueGrey,
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      "$amount",
+                      style: TextStyle(
+                        fontSize: 12.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * widthPercentage,
+                height: 20.0,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(9.0),
+                    ),
+                    color: color,
+                  ),
                 ),
               ),
             ),
           ),
-          Text("$label : $amount : ${partOfTotal.roundToDouble()}%")
         ],
       ),
     );

@@ -37,9 +37,12 @@ class MonthExpenses extends StatelessWidget {
 
               var expenditures = toBars(entries, vm.toCategory);
 
-              return HorizontalBarChart(
-                expenditures,
-                ascending: false,
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: HorizontalBarChart(
+                  expenditures,
+                  ascending: false,
+                ),
               );
             },
           ),
