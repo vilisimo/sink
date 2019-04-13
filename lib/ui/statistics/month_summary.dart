@@ -21,30 +21,30 @@ class MonthExpenses extends StatelessWidget {
     return StoreConnector<AppState, _ViewModel>(
       converter: _ViewModel.fromState,
       builder: (context, vm) {
-        //TODO: add padding
-        return Card(
-          child: StreamBuilder<QuerySnapshot>(
-            stream: FirestoreRepository.snapshotBetween(from, to),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return PaddedCircularProgressIndicator();
-              }
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: FirestoreRepository.snapshotBetween(from, to),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return PaddedCircularProgressIndicator();
+                }
 
-              List<Entry> entries = snapshot.data.documents
-                  .map((ds) => Entry.fromSnapshot(ds))
-                  .where((entry) => entry.type != EntryType.INCOME)
-                  .toList();
+                List<Entry> entries = snapshot.data.documents
+                    .map((ds) => Entry.fromSnapshot(ds))
+                    .where((entry) => entry.type != EntryType.INCOME)
+                    .toList();
 
-              var expenditures = toBars(entries, vm.toCategory);
-
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: HorizontalBarChart(
-                  expenditures,
-                  ascending: false,
-                ),
-              );
-            },
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: HorizontalBarChart(
+                    toBars(entries, vm.toCategory),
+                    ascending: false,
+                  ),
+                );
+              },
+            ),
           ),
         );
       },
