@@ -1,10 +1,10 @@
-import 'dart:collection';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
+import 'package:sink/models/expenditure.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/repository/firestore.dart';
@@ -36,10 +36,11 @@ class MonthExpenses extends StatelessWidget {
                   .where((entry) => entry.type != EntryType.INCOME)
                   .toList();
 
-              Map<String, double> months = group(entries);
-              List<Widget> categoryExpenditures = months.entries
+              var expenditures = groupExpenditures(entries, vm.toCategory);
+
+              List<Widget> categoryExpenditures = expenditures
                   .map(
-                    (MapEntry<String, double> entry) => Padding(
+                    (e) => Padding(
                           padding: EdgeInsets.symmetric(vertical: 4.0),
                           child: Row(
                             children: <Widget>[
@@ -48,21 +49,21 @@ class MonthExpenses extends StatelessWidget {
                                     const EdgeInsets.symmetric(horizontal: 8.0),
                                 //TODO: largest expense = 100%; others = 100 * x (given x < 1.0);
                                 child: SizedBox(
-                                  width:
-                                      75.0, //TODO: adjust bar width for category amount
+                                  width: MediaQuery.of(context).size.width *
+                                      0.4, //TODO: adjust bar width for category amount
                                   height: 20.0,
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(9.0),
                                       ),
-                                      color: vm.resolveId(entry.key).color,
+                                      color: e.bucket.color,
                                     ),
                                   ),
                                 ),
                               ),
                               Text(
-                                "${vm.resolveId(entry.key).name}: ${entry.value}",
+                                "${e.bucket.name}: ${e.amount}",
                               )
                             ],
                           ),
@@ -81,25 +82,30 @@ class MonthExpenses extends StatelessWidget {
   }
 }
 
-// TODO: explicit class for category's amount
-// TODO: sort that class by amount
-Map<String, double> group(List<Entry> entries) {
-  var categories = LinkedHashMap<String, double>();
-  entries.forEach((entry) => categories.update(
-      entry.categoryId, (value) => value + entry.amount,
-      ifAbsent: () => entry.amount));
-  categories.forEach((month, value) => print("$month: $value"));
-
-  return categories;
-}
-
 @immutable
 class _ViewModel {
-  final Function(String) resolveId;
+  final Function(String) toCategory;
 
-  _ViewModel({@required this.resolveId});
+  _ViewModel({@required this.toCategory});
 
   static _ViewModel fromState(Store<AppState> store) {
-    return _ViewModel(resolveId: (id) => getCategory(store.state, id));
+    return _ViewModel(toCategory: (id) => getCategory(store.state, id));
   }
+}
+
+Iterable<Expenditure<Category>> groupExpenditures(
+    List<Entry> entries, Function(String) toCategory) {
+  var categories = Map<Category, double>();
+  entries.forEach(
+    (entry) => categories.update(
+        toCategory(entry.categoryId), (value) => value + entry.amount,
+        ifAbsent: () => entry.amount),
+  );
+
+  var result = categories.entries
+      .map((entry) => Expenditure(bucket: entry.key, amount: entry.value))
+      .toList();
+  result.sort();
+
+  return result.reversed;
 }
