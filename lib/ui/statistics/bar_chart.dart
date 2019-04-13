@@ -163,7 +163,7 @@ class _ColoredBar extends StatelessWidget {
           child: DecoratedBox(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(
-                Radius.circular(9.0),
+                Radius.circular(10.0),
               ),
               color: color,
             ),
