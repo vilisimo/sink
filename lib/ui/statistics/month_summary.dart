@@ -12,10 +12,11 @@ import 'package:sink/ui/statistics/breakdown_chart.dart';
 import 'package:sink/ui/statistics/charts.dart';
 
 class MonthExpenses extends StatelessWidget {
-  final DateTime from; // TODO: calculate month's start
+  final DateTime from;
   final DateTime to;
 
-  MonthExpenses({@required this.from, @required this.to});
+  MonthExpenses({@required this.to})
+      : this.from = new DateTime(to.year, to.month, 1, 0, 0, 0, 0);
 
   @override
   Widget build(BuildContext context) {

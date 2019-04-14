@@ -31,7 +31,7 @@ class CircularChart extends StatelessWidget {
       initialChartData: data,
       chartType: CircularChartType.Radial,
       holeRadius: radius / 5,
-      holeLabel: "$totalAmount",
+      holeLabel: "${totalAmount.toStringAsFixed(2)}",
       labelStyle: TextStyle(fontSize: 16, color: Colors.black),
       edgeStyle: SegmentEdgeStyle.round,
     );
