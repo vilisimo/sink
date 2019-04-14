@@ -84,6 +84,7 @@ class ChartEntry extends StatelessWidget implements Comparable<ChartEntry> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _BarLabel(
             label: label,
@@ -181,19 +182,11 @@ class _ColoredBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.centerLeft,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * percentOfScreen,
-          height: 20.0,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              color: color,
-            ),
-          ),
-        ),
+      width: MediaQuery.of(context).size.width * percentOfScreen,
+      height: 20.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        color: color,
       ),
     );
   }
