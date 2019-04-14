@@ -8,7 +8,8 @@ import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/repository/firestore.dart';
 import 'package:sink/ui/common/progress_indicator.dart';
-import 'package:sink/ui/statistics/bar_chart.dart';
+import 'package:sink/ui/statistics/breakdown_chart.dart';
+import 'package:sink/ui/statistics/charts.dart';
 
 class MonthExpenses extends StatelessWidget {
   final DateTime from; // TODO: calculate month's start
@@ -38,7 +39,7 @@ class MonthExpenses extends StatelessWidget {
 
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: HorizontalBarChart(
+                  child: SortedBreakdown(
                     toBars(entries, vm.toCategory),
                     ascending: false,
                   ),
@@ -63,7 +64,7 @@ class _ViewModel {
   }
 }
 
-List<Bar> toBars(List<Entry> entries, Function(String) toCategory) {
+List<ChartEntry> toBars(List<Entry> entries, Function(String) toCategory) {
   var categories = Map<Category, double>();
   entries.forEach(
     (entry) => categories.update(
@@ -72,7 +73,7 @@ List<Bar> toBars(List<Entry> entries, Function(String) toCategory) {
   );
 
   return categories.entries
-      .map((entry) => Bar(
+      .map((entry) => ChartEntry(
             label: entry.key.name,
             amount: entry.value,
             color: entry.key.color,

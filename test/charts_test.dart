@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:sink/ui/statistics/bar_chart.dart';
+import 'package:sink/ui/statistics/charts.dart';
 import 'package:test/test.dart';
 
 main() {
   test('expenditure with greater amount is considered to be greater', () {
-    var greater = Bar(
+    var greater = ChartEntry(
       label: "filler",
       amount: 1.0,
       color: Colors.red,
     );
-    var smaller = Bar(
+    var smaller = ChartEntry(
       label: "filler",
       amount: 0.0,
       color: Colors.red,
@@ -19,12 +19,12 @@ main() {
   });
 
   test('expenditure with smaller amount is considered to be smaller', () {
-    var greater = Bar(
+    var greater = ChartEntry(
       label: "filler",
       amount: 1.0,
       color: Colors.red,
     );
-    var smaller = Bar(
+    var smaller = ChartEntry(
       label: "filler",
       amount: 0.0,
       color: Colors.red,
@@ -34,12 +34,12 @@ main() {
   });
 
   test('expenditure with equal amount is considered to be smaller', () {
-    var e1 = Bar(
+    var e1 = ChartEntry(
       label: "filler",
       amount: 1.0,
       color: Colors.red,
     );
-    var e2 = Bar(
+    var e2 = ChartEntry(
       label: "filler",
       amount: 1.0,
       color: Colors.red,

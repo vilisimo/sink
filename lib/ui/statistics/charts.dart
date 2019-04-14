@@ -1,42 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'package:sink/common/palette.dart' as Palette;
 
-class HorizontalBarChart extends StatelessWidget {
-  final List<Bar> bars;
+class CircularChart extends StatelessWidget {
+  final _chartKey = GlobalKey<AnimatedCircularChartState>();
 
-  HorizontalBarChart._(this.bars);
+  final List<CircularStackEntry> data;
+  final double totalAmount;
 
-  factory HorizontalBarChart(List<Bar> bars, {bool ascending}) {
-    bars.sort();
-    var asc = ascending ?? false;
-    var sorted = asc ? bars.toList() : bars.reversed.toList();
-    var maxAmount = asc ? sorted.last.amount : sorted.first.amount;
-    var total = sorted.fold(0.0, (prev, next) => prev + next.amount);
+  CircularChart._(this.data, this.totalAmount);
 
-    return new HorizontalBarChart._(
-      sorted
-          .map((b) => b.copyWith(maxAmount: maxAmount, totalAmount: total))
-          .toList(),
-    );
+  factory CircularChart({
+    @required List<ChartEntry> data,
+    @required double totalAmount,
+  }) {
+    var entries = data.map((bar) => toEntry(bar)).toList();
+    var result = [CircularStackEntry(entries, rankKey: "Categories")];
+
+    return CircularChart._(result, totalAmount);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: bars,
+    double radius = MediaQuery.of(context).size.width / 2;
+
+    return AnimatedCircularChart(
+      key: _chartKey,
+      size: Size(radius, radius),
+      initialChartData: data,
+      chartType: CircularChartType.Radial,
+      holeRadius: radius / 5,
+      holeLabel: "$totalAmount",
+      labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+      edgeStyle: SegmentEdgeStyle.round,
     );
+  }
+
+  static CircularSegmentEntry toEntry(ChartEntry bar) => CircularSegmentEntry(
+        bar.amount,
+        bar.color,
+        rankKey: bar.label,
+      );
+}
+
+class HorizontalBarChart extends StatelessWidget {
+  final List<ChartEntry> data;
+  final double maxAmount;
+  final double totalAmount;
+
+  HorizontalBarChart({
+    @required this.data,
+    @required this.maxAmount,
+    @required this.totalAmount,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: data);
   }
 }
 
-class Bar extends StatelessWidget implements Comparable<Bar> {
+class ChartEntry extends StatelessWidget implements Comparable<ChartEntry> {
   final String label;
   final double amount;
   final Color color;
   final double maxAmount;
   final double totalAmount;
 
-  Bar({
+  ChartEntry({
     @required this.label,
     @required this.amount,
     @required this.color,
@@ -67,11 +99,11 @@ class Bar extends StatelessWidget implements Comparable<Bar> {
     );
   }
 
-  Bar copyWith({
+  ChartEntry copyWith({
     double maxAmount,
     double totalAmount,
   }) {
-    return Bar(
+    return ChartEntry(
       label: this.label,
       amount: this.amount,
       color: this.color,
@@ -81,7 +113,7 @@ class Bar extends StatelessWidget implements Comparable<Bar> {
   }
 
   @override
-  int compareTo(Bar other) {
+  int compareTo(ChartEntry other) {
     if (this.amount > other.amount) {
       return 1;
     } else if (this.amount == other.amount) {
@@ -111,15 +143,10 @@ class _BarLabel extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 14.0,
-              ),
-            ),
+            child: Text(label, style: TextStyle(fontSize: 14.0)),
           ),
           Text(
-            percent,
+            "$percent%",
             style: TextStyle(
               fontSize: 12.0,
               color: Palette.dimBlueGrey,
@@ -162,9 +189,7 @@ class _ColoredBar extends StatelessWidget {
           height: 20.0,
           child: DecoratedBox(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10.0),
-              ),
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
               color: color,
             ),
           ),
