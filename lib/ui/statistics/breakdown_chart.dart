@@ -3,22 +3,33 @@ import 'package:sink/common/dot.dart';
 import 'package:sink/ui/statistics/charts.dart';
 
 class SortedBreakdown extends StatelessWidget {
-  final List<ChartEntry> bars;
+  final String month;
+  final List<ChartEntry> data;
   final double maxAmount;
   final double totalAmount;
 
-  SortedBreakdown._(this.bars, this.maxAmount, this.totalAmount);
+  SortedBreakdown._(
+    this.month,
+    this.data,
+    this.maxAmount,
+    this.totalAmount,
+  );
 
-  factory SortedBreakdown(List<ChartEntry> bars, {bool ascending}) {
-    bars.sort();
+  factory SortedBreakdown({
+    @required String month,
+    @required List<ChartEntry> data,
+    bool ascending,
+  }) {
+    data.sort();
     var asc = ascending ?? false;
-    var sorted = asc ? bars.toList() : bars.reversed.toList();
+    var sorted = asc ? data.toList() : data.reversed.toList();
     var max = asc ? sorted.last.amount : sorted.first.amount;
     var total = sorted.fold(0.0, (prev, next) => prev + next.amount);
 
     return SortedBreakdown._(
+      month,
       sorted
-          .map((b) => b.copyWith(maxAmount: max, totalAmount: total))
+          .map((d) => d.copyWith(maxAmount: max, totalAmount: total))
           .toList(),
       max,
       total,
@@ -29,9 +40,16 @@ class SortedBreakdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        CircularBreakdown(data: bars, totalAmount: totalAmount),
+        Text(
+          month,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 24.0,
+          ),
+        ),
+        CircularBreakdown(data: data, totalAmount: totalAmount),
         HorizontalBarChart(
-            data: bars, maxAmount: maxAmount, totalAmount: totalAmount),
+            data: data, maxAmount: maxAmount, totalAmount: totalAmount),
       ],
     );
   }

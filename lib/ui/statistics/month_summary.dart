@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:sink/common/calendar.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/selectors.dart';
@@ -41,7 +42,8 @@ class MonthExpenses extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SortedBreakdown(
-                    toBars(entries, vm.toCategory),
+                    month: monthsName(to),
+                    data: toBars(entries, vm.toCategory),
                     ascending: false,
                   ),
                 );
