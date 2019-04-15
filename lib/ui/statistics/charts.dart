@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'package:sink/common/palette.dart' as Palette;
+import 'package:sink/ui/animation/bar.dart';
 
 class CircularChart extends StatelessWidget {
   final _chartKey = GlobalKey<AnimatedCircularChartState>();
@@ -91,7 +92,7 @@ class ChartEntry extends StatelessWidget implements Comparable<ChartEntry> {
             percent: percent.toStringAsFixed(2),
             amount: amount,
           ),
-          _ColoredBar(
+          AnimatedBar(
             color: color,
             percentOfScreen: widthPercentage,
           ),
@@ -165,28 +166,6 @@ class _BarLabel extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _ColoredBar extends StatelessWidget {
-  final Color color;
-  final percentOfScreen;
-
-  _ColoredBar({
-    @required this.color,
-    @required this.percentOfScreen,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * percentOfScreen,
-      height: 20.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        color: color,
       ),
     );
   }
