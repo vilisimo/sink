@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sink/common/dot.dart';
+import 'package:sink/ui/common/dot.dart';
 import 'package:sink/ui/statistics/charts.dart';
 
 class SortedBreakdown extends StatelessWidget {
