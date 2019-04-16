@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
-import 'package:sink/common/palette.dart' as Palette;
+import 'package:sink/theme/palette.dart' as Palette;
 import 'package:sink/ui/animation/bar.dart';
 
 class CircularChart extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sink/common/calendar.dart';
-import 'package:sink/common/palette.dart' as Palette;
 import 'package:sink/repository/firestore.dart';
 import 'package:sink/repository/firestore_calculator.dart';
+import 'package:sink/theme/palette.dart' as Palette;
 import 'package:sink/ui/common/centered_text.dart';
 import 'package:sink/ui/common/progress_indicator.dart';
 

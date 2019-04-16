@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sink/common/palette.dart' as Palette;
+import 'package:sink/theme/palette.dart' as Palette;
 
 /// Displays expense/income amount. Depending on type of entry, shows an icon
 /// indicating whether it is an expense or an income.

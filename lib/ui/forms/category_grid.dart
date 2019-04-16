@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:sink/common/palette.dart' as Palette;
 import 'package:sink/models/category.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/theme/icons.dart';
+import 'package:sink/theme/palette.dart' as Palette;
 import 'package:sink/ui/forms/category_form.dart';
 
 class CategoryGrid extends StatelessWidget {

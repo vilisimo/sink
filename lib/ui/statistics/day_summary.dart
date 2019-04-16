@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sink/common/palette.dart' as Palette;
 import 'package:sink/models/entry.dart';
+import 'package:sink/theme/palette.dart' as Palette;
 import 'package:sink/ui/common/amount.dart';
 
 class DaySummaryTile extends StatelessWidget {
