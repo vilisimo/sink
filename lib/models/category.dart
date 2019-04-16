@@ -7,12 +7,14 @@ enum CategoryType { EXPENSE, INCOME }
 class Category {
   final String id;
   final String name;
+  final String icon;
   final Color color;
   final CategoryType type;
 
   Category({
     @required this.id,
     @required this.name,
+    @required this.icon,
     @required this.color,
     @required this.type,
   });
@@ -21,6 +23,7 @@ class Category {
     return Category(
       id: document['id'],
       name: document['name'],
+      icon: document['icon'],
       color: Color(document['color']),
       type: document['type'] != null
           ? CategoryType.values[document['type']]
@@ -30,7 +33,7 @@ class Category {
 
   @override
   String toString() {
-    return 'Category{id: $id, name: $name, color: $color, type: $type}';
+    return 'Category{id: $id, name: $name, icon: $icon, color: $color, type: $type}';
   }
 
   @override
@@ -40,10 +43,15 @@ class Category {
           runtimeType == other.runtimeType &&
           id == other.id &&
           name == other.name &&
+          icon == other.icon &&
           color == other.color &&
           type == other.type;
 
   @override
   int get hashCode =>
-      id.hashCode ^ name.hashCode ^ color.hashCode ^ type.hashCode;
+      id.hashCode ^
+      name.hashCode ^
+      icon.hashCode ^
+      color.hashCode ^
+      type.hashCode;
 }

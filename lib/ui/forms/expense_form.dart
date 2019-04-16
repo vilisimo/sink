@@ -8,6 +8,7 @@ import 'package:sink/ui/common/number_input.dart';
 import 'package:sink/ui/common/text_input.dart';
 import 'package:sink/ui/forms/category_grid.dart';
 
+//TODO: rename - it's not only expense anymore
 class ExpenseForm extends StatefulWidget {
   final Function(Entry) onSave;
   final Entry entry;

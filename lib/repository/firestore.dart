@@ -36,6 +36,7 @@ class FirestoreRepository {
     categories.reference().document(category.id).setData({
       'id': category.id,
       'name': category.name,
+      'icon': category.icon,
       'color': category.color.value,
       'type': category.type.index,
     });

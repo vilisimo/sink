@@ -8,7 +8,8 @@ import 'package:test/test.dart';
 
 const white = Material.Colors.white;
 const blue = Material.Colors.blue;
-final black = Material.Colors.black;
+const black = Material.Colors.black;
+const red = Material.Colors.red;
 
 main() {
   test('retrieves last removed entry', () {
@@ -37,9 +38,9 @@ main() {
   test('retrieves used colors', () {
     var state = AppState(
       categories: Set<Category>.from([
-        Category(id: "1", name: "category 1", color: white, type: null),
-        Category(id: "2", name: "category 2", color: blue, type: null),
-        Category(id: "3", name: "category 3", color: black, type: null),
+        Category(id: "1", name: "1", icon: "", color: white, type: null),
+        Category(id: "2", name: "2", icon: "", color: blue, type: null),
+        Category(id: "3", name: "3", icon: "", color: black, type: null),
       ]),
     );
 
@@ -51,38 +52,45 @@ main() {
   });
 
   test('retrieves a set of categories', () {
-    var category = Category(
+    var cat = Category(
       id: "1",
-      name: "category",
-      color: Material.Colors.red,
+      name: "1",
+      icon: "",
+      color: red,
       type: null,
     );
-    var state = AppState(categories: Set<Category>.from([category]));
+    var state = AppState(categories: Set<Category>.from([cat]));
 
     var categories = getCategories(state);
 
     expect(categories.length, 1);
-    expect(categories.first, category);
+    expect(categories.first, cat);
   });
 
   test('retrieves a set of expense categories', () {
     var first = Category(
-        id: "1",
-        name: "expense 1",
-        color: Material.Colors.red,
-        type: CategoryType.EXPENSE);
+      id: "1",
+      icon: "",
+      name: "expense 1",
+      color: red,
+      type: CategoryType.EXPENSE,
+    );
 
     var second = Category(
-        id: "2",
-        name: "expense 2",
-        color: Material.Colors.red,
-        type: CategoryType.INCOME);
+      id: "2",
+      icon: "",
+      name: "expense 2",
+      color: red,
+      type: CategoryType.INCOME,
+    );
 
     var third = Category(
-        id: "3",
-        name: "income",
-        color: Material.Colors.red,
-        type: CategoryType.EXPENSE);
+      id: "3",
+      name: "income",
+      icon: "",
+      color: red,
+      type: CategoryType.EXPENSE,
+    );
 
     var st = AppState(categories: Set<Category>.from([first, second, third]));
 
@@ -102,22 +110,28 @@ main() {
 
   test('retrieves a set of income categories', () {
     var first = Category(
-        id: "1",
-        name: "expense 1",
-        color: Material.Colors.red,
-        type: CategoryType.EXPENSE);
+      id: "1",
+      name: "expense 1",
+      icon: "",
+      color: red,
+      type: CategoryType.EXPENSE,
+    );
 
     var second = Category(
-        id: "2",
-        name: "expense 2",
-        color: Material.Colors.red,
-        type: CategoryType.INCOME);
+      id: "2",
+      name: "expense 2",
+      icon: "",
+      color: red,
+      type: CategoryType.INCOME,
+    );
 
     var third = Category(
-        id: "3",
-        name: "income",
-        color: Material.Colors.red,
-        type: CategoryType.EXPENSE);
+      id: "3",
+      name: "income",
+      icon: "",
+      color: red,
+      type: CategoryType.EXPENSE,
+    );
 
     var st = AppState(categories: Set<Category>.from([first, second, third]));
 
@@ -138,24 +152,24 @@ main() {
   test('should retrieve a category by id', () {
     var state = AppState(
       categories: Set<Category>.from([
-        Category(id: "1", name: "category 1", color: white, type: null),
-        Category(id: "2", name: "category 2", color: blue, type: null),
-        Category(id: "3", name: "category 3", color: black, type: null),
+        Category(id: "1", name: "1", icon: "", color: white, type: null),
+        Category(id: "2", name: "2", icon: "", color: blue, type: null),
+        Category(id: "3", name: "3", icon: "", color: black, type: null),
       ]),
     );
 
     var category = getCategory(state, "2");
 
     expect(category,
-        Category(id: "2", name: "category 2", color: blue, type: null));
+        Category(id: "2", name: "2", icon: "", color: blue, type: null));
   });
 
   test('should indicate that a category could not be found', () {
     var state = AppState(
       categories: Set<Category>.from([
-        Category(id: "1", name: "category 1", color: white, type: null),
-        Category(id: "2", name: "category 2", color: blue, type: null),
-        Category(id: "3", name: "category 3", color: black, type: null),
+        Category(id: "1", name: "1", icon: "", color: white, type: null),
+        Category(id: "2", name: "2", icon: "", color: blue, type: null),
+        Category(id: "3", name: "3", icon: "", color: black, type: null),
       ]),
     );
 

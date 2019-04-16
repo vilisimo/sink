@@ -5,6 +5,7 @@ import 'package:sink/common/palette.dart' as Palette;
 import 'package:sink/models/category.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
+import 'package:sink/theme/icons.dart';
 import 'package:sink/ui/forms/category_form.dart';
 
 class CategoryGrid extends StatelessWidget {
@@ -34,6 +35,7 @@ class CategoryGrid extends StatelessWidget {
       category: Category(
         id: ADD_CATEGORY_ID,
         name: ADD_CATEGORY_ID,
+        icon: 'add',
         color: null,
         type: null,
       ),
@@ -121,10 +123,7 @@ class CategoryTile extends StatelessWidget {
                       : Palette.lightGrey,
                 ),
                 child: Icon(
-                  category.id == CategoryGrid.ADD_CATEGORY_ID
-                      ? Icons.add
-                      // TODO: change it when categories get their own icons
-                      : Icons.add_shopping_cart,
+                  icons[category.icon],
                   color: isSelected ? Colors.white : Colors.black,
                 ),
               ),

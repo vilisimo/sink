@@ -103,7 +103,13 @@ class _ViewModel {
       onSave: (category, color) {
         store.dispatch(
           CreateCategory(
-            Category(id: Uuid().v4(), name: category, color: color, type: type),
+            Category(
+              id: Uuid().v4(),
+              name: category,
+              icon: 'shopping_cart',
+              color: color,
+              type: type,
+            ),
           ),
         );
       },
