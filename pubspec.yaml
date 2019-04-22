@@ -8,6 +8,7 @@ dependencies:
   cloud_firestore: ^0.9.11
   flutter_redux: ^0.5.3
   flutter_circular_chart: ^0.1.0
+  font_awesome_flutter: ^8.4.0
   intl: ^0.15.8
   uuid: ^1.0.3
   quiver: ^2.0.2
