@@ -8,20 +8,19 @@ import 'package:sink/ui/common/number_input.dart';
 import 'package:sink/ui/common/text_input.dart';
 import 'package:sink/ui/forms/category_grid.dart';
 
-//TODO: rename - it's not only expense anymore
-class ExpenseForm extends StatefulWidget {
+class EntryForm extends StatefulWidget {
   final Function(Entry) onSave;
   final Entry entry;
 
-  ExpenseForm({this.onSave, this.entry});
+  EntryForm({this.onSave, this.entry});
 
   @override
-  ExpenseFormState createState() {
-    return ExpenseFormState(entry: this.entry);
+  EntryFormState createState() {
+    return EntryFormState(entry: this.entry);
   }
 }
 
-class ExpenseFormState extends State<ExpenseForm> {
+class EntryFormState extends State<EntryForm> {
   static const style = TextStyle(fontSize: 16.0, color: Colors.black);
   static const inputPadding = EdgeInsets.all(16.0);
   static const cardPadding = EdgeInsets.only(left: 16.0, right: 16.0);
@@ -37,7 +36,7 @@ class ExpenseFormState extends State<ExpenseForm> {
   double _amount;
   String _description;
 
-  ExpenseFormState({this.entry})
+  EntryFormState({this.entry})
       : _date = entry.date ?? DateTime.now(),
         _selectedCategoryId = entry.categoryId,
         _amount = entry.amount,

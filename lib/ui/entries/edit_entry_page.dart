@@ -4,7 +4,7 @@ import 'package:redux/redux.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/state.dart';
-import 'package:sink/ui/forms/expense_form.dart';
+import 'package:sink/ui/forms/entry_form.dart';
 
 class EditExpensePage extends StatelessWidget {
   final Entry entry;
@@ -16,7 +16,7 @@ class EditExpensePage extends StatelessWidget {
     return StoreConnector<AppState, _EditViewModel>(
       converter: _EditViewModel.fromState,
       builder: (context, vm) {
-        return ExpenseForm(
+        return EntryForm(
           onSave: vm.onSave,
           entry: this.entry,
         );
