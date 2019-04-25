@@ -4,8 +4,8 @@ import 'package:sink/common/calendar.dart';
 import 'package:sink/repository/firestore.dart';
 import 'package:sink/repository/firestore_calculator.dart';
 import 'package:sink/theme/palette.dart' as Palette;
-import 'package:sink/ui/common/centered_text.dart';
 import 'package:sink/ui/common/progress_indicator.dart';
+import 'package:sink/ui/common/text.dart';
 
 class BalanceCard extends StatelessWidget {
   final DateTime from;
