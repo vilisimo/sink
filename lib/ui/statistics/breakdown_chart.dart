@@ -81,9 +81,10 @@ class ChartLegend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: data.map((datum) => ChartLabel(datum, totalAmount)).toList(),
+    return Expanded(
+      child: Column(
+        children: data.map((datum) => ChartLabel(datum, totalAmount)).toList(),
+      ),
     );
   }
 }
@@ -103,11 +104,22 @@ class ChartLabel extends StatelessWidget {
           color: datum.color,
           padding: const EdgeInsets.fromLTRB(4.0, 4.0, 12.0, 4.0),
         ),
-        Text(
-          "${(datum.amount / totalAmount * 100).toStringAsFixed(2)}%",
-          textAlign: TextAlign.left,
-          style: TextStyle(fontSize: 16.0),
-        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  datum.label,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Text(
+                "${(datum.amount / totalAmount * 100).toStringAsFixed(2)}%",
+              ),
+            ],
+          ),
+        )
       ],
     );
   }
