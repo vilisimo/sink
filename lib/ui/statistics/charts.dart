@@ -143,28 +143,31 @@ class _BarLabel extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 4.0),
       child: Row(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Text(label, style: TextStyle(fontSize: 14.0)),
-          ),
-          Text(
-            "$percent%",
-            style: TextStyle(
-              fontSize: 12.0,
-              color: Palette.dimBlueGrey,
-            ),
-          ),
-          Expanded(
-            child: Container(
-              alignment: Alignment.centerRight,
-              child: Text(
-                "$amount",
-                style: TextStyle(
-                  fontSize: 12.0,
+          Flexible(
+            child: Row(
+              children: <Widget>[
+                Flexible(
+                  flex: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Text(
+                      label,
+                      style: TextStyle(fontSize: 14.0),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ),
-              ),
+                Expanded(
+                  child: Text(
+                    "$percent%",
+                    style:
+                        TextStyle(fontSize: 12.0, color: Palette.dimBlueGrey),
+                  ),
+                ),
+              ],
             ),
           ),
+          Text("$amount", style: TextStyle(fontSize: 12.0)),
         ],
       ),
     );
