@@ -8,10 +8,7 @@ class StatisticsPage extends StatelessWidget {
     return ListView(
       children: <Widget>[
         MonthExpenses(to: DateTime.now()),
-        YearExpenses(
-          from: DateTime(2018, 5, 0),
-          to: DateTime.now(),
-        ),
+        YearExpenses(to: DateTime.now()),
       ],
     );
   }

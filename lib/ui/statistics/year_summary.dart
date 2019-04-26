@@ -7,10 +7,11 @@ import 'package:sink/ui/common/progress_indicator.dart';
 
 //TODO: show in bar chart?
 class YearExpenses extends StatelessWidget {
-  final DateTime from; // TODO: calculate -12 months from now
+  final DateTime from;
   final DateTime to;
 
-  YearExpenses({@required this.from, @required this.to});
+  YearExpenses({@required this.to})
+      : this.from = DateTime(to.year - 1, to.month + 1);
 
   @override
   Widget build(BuildContext context) {
