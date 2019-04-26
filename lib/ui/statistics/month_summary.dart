@@ -35,8 +35,8 @@ class MonthExpenses extends StatelessWidget {
                 }
 
                 List<Entry> entries = snapshot.data.documents
+                    .where((ds) => ds['type'] != EntryType.INCOME.index)
                     .map((ds) => Entry.fromSnapshot(ds))
-                    .where((entry) => entry.type != EntryType.INCOME)
                     .toList();
 
                 return Padding(
