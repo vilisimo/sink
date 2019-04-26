@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class AnimatedBar extends StatefulWidget {
+class AnimatedHorizontalBar extends StatefulWidget {
   final Color color;
   final double percentOfScreen;
 
-  AnimatedBar({
+  AnimatedHorizontalBar({
     @required this.color,
     @required this.percentOfScreen,
   });
 
   @override
-  State<StatefulWidget> createState() => _AnimatedBarState();
+  State<StatefulWidget> createState() => _AnimatedHorizontalBarState();
 }
 
-class _AnimatedBarState extends State<AnimatedBar>
+class _AnimatedHorizontalBarState extends State<AnimatedHorizontalBar>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 

@@ -92,7 +92,7 @@ class ChartEntry extends StatelessWidget implements Comparable<ChartEntry> {
             percent: percent.toStringAsFixed(2),
             amount: amount,
           ),
-          AnimatedBar(
+          AnimatedHorizontalBar(
             color: color,
             percentOfScreen: widthPercentage,
           ),
