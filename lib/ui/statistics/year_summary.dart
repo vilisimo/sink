@@ -31,14 +31,54 @@ class YearExpenses extends StatelessWidget {
                 .toList();
 
             List<_MonthlyExpense> months = groupByMonth(entries);
-            List<Widget> monthlyExpenditures = months
-                .map((m) => Text("${monthsName(m.date)}: ${m.amount}"))
-                .toList();
 
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
-                children: monthlyExpenditures,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: Text(
+                      "${from.year} - ${to.year}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24.0,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: months
+                        .map(
+                          (m) => Container(
+                                width: MediaQuery.of(context).size.width / 14,
+                                height: m.amount,
+                                decoration: BoxDecoration(
+                                  color: Colors.deepOrange,
+                                ),
+                              ),
+                        )
+                        .toList(),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: months
+                        .map(
+                          (m) => Container(
+                                width: MediaQuery.of(context).size.width / 14,
+                                child: RotatedBox(
+                                  quarterTurns: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Text("${monthsName(m.date)}"),
+                                  ),
+                                ),
+                              ),
+                        )
+                        .toList(),
+                  )
+                ],
               ),
             );
           },
@@ -54,12 +94,10 @@ class YearExpenses extends StatelessWidget {
         (value) => value + entry.amount,
         ifAbsent: () => entry.amount));
 
-    var months = grouped.entries
+    return grouped.entries
         .map((entry) => _MonthlyExpense(entry.key, entry.value))
         .toList()
           ..sort();
-
-    return months.reversed.toList();
   }
 }
 
