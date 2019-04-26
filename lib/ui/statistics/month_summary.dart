@@ -25,7 +25,7 @@ class MonthExpenses extends StatelessWidget {
       converter: _ViewModel.fromState,
       builder: (context, vm) {
         return Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0).copyWith(bottom: 0.0),
           child: Card(
             child: StreamBuilder<QuerySnapshot>(
               stream: FirestoreRepository.snapshotBetween(from, to),

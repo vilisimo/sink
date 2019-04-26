@@ -15,31 +15,34 @@ class YearExpenses extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: StreamBuilder<QuerySnapshot>(
-        stream: FirestoreRepository.snapshotBetween(from, to),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return PaddedCircularProgressIndicator();
-          }
+    return Padding(
+      padding: const EdgeInsets.all(8.0).copyWith(top: 0.0),
+      child: Card(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirestoreRepository.snapshotBetween(from, to),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return PaddedCircularProgressIndicator();
+            }
 
-          List<Entry> entries = snapshot.data.documents
-              .where((ds) => ds['type'] != EntryType.INCOME.index)
-              .map((ds) => Entry.fromSnapshot(ds))
-              .toList();
+            List<Entry> entries = snapshot.data.documents
+                .where((ds) => ds['type'] != EntryType.INCOME.index)
+                .map((ds) => Entry.fromSnapshot(ds))
+                .toList();
 
-          List<_MonthlyExpense> months = groupByMonth(entries);
-          List<Widget> monthlyExpenditures = months
-              .map((m) => Text("${monthsName(m.date)}: ${m.amount}"))
-              .toList();
+            List<_MonthlyExpense> months = groupByMonth(entries);
+            List<Widget> monthlyExpenditures = months
+                .map((m) => Text("${monthsName(m.date)}: ${m.amount}"))
+                .toList();
 
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: monthlyExpenditures,
-            ),
-          );
-        },
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: monthlyExpenditures,
+              ),
+            );
+          },
+        ),
       ),
     );
   }
