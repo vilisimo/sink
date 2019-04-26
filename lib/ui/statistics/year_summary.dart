@@ -24,14 +24,13 @@ class YearExpenses extends StatelessWidget {
           }
 
           List<Entry> entries = snapshot.data.documents
+              .where((ds) => ds['type'] != EntryType.INCOME.index)
               .map((ds) => Entry.fromSnapshot(ds))
-              .where((entry) => entry.type != EntryType.INCOME)
               .toList();
 
-          Map<String, double> months = group(entries);
-          List<Widget> monthlyExpenditures = months.entries
-              .map((MapEntry<String, double> entry) =>
-                  Text("${entry.key}: ${entry.value}"))
+          List<_MonthlyExpense> months = groupByMonth(entries);
+          List<Widget> monthlyExpenditures = months
+              .map((m) => Text("${monthsName(m.date)}: ${m.amount}"))
               .toList();
 
           return Padding(
@@ -44,14 +43,36 @@ class YearExpenses extends StatelessWidget {
       ),
     );
   }
+
+  List<_MonthlyExpense> groupByMonth(List<Entry> entries) {
+    var grouped = Map<DateTime, double>();
+    entries.forEach((entry) => grouped.update(
+        DateTime(entry.date.year, entry.date.month),
+        (value) => value + entry.amount,
+        ifAbsent: () => entry.amount));
+
+    var months = grouped.entries
+        .map((entry) => _MonthlyExpense(entry.key, entry.value))
+        .toList()
+          ..sort();
+
+    return months.reversed.toList();
+  }
 }
 
-// TODO: explicit class for month's amount
-Map<String, double> group(List<Entry> entries) {
-  var months = Map<String, double>();
-  entries.forEach((entry) => months.update(
-      monthsName(entry.date), (value) => value + entry.amount,
-      ifAbsent: () => entry.amount));
+class _MonthlyExpense implements Comparable<_MonthlyExpense> {
+  DateTime date;
+  double amount;
 
-  return months;
+  _MonthlyExpense(this.date, this.amount);
+
+  @override
+  int compareTo(_MonthlyExpense other) {
+    return this.date.compareTo(other.date);
+  }
+
+  @override
+  String toString() {
+    return '_MonthlyExpense{date: $date, amount: $amount}';
+  }
 }
