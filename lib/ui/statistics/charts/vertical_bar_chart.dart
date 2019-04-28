@@ -59,7 +59,7 @@ class VerticalBarChart extends StatelessWidget {
             width: width,
             height: maxHeight * heightPercentage,
             decoration: BoxDecoration(
-              color: Colors.deepOrange,
+              color: entry.color,
             ),
           ),
         ),

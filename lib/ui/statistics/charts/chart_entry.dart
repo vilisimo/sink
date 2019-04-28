@@ -14,7 +14,7 @@ class ChartEntry implements Comparable<ChartEntry> {
     color,
     maxAmount,
     totalAmount,
-  })  : this.color = color ?? Colors.black,
+  })  : this.color = color ?? Colors.red,
         this.maxAmount = maxAmount ?? amount,
         this.totalAmount = totalAmount ?? amount;
 
