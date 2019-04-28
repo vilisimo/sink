@@ -1,11 +1,13 @@
+import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sink/common/calendar.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/repository/firestore.dart';
 import 'package:sink/ui/common/progress_indicator.dart';
+import 'package:sink/ui/statistics/charts/chart_entry.dart';
 
-//TODO: show in bar chart?
 class YearExpenses extends StatelessWidget {
   final DateTime from;
   final DateTime to;
@@ -30,7 +32,7 @@ class YearExpenses extends StatelessWidget {
                 .map((ds) => Entry.fromSnapshot(ds))
                 .toList();
 
-            List<_MonthlyExpense> months = groupByMonth(entries);
+            List<ChartEntry> months = toChartEntries(entries);
 
             return Padding(
               padding: const EdgeInsets.all(8.0),
@@ -71,7 +73,7 @@ class YearExpenses extends StatelessWidget {
                                   quarterTurns: 3,
                                   child: Padding(
                                     padding: const EdgeInsets.only(right: 8.0),
-                                    child: Text("${monthsName(m.date)}"),
+                                    child: Text("${m.label}"),
                                   ),
                                 ),
                               ),
@@ -87,33 +89,14 @@ class YearExpenses extends StatelessWidget {
     );
   }
 
-  List<_MonthlyExpense> groupByMonth(List<Entry> entries) {
-    var grouped = Map<DateTime, double>();
-    entries.forEach((entry) => grouped.update(
-        DateTime(entry.date.year, entry.date.month),
-        (value) => value + entry.amount,
-        ifAbsent: () => entry.amount));
+  List<ChartEntry> toChartEntries(List<Entry> entries) {
+    var grouped = SplayTreeMap<DateTime, double>();
+    entries.forEach((e) => grouped.update(
+        DateTime(e.date.year, e.date.month), (value) => value + e.amount,
+        ifAbsent: () => e.amount));
 
     return grouped.entries
-        .map((entry) => _MonthlyExpense(entry.key, entry.value))
-        .toList()
-          ..sort();
-  }
-}
-
-class _MonthlyExpense implements Comparable<_MonthlyExpense> {
-  DateTime date;
-  double amount;
-
-  _MonthlyExpense(this.date, this.amount);
-
-  @override
-  int compareTo(_MonthlyExpense other) {
-    return this.date.compareTo(other.date);
-  }
-
-  @override
-  String toString() {
-    return '_MonthlyExpense{date: $date, amount: $amount}';
+        .map((e) => ChartEntry(label: monthsName(e.key), amount: e.value))
+        .toList();
   }
 }
