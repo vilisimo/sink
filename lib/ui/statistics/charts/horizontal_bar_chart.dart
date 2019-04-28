@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sink/theme/palette.dart' as Palette;
-import 'package:sink/ui/animation/bar.dart';
+import 'package:sink/ui/animation/bars.dart';
 import 'package:sink/ui/statistics/charts/chart_entry.dart';
 
 class HorizontalBarChart extends StatelessWidget {
