@@ -50,6 +50,10 @@ class SortedBreakdown extends StatelessWidget {
             fontSize: 24.0,
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.only(left: 24.0, top: 8.0, right: 24.0),
+          child: Divider(),
+        ),
         CircularBreakdown(data: data, totalAmount: totalAmount),
         HorizontalBarChart(
             data: data, maxAmount: maxAmount, totalAmount: totalAmount),
