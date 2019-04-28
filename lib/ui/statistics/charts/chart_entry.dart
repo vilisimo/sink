@@ -11,10 +11,11 @@ class ChartEntry implements Comparable<ChartEntry> {
   ChartEntry({
     @required this.label,
     @required this.amount,
-    @required this.color,
+    color,
     maxAmount,
     totalAmount,
-  })  : this.maxAmount = maxAmount ?? amount,
+  })  : this.color = color ?? Colors.black,
+        this.maxAmount = maxAmount ?? amount,
         this.totalAmount = totalAmount ?? amount;
 
   ChartEntry copyWith({
