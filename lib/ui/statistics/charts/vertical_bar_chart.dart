@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sink/ui/animation/bars.dart';
 import 'package:sink/ui/statistics/charts/chart_entry.dart';
 
 class VerticalBarChart extends StatelessWidget {
@@ -55,12 +56,10 @@ class VerticalBarChart extends StatelessWidget {
         ),
         Padding(
           padding: _padding,
-          child: Container(
+          child: AnimatedVerticalBar(
             width: width,
             height: maxHeight * heightPercentage,
-            decoration: BoxDecoration(
-              color: entry.color,
-            ),
+            color: entry.color,
           ),
         ),
       ],

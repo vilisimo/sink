@@ -51,3 +51,56 @@ class _AnimatedHorizontalBarState extends State<AnimatedHorizontalBar>
     );
   }
 }
+
+class AnimatedVerticalBar extends StatefulWidget {
+  final Color color;
+  final double height;
+  final double width;
+
+  AnimatedVerticalBar({
+    @required this.color,
+    @required this.height,
+    @required this.width,
+  });
+
+  @override
+  State<StatefulWidget> createState() => AnimatedVerticalBarState();
+}
+
+class AnimatedVerticalBarState extends State<AnimatedVerticalBar>
+    with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = new AnimationController(
+      duration: const Duration(milliseconds: 350),
+      vsync: this,
+    );
+
+    _controller.addListener(() {
+      setState(() {});
+    });
+
+    _controller.forward().orCancel;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double heightFraction = _controller.value;
+    return Container(
+      width: widget.width,
+      height: widget.height * heightFraction,
+      decoration: BoxDecoration(
+        color: widget.color,
+      ),
+    );
+  }
+}
