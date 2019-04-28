@@ -41,4 +41,9 @@ class ChartEntry implements Comparable<ChartEntry> {
       return -1;
     }
   }
+
+  @override
+  String toString() {
+    return 'ChartEntry{label: $label, amount: $amount, color: $color, maxAmount: $maxAmount, totalAmount: $totalAmount}';
+  }
 }
