@@ -17,10 +17,13 @@ class HorizontalBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: data.map((d) => _toHorizontalBar(d)).toList());
+    double maxWidth = MediaQuery.of(context).size.width;
+    return Column(
+      children: data.map((d) => _toHorizontalBar(d, maxWidth)).toList(),
+    );
   }
 
-  Widget _toHorizontalBar(ChartEntry entry) {
+  Widget _toHorizontalBar(ChartEntry entry, double maxWidth) {
     final widthPercentage = entry.amount / maxAmount;
     final percent = entry.amount / totalAmount * 100;
 
@@ -34,9 +37,12 @@ class HorizontalBarChart extends StatelessWidget {
             percent: percent.toStringAsFixed(2),
             amount: entry.amount,
           ),
-          AnimatedHorizontalBar(
+          AnimatedBar(
+            width: maxWidth * widthPercentage,
+            height: 20.0,
             color: entry.color,
-            percentOfScreen: widthPercentage,
+            horizontal: true,
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
           ),
         ],
       ),

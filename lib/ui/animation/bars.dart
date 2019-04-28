@@ -1,73 +1,29 @@
 import 'package:flutter/material.dart';
 
-class AnimatedHorizontalBar extends StatefulWidget {
-  final Color color;
-  final double percentOfScreen;
-
-  AnimatedHorizontalBar({
-    @required this.color,
-    @required this.percentOfScreen,
-  });
-
-  @override
-  State<StatefulWidget> createState() => _AnimatedHorizontalBarState();
-}
-
-class _AnimatedHorizontalBarState extends State<AnimatedHorizontalBar>
-    with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = new AnimationController(
-      duration: const Duration(milliseconds: 350),
-      vsync: this,
-    );
-
-    _controller.addListener(() {
-      setState(() {});
-    });
-
-    _controller.forward().orCancel;
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final double width = _controller.value;
-    return Container(
-      width: MediaQuery.of(context).size.width * widget.percentOfScreen * width,
-      height: 20.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        color: widget.color,
-      ),
-    );
-  }
-}
-
-class AnimatedVerticalBar extends StatefulWidget {
-  final Color color;
-  final double height;
+class AnimatedBar extends StatefulWidget {
   final double width;
+  final double height;
+  final Color color;
+  final bool horizontal;
+  final BorderRadiusGeometry borderRadius;
+  final Duration duration;
 
-  AnimatedVerticalBar({
-    @required this.color,
-    @required this.height,
+  AnimatedBar({
     @required this.width,
-  });
+    @required this.height,
+    @required this.color,
+    horizontal,
+    borderRadius,
+    duration,
+  })  : this.horizontal = horizontal ?? false,
+        this.borderRadius = borderRadius,
+        this.duration = duration ?? const Duration(milliseconds: 350);
 
   @override
-  State<StatefulWidget> createState() => AnimatedVerticalBarState();
+  State<StatefulWidget> createState() => _AnimatedBarState();
 }
 
-class AnimatedVerticalBarState extends State<AnimatedVerticalBar>
+class _AnimatedBarState extends State<AnimatedBar>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
@@ -75,7 +31,7 @@ class AnimatedVerticalBarState extends State<AnimatedVerticalBar>
   void initState() {
     super.initState();
     _controller = new AnimationController(
-      duration: const Duration(milliseconds: 350),
+      duration: widget.duration,
       vsync: this,
     );
 
@@ -94,11 +50,12 @@ class AnimatedVerticalBarState extends State<AnimatedVerticalBar>
 
   @override
   Widget build(BuildContext context) {
-    final double heightFraction = _controller.value;
+    var fraction = _controller.value;
     return Container(
-      width: widget.width,
-      height: widget.height * heightFraction,
+      width: widget.horizontal ? widget.width * fraction : widget.width,
+      height: widget.horizontal ? widget.height : widget.height * fraction,
       decoration: BoxDecoration(
+        borderRadius: widget.borderRadius,
         color: widget.color,
       ),
     );

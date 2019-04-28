@@ -56,10 +56,11 @@ class VerticalBarChart extends StatelessWidget {
         ),
         Padding(
           padding: _padding,
-          child: AnimatedVerticalBar(
+          child: AnimatedBar(
             width: width,
             height: maxHeight * heightPercentage,
             color: entry.color,
+            horizontal: false,
           ),
         ),
       ],
