@@ -58,80 +58,39 @@ class HorizontalBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: data);
+    return Column(children: data.map((d) => _toHorizontalBar(d)).toList());
   }
-}
 
-class ChartEntry extends StatelessWidget implements Comparable<ChartEntry> {
-  final String label;
-  final double amount;
-  final Color color;
-  final double maxAmount;
-  final double totalAmount;
+  Widget _toHorizontalBar(ChartEntry entry) {
+    final widthPercentage = entry.amount / maxAmount;
+    final percent = entry.amount / totalAmount * 100;
 
-  ChartEntry({
-    @required this.label,
-    @required this.amount,
-    @required this.color,
-    maxAmount,
-    totalAmount,
-  })  : this.maxAmount = maxAmount ?? amount,
-        this.totalAmount = totalAmount ?? amount;
-
-  @override
-  Widget build(BuildContext context) {
-    final widthPercentage = amount / maxAmount;
-    final percent = amount / totalAmount * 100;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _BarLabel(
-            label: label,
+          _HorizontalBarLabel(
+            label: entry.label,
             percent: percent.toStringAsFixed(2),
-            amount: amount,
+            amount: entry.amount,
           ),
           AnimatedHorizontalBar(
-            color: color,
+            color: entry.color,
             percentOfScreen: widthPercentage,
           ),
         ],
       ),
     );
   }
-
-  ChartEntry copyWith({
-    double maxAmount,
-    double totalAmount,
-  }) {
-    return ChartEntry(
-      label: this.label,
-      amount: this.amount,
-      color: this.color,
-      maxAmount: maxAmount ?? this.maxAmount,
-      totalAmount: totalAmount ?? this.totalAmount,
-    );
-  }
-
-  @override
-  int compareTo(ChartEntry other) {
-    if (this.amount > other.amount) {
-      return 1;
-    } else if (this.amount == other.amount) {
-      return 0;
-    } else {
-      return -1;
-    }
-  }
 }
 
-class _BarLabel extends StatelessWidget {
+class _HorizontalBarLabel extends StatelessWidget {
   final String label;
   final String percent;
   final double amount;
 
-  _BarLabel({
+  _HorizontalBarLabel({
     @required this.label,
     @required this.percent,
     @required this.amount,
@@ -171,5 +130,46 @@ class _BarLabel extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class ChartEntry implements Comparable<ChartEntry> {
+  final String label;
+  final double amount;
+  final Color color;
+  final double maxAmount;
+  final double totalAmount;
+
+  ChartEntry({
+    @required this.label,
+    @required this.amount,
+    @required this.color,
+    maxAmount,
+    totalAmount,
+  })  : this.maxAmount = maxAmount ?? amount,
+        this.totalAmount = totalAmount ?? amount;
+
+  ChartEntry copyWith({
+    double maxAmount,
+    double totalAmount,
+  }) {
+    return ChartEntry(
+      label: this.label,
+      amount: this.amount,
+      color: this.color,
+      maxAmount: maxAmount ?? this.maxAmount,
+      totalAmount: totalAmount ?? this.totalAmount,
+    );
+  }
+
+  @override
+  int compareTo(ChartEntry other) {
+    if (this.amount > other.amount) {
+      return 1;
+    } else if (this.amount == other.amount) {
+      return 0;
+    } else {
+      return -1;
+    }
   }
 }
