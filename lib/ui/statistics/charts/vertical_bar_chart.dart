@@ -43,6 +43,7 @@ class VerticalBarChart extends StatelessWidget {
     final heightPercentage = entry.amount / maxAmount;
 
     return Column(
+      key: ObjectKey(entry),
       children: <Widget>[
         RotatedBox(
           quarterTurns: 3,
@@ -55,6 +56,7 @@ class VerticalBarChart extends StatelessWidget {
           ),
         ),
         Padding(
+          key: ObjectKey(entry),
           padding: _padding,
           child: AnimatedBar(
             width: width,
@@ -69,6 +71,7 @@ class VerticalBarChart extends StatelessWidget {
 
   Widget _toBarLabel(ChartEntry entry, double width) {
     return Padding(
+      key: ObjectKey(entry),
       padding: _padding,
       child: Container(
         alignment: Alignment.center,

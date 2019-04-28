@@ -39,7 +39,7 @@ class _AnimatedBarState extends State<AnimatedBar>
       setState(() {});
     });
 
-    _controller.forward().orCancel;
+    _controller.forward();
   }
 
   @override
