@@ -1,49 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'package:sink/theme/palette.dart' as Palette;
 import 'package:sink/ui/animation/bar.dart';
-
-class CircularChart extends StatelessWidget {
-  final _chartKey = GlobalKey<AnimatedCircularChartState>();
-
-  final List<CircularStackEntry> data;
-  final double totalAmount;
-
-  CircularChart._(this.data, this.totalAmount);
-
-  factory CircularChart({
-    @required List<ChartEntry> data,
-    @required double totalAmount,
-  }) {
-    var entries = data.map((bar) => toEntry(bar)).toList();
-    var result = [CircularStackEntry(entries, rankKey: "Categories")];
-
-    return CircularChart._(result, totalAmount);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    double radius = MediaQuery.of(context).size.width / 2;
-
-    return AnimatedCircularChart(
-      key: _chartKey,
-      size: Size(radius, radius),
-      initialChartData: data,
-      chartType: CircularChartType.Radial,
-      holeRadius: radius / 5,
-      holeLabel: "${totalAmount.toStringAsFixed(2)}",
-      labelStyle: TextStyle(fontSize: 16, color: Colors.black),
-      edgeStyle: SegmentEdgeStyle.round,
-    );
-  }
-
-  static CircularSegmentEntry toEntry(ChartEntry bar) => CircularSegmentEntry(
-        bar.amount,
-        bar.color,
-        rankKey: bar.label,
-      );
-}
+import 'package:sink/ui/statistics/charts/chart_entry.dart';
 
 class HorizontalBarChart extends StatelessWidget {
   final List<ChartEntry> data;
@@ -130,46 +89,5 @@ class _HorizontalBarLabel extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class ChartEntry implements Comparable<ChartEntry> {
-  final String label;
-  final double amount;
-  final Color color;
-  final double maxAmount;
-  final double totalAmount;
-
-  ChartEntry({
-    @required this.label,
-    @required this.amount,
-    @required this.color,
-    maxAmount,
-    totalAmount,
-  })  : this.maxAmount = maxAmount ?? amount,
-        this.totalAmount = totalAmount ?? amount;
-
-  ChartEntry copyWith({
-    double maxAmount,
-    double totalAmount,
-  }) {
-    return ChartEntry(
-      label: this.label,
-      amount: this.amount,
-      color: this.color,
-      maxAmount: maxAmount ?? this.maxAmount,
-      totalAmount: totalAmount ?? this.totalAmount,
-    );
-  }
-
-  @override
-  int compareTo(ChartEntry other) {
-    if (this.amount > other.amount) {
-      return 1;
-    } else if (this.amount == other.amount) {
-      return 0;
-    } else {
-      return -1;
-    }
   }
 }

@@ -9,8 +9,8 @@ import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/repository/firestore.dart';
 import 'package:sink/ui/common/progress_indicator.dart';
-import 'package:sink/ui/statistics/breakdown_chart.dart';
-import 'package:sink/ui/statistics/charts.dart';
+import 'package:sink/ui/statistics/charts/breakdown_chart.dart';
+import 'package:sink/ui/statistics/charts/chart_entry.dart';
 
 class MonthExpenses extends StatelessWidget {
   final DateTime from;

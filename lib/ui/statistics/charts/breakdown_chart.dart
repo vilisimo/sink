@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sink/ui/common/dot.dart';
-import 'package:sink/ui/statistics/charts.dart';
+import 'package:sink/ui/statistics/charts/chart_entry.dart';
+
+import 'circular_chart.dart';
+import 'horizontal_bar_chart.dart';
 
 class SortedBreakdown extends StatelessWidget {
   final String month;

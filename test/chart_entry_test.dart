@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sink/ui/statistics/charts.dart';
+import 'package:sink/ui/statistics/charts/chart_entry.dart';
 import 'package:test/test.dart';
 
 main() {
