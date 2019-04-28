@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:quiver/iterables.dart';
 import 'package:sink/ui/statistics/charts/chart_entry.dart';
+import 'package:sink/ui/statistics/charts/vertical_bar_chart.dart';
 
 class YearBreakdown extends StatelessWidget {
   final String label;
   final List<ChartEntry> data;
   final double maxAmount;
-  final double total;
+  final double totalAmount;
 
-  YearBreakdown._(this.label, this.data, this.maxAmount, this.total);
+  YearBreakdown._(this.label, this.data, this.maxAmount, this.totalAmount);
 
   factory YearBreakdown({
     @required String label,
@@ -18,7 +19,15 @@ class YearBreakdown extends StatelessWidget {
     var maxAmount = max(amounts);
     var totalAmount = amounts.reduce((a, b) => a + b);
 
-    return YearBreakdown._(label, data, maxAmount, totalAmount);
+    return YearBreakdown._(
+      label,
+      data
+          .map(
+              (d) => d.copyWith(maxAmount: maxAmount, totalAmount: totalAmount))
+          .toList(),
+      maxAmount,
+      totalAmount,
+    );
   }
 
   @override
@@ -27,48 +36,29 @@ class YearBreakdown extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
-            child: Text(
-              label,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24.0,
-              ),
+          Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 24.0,
             ),
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: data
-                .map(
-                  (m) => Container(
-                        width: MediaQuery.of(context).size.width / 14,
-                        height: m.amount,
-                        decoration: BoxDecoration(
-                          color: Colors.deepOrange,
-                        ),
-                      ),
-                )
-                .toList(),
+          Text(
+            "Total: $totalAmount",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18.0,
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: data
-                .map(
-                  (m) => Container(
-                        width: MediaQuery.of(context).size.width / 14,
-                        child: RotatedBox(
-                          quarterTurns: 3,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Text("${m.label}"),
-                          ),
-                        ),
-                      ),
-                )
-                .toList(),
-          )
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24.0, 8.0, 24.0, 8.0),
+            child: Divider(),
+          ),
+          VerticalBarChart(
+            data: data,
+            maxAmount: maxAmount,
+            maxHeight: 250,
+          ),
         ],
       ),
     );
