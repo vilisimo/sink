@@ -6,6 +6,7 @@ import 'package:sink/common/calendar.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/repository/firestore.dart';
 import 'package:sink/ui/common/progress_indicator.dart';
+import 'package:sink/ui/statistics/charts/chart_components.dart';
 import 'package:sink/ui/statistics/charts/chart_entry.dart';
 import 'package:sink/ui/statistics/charts/year_breakdown.dart';
 
@@ -35,9 +36,12 @@ class YearExpenses extends StatelessWidget {
 
             List<ChartEntry> months = toChartEntries(entries);
 
-            return YearBreakdown(
-              label: "${from.year} - ${to.year}",
-              data: months,
+            var label = "${from.year} - ${to.year}";
+            return Padding(
+              padding: EdgeInsets.all(8.0),
+              child: months.isEmpty
+                  ? EmptyBreakdown(periodName: label)
+                  : YearBreakdown(label: label, data: months),
             );
           },
         ),

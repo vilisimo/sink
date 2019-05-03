@@ -10,6 +10,7 @@ import 'package:sink/redux/state.dart';
 import 'package:sink/repository/firestore.dart';
 import 'package:sink/ui/common/progress_indicator.dart';
 import 'package:sink/ui/statistics/charts/breakdown_chart.dart';
+import 'package:sink/ui/statistics/charts/chart_components.dart';
 import 'package:sink/ui/statistics/charts/chart_entry.dart';
 
 class MonthExpenses extends StatelessWidget {
@@ -39,13 +40,16 @@ class MonthExpenses extends StatelessWidget {
                     .map((ds) => Entry.fromSnapshot(ds))
                     .toList();
 
+                var label = monthsName(to);
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: SortedBreakdown(
-                    month: monthsName(to),
-                    data: toBars(entries, vm.toCategory),
-                    ascending: false,
-                  ),
+                  child: entries.isEmpty
+                      ? EmptyBreakdown(periodName: label)
+                      : SortedBreakdown(
+                          month: label,
+                          data: toBars(entries, vm.toCategory),
+                          ascending: false,
+                        ),
                 );
               },
             ),

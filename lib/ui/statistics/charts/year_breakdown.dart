@@ -33,23 +33,16 @@ class YearBreakdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: <Widget>[
-          ChartTitle(title: label),
-          ChartSubtitle(subtitle: "Total: $totalAmount"),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24.0, 8.0, 24.0, 8.0),
-            child: Divider(),
-          ),
-          VerticalBarChart(
-            data: data,
-            maxAmount: maxAmount,
-            maxHeight: 250,
-          ),
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        ChartTitle(title: label),
+        ChartSubtitle(subtitle: "Total: $totalAmount"),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(24.0, 8.0, 24.0, 8.0),
+          child: Divider(),
+        ),
+        VerticalBarChart(data: data, maxAmount: maxAmount, maxHeight: 250),
+      ],
     );
   }
 }
