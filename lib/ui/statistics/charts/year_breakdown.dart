@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiver/iterables.dart';
+import 'package:sink/ui/statistics/charts/chart_components.dart';
 import 'package:sink/ui/statistics/charts/chart_entry.dart';
 import 'package:sink/ui/statistics/charts/vertical_bar_chart.dart';
 
@@ -36,20 +37,8 @@ class YearBreakdown extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: <Widget>[
-          Text(
-            label,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 24.0,
-            ),
-          ),
-          Text(
-            "Total: $totalAmount",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18.0,
-            ),
-          ),
+          ChartTitle(title: label),
+          ChartSubtitle(subtitle: "Total: $totalAmount"),
           Padding(
             padding: const EdgeInsets.fromLTRB(24.0, 8.0, 24.0, 8.0),
             child: Divider(),
