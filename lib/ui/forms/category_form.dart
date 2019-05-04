@@ -10,6 +10,8 @@ import 'package:sink/ui/common/text_input.dart';
 import 'package:sink/ui/forms/color_grid.dart';
 import 'package:uuid/uuid.dart';
 
+import 'icon_grid.dart';
+
 class CategoryForm extends StatefulWidget {
   final CategoryType type;
 
@@ -23,6 +25,7 @@ class CategoryFormState extends State<CategoryForm> {
   List<Color> colors;
   String categoryName;
   Color color;
+  String iconName;
 
   @override
   void initState() {
@@ -43,8 +46,17 @@ class CategoryFormState extends State<CategoryForm> {
     });
   }
 
-  void handleSave(Function(String, Color) onSave, BuildContext context) {
-    onSave(categoryName, color == null ? colors[0] : color);
+  void handleIconTap(String newIconName) {
+    setState(() {
+      this.iconName = newIconName;
+    });
+  }
+
+  void handleSave(
+    Function(String, Color, String) onSave,
+    BuildContext context,
+  ) {
+    onSave(categoryName, color == null ? colors[0] : color, iconName);
     Navigator.pop(context);
   }
 
@@ -65,7 +77,7 @@ class CategoryFormState extends State<CategoryForm> {
                 disabledColor: Colors.grey,
                 iconSize: 28.0,
                 icon: Icon(Icons.check),
-                onPressed: !isBlank(categoryName)
+                onPressed: !isBlank(categoryName) && !isBlank(iconName)
                     ? () => handleSave(vm.onSave, context)
                     : null,
               ),
@@ -81,6 +93,7 @@ class CategoryFormState extends State<CategoryForm> {
                 ),
               ),
               ColorGrid(colors: colors, onTap: handleColorTap),
+              IconGrid(selectedColor: color ?? colors[0], onTap: handleIconTap),
             ],
           ),
         );
@@ -90,7 +103,7 @@ class CategoryFormState extends State<CategoryForm> {
 }
 
 class _ViewModel {
-  final Function(String, Color) onSave;
+  final Function(String, Color, String) onSave;
   final Set<Color> usedColors;
 
   _ViewModel({@required this.onSave, @required this.usedColors});
@@ -100,13 +113,13 @@ class _ViewModel {
     CategoryType type,
   ) {
     return _ViewModel(
-      onSave: (category, color) {
+      onSave: (category, color, iconName) {
         store.dispatch(
           CreateCategory(
             Category(
               id: Uuid().v4(),
               name: category,
-              icon: 'shopping_cart',
+              icon: iconName,
               color: color,
               type: type,
             ),
