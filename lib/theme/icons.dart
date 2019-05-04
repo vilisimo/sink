@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-LinkedHashMap<String, IconData> icons = {
+final LinkedHashMap<String, IconData> icons = {
   // Generic
   "add": Icons.add,
 
