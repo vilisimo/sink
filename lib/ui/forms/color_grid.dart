@@ -7,9 +7,7 @@ class ColorGrid extends StatefulWidget {
   ColorGrid({@required this.colors, @required this.onTap});
 
   @override
-  ColorGridState createState() {
-    return ColorGridState(colors, onTap);
-  }
+  ColorGridState createState() => ColorGridState(colors, onTap);
 }
 
 class ColorGridState extends State<StatefulWidget> {
