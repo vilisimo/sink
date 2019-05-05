@@ -83,18 +83,24 @@ class CategoryFormState extends State<CategoryForm> {
               ),
             ],
           ),
-          body: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ClearableTextInput(
-                  hintText: "Category Name",
-                  onChange: (value) => handleNameChange(value),
-                ),
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ClearableTextInput(
+                      hintText: "Category Name",
+                      onChange: (value) => handleNameChange(value),
+                    ),
+                  ),
+                  ColorGrid(colors: colors, onTap: handleColorTap),
+                  IconGrid(
+                      selectedColor: color ?? colors[0], onTap: handleIconTap),
+                ],
               ),
-              ColorGrid(colors: colors, onTap: handleColorTap),
-              IconGrid(selectedColor: color ?? colors[0], onTap: handleIconTap),
-            ],
+            ),
           ),
         );
       },
