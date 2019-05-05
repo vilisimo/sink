@@ -30,17 +30,19 @@ class ColorGridState extends State<StatefulWidget> {
     return Flexible(
       child: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-        child: GridView.count(
-          shrinkWrap: true,
-          primary: true,
-          physics: BouncingScrollPhysics(),
-          crossAxisCount: 5,
-          children: _colors.map((color) {
-            return Padding(
-              padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-              child: ColorButton(color, _selectedColor == color, _handleTap),
-            );
-          }).toList(),
+        child: Scrollbar(
+          child: GridView.count(
+            shrinkWrap: true,
+            primary: true,
+            physics: BouncingScrollPhysics(),
+            crossAxisCount: 5,
+            children: _colors.map((color) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                child: ColorButton(color, _selectedColor == color, _handleTap),
+              );
+            }).toList(),
+          ),
         ),
       ),
     );
