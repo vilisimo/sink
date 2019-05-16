@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
@@ -38,6 +39,13 @@ class LoadCategories {
   final Set<Category> categories;
 
   LoadCategories(this.categories);
+}
+
+@immutable
+class LoadColors {
+  final Set<Color> usedColors;
+
+  LoadColors(this.usedColors);
 }
 
 @immutable

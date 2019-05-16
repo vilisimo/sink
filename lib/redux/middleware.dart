@@ -17,6 +17,7 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
         Set<Category> categories = Set();
         qs.documents.forEach((ds) => categories.add(Category.fromSnapshot(ds)));
         store.dispatch(LoadCategories(categories));
+        store.dispatch(LoadColors(categories.map((c) => c.color).toSet()));
       });
     } else if (action is AddEntry) {
       FirestoreRepository.create(action.entry);

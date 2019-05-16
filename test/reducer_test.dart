@@ -4,6 +4,7 @@ import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/reducers.dart';
 import 'package:sink/redux/state.dart';
+import 'package:sink/theme/palette.dart';
 import 'package:test/test.dart';
 
 main() {
@@ -112,5 +113,22 @@ main() {
 
     expect(newState.categories, categories);
     expect(newState.areCategoriesLoading, false);
+  });
+
+  test('LoadColors returns a state with colors', () {
+    var state = AppState();
+
+    var newState = reduce(state, LoadColors(Set.from([])));
+
+    expect(newState.availableColors, materialColors);
+  });
+
+  test('LoadColors returns a state with intersection of colors', () {
+    var state = AppState();
+
+    var newState = reduce(state, LoadColors(Set.from([Colors.red])));
+
+    expect(newState.availableColors, isNotEmpty);
+    expect(newState.availableColors, isNot(containsAll([Colors.red])));
   });
 }

@@ -93,4 +93,21 @@ main() {
 
     expect(result.areCategoriesLoading, state.areCategoriesLoading);
   });
+
+  test('returns state with new colors', () {
+    var state = AppState(availableColors: Set<Color>.from([Colors.red]));
+
+    final newColors = Set<Color>.from([Colors.green]);
+    final result = state.copyWith(availableColors: newColors);
+
+    expect(result.availableColors, newColors);
+  });
+
+  test('returns state with old colors', () {
+    var state = AppState(availableColors: Set<Color>.from([Colors.red]));
+
+    final result = state.copyWith(availableColors: null);
+
+    expect(result.availableColors, state.availableColors);
+  });
 }

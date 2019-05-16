@@ -1,6 +1,7 @@
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/state.dart';
+import 'package:sink/theme/palette.dart';
 
 AppState reduce(AppState state, dynamic action) {
   switch (action.runtimeType) {
@@ -19,6 +20,11 @@ AppState reduce(AppState state, dynamic action) {
       return state.copyWith(
         categories: Set.from(action.categories),
         areCategoriesLoading: false,
+      );
+
+    case LoadColors:
+      return state.copyWith(
+        availableColors: Set.from(materialColors)..removeAll(action.usedColors),
       );
 
     default:
