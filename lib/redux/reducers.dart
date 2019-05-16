@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/state.dart';
@@ -23,9 +24,8 @@ AppState reduce(AppState state, dynamic action) {
       );
 
     case LoadColors:
-      return state.copyWith(
-        availableColors: Set.from(materialColors)..removeAll(action.usedColors),
-      );
+      Set<Color> used = Set.from(action.usedColors);
+      return state.copyWith(availableColors: materialColors.difference(used));
 
     default:
       return state;

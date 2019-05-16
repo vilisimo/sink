@@ -129,6 +129,6 @@ main() {
     var newState = reduce(state, LoadColors(Set.from([Colors.red])));
 
     expect(newState.availableColors, isNotEmpty);
-    expect(newState.availableColors, isNot(containsAll([Colors.red])));
+    expect(newState.availableColors.contains(Colors.red), false);
   });
 }

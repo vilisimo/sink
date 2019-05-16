@@ -22,17 +22,9 @@ class CategoryForm extends StatefulWidget {
 }
 
 class CategoryFormState extends State<CategoryForm> {
-  List<Color> colors;
   String categoryName;
   Color color;
   String iconName;
-
-  @override
-  void initState() {
-    colors = List.from(Colors.primaries);
-    colors.addAll(Colors.accents);
-    super.initState();
-  }
 
   void handleNameChange(String newName) {
     setState(() {
@@ -54,9 +46,10 @@ class CategoryFormState extends State<CategoryForm> {
 
   void handleSave(
     Function(String, Color, String) onSave,
+    Color fallbackColor,
     BuildContext context,
   ) {
-    onSave(categoryName, color == null ? colors[0] : color, iconName);
+    onSave(categoryName, color == null ? fallbackColor : color, iconName);
     Navigator.pop(context);
   }
 
@@ -65,8 +58,7 @@ class CategoryFormState extends State<CategoryForm> {
     return StoreConnector<AppState, _ViewModel>(
       converter: (state) => _ViewModel.fromState(state, widget.type),
       builder: (BuildContext context, _ViewModel vm) {
-        colors.removeWhere((color) => vm.usedColors
-            .contains(Color.fromRGBO(color.red, color.green, color.blue, 1.0)));
+        Set<Color> colors = vm.availableColors;
 
         return Scaffold(
           appBar: AppBar(
@@ -78,7 +70,7 @@ class CategoryFormState extends State<CategoryForm> {
                 iconSize: 28.0,
                 icon: Icon(Icons.check),
                 onPressed: !isBlank(categoryName) && !isBlank(iconName)
-                    ? () => handleSave(vm.onSave, context)
+                    ? () => handleSave(vm.onSave, colors.first, context)
                     : null,
               ),
             ],
@@ -97,7 +89,8 @@ class CategoryFormState extends State<CategoryForm> {
                   ),
                   ColorGrid(colors: colors, onTap: handleColorTap),
                   IconGrid(
-                      selectedColor: color ?? colors[0], onTap: handleIconTap),
+                      selectedColor: color ?? colors.first,
+                      onTap: handleIconTap),
                 ],
               ),
             ),
@@ -111,8 +104,13 @@ class CategoryFormState extends State<CategoryForm> {
 class _ViewModel {
   final Function(String, Color, String) onSave;
   final Set<Color> usedColors;
+  final Set<Color> availableColors;
 
-  _ViewModel({@required this.onSave, @required this.usedColors});
+  _ViewModel({
+    @required this.onSave,
+    @required this.usedColors,
+    @required this.availableColors,
+  });
 
   static _ViewModel fromState(
     Store<AppState> store,
@@ -133,6 +131,7 @@ class _ViewModel {
         );
       },
       usedColors: getUsedColors(store.state),
+      availableColors: getAvailableColors(store.state),
     );
   }
 }

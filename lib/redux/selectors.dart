@@ -9,6 +9,8 @@ Entry getLastRemoved(AppState state) => state.removed.last;
 Set<Color> getUsedColors(AppState state) =>
     state.categories.map((category) => category.color).toSet();
 
+Set<Color> getAvailableColors(AppState state) => state.availableColors;
+
 Set<Category> getCategories(AppState state) => state.categories;
 
 Set<Category> getExpenseCategories(AppState state) => state.categories

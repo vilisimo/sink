@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
+import 'package:sink/theme/palette.dart';
 
 @immutable
 class AppState {
@@ -15,7 +16,7 @@ class AppState {
       : this.removed = removed ?? List(),
         this.categories = categories ?? Set(),
         this.areCategoriesLoading = areCategoriesLoading ?? true,
-        this.availableColors = availableColors ?? Set();
+        this.availableColors = availableColors ?? Set.from(materialColors);
 
   AppState copyWith({
     List<Entry> removed,

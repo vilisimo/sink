@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ColorGrid extends StatefulWidget {
-  final List<Color> colors;
+  final Set<Color> colors;
   final Function(Color) onTap;
 
   ColorGrid({@required this.colors, @required this.onTap});
@@ -11,11 +11,11 @@ class ColorGrid extends StatefulWidget {
 }
 
 class ColorGridState extends State<StatefulWidget> {
-  List<Color> _colors;
+  Set<Color> _colors;
   Color _selectedColor;
   Function(Color) _onTap;
 
-  ColorGridState(this._colors, this._onTap) : _selectedColor = _colors[0];
+  ColorGridState(this._colors, this._onTap) : _selectedColor = _colors.first;
 
   void _handleTap(Color newColor) {
     _onTap(newColor);

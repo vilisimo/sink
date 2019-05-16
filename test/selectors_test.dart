@@ -186,4 +186,13 @@ main() {
     state = state.copyWith(areCategoriesLoading: false);
     expect(areCategoriesLoading(state), false);
   });
+
+  test('retrieves available colors', () {
+    var colors = Set<Material.Color>.from([Material.Colors.red]);
+    var state = AppState(availableColors: colors);
+
+    var result = getAvailableColors(state);
+
+    expect(result, Set.from([Material.Colors.red]));
+  });
 }
