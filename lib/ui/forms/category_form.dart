@@ -49,7 +49,7 @@ class CategoryFormState extends State<CategoryForm> {
     Color fallbackColor,
     BuildContext context,
   ) {
-    onSave(categoryName, color == null ? fallbackColor : color, iconName);
+    onSave(categoryName, color ?? fallbackColor, iconName);
     Navigator.pop(context);
   }
 
@@ -87,10 +87,11 @@ class CategoryFormState extends State<CategoryForm> {
                       onChange: (value) => handleNameChange(value),
                     ),
                   ),
-                  ColorGrid(colors: colors, onTap: handleColorTap),
+                  ColorGrid(selectedColor: color, onTap: handleColorTap),
                   IconGrid(
-                      selectedColor: color ?? colors.first,
-                      onTap: handleIconTap),
+                    selectedColor: color ?? colors.first,
+                    onTap: handleIconTap,
+                  ),
                 ],
               ),
             ),

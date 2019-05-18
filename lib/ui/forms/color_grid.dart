@@ -1,50 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+import 'package:sink/redux/selectors.dart';
+import 'package:sink/redux/state.dart';
 
-class ColorGrid extends StatefulWidget {
-  final Set<Color> colors;
+class ColorGrid extends StatelessWidget {
+  final Color selectedColor;
   final Function(Color) onTap;
 
-  ColorGrid({@required this.colors, @required this.onTap});
-
-  @override
-  ColorGridState createState() => ColorGridState(colors, onTap);
-}
-
-class ColorGridState extends State<StatefulWidget> {
-  Set<Color> _colors;
-  Color _selectedColor;
-  Function(Color) _onTap;
-
-  ColorGridState(this._colors, this._onTap) : _selectedColor = _colors.first;
+  ColorGrid({@required this.selectedColor, @required this.onTap});
 
   void _handleTap(Color newColor) {
-    _onTap(newColor);
-
-    setState(() {
-      _selectedColor = newColor;
-    });
+    onTap(newColor);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-        child: Scrollbar(
-          child: GridView.count(
-            shrinkWrap: true,
-            primary: true,
-            physics: BouncingScrollPhysics(),
-            crossAxisCount: 5,
-            children: _colors.map((color) {
-              return Padding(
-                padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-                child: ColorButton(color, _selectedColor == color, _handleTap),
-              );
-            }).toList(),
+    return StoreConnector<AppState, _ViewModel>(
+      converter: _ViewModel.fromState,
+      builder: (BuildContext context, _ViewModel vm) {
+        final selected = this.selectedColor ?? vm.colors.first;
+
+        return Flexible(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+            child: Scrollbar(
+              child: GridView.count(
+                shrinkWrap: true,
+                primary: true,
+                physics: BouncingScrollPhysics(),
+                crossAxisCount: 5,
+                children: vm.colors.map((color) {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                    child: ColorButton(color, selected == color, _handleTap),
+                  );
+                }).toList(),
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
+    );
+  }
+}
+
+class _ViewModel {
+  final Set<Color> colors;
+
+  _ViewModel({@required this.colors});
+
+  static _ViewModel fromState(Store<AppState> store) {
+    return _ViewModel(
+      colors: getAvailableColors(store.state),
     );
   }
 }
