@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sink/ui/animation/bars.dart';
 import 'package:sink/ui/statistics/charts/chart_entry.dart';
 
+const HEIGHT_PER_CHARACTER = 8;
+
 class VerticalBarChart extends StatelessWidget {
   static const EdgeInsetsGeometry _padding =
       const EdgeInsets.only(left: 2.0, right: 2.0);
@@ -41,31 +43,40 @@ class VerticalBarChart extends StatelessWidget {
 
   Widget _toVerticalBar(ChartEntry entry, double width) {
     final heightPercentage = entry.amount / maxAmount;
+    final amount = entry.amount.toStringAsFixed(2);
+    // fixme: a hack to prevent expansion of stats card
+    final textSize = amount.length * HEIGHT_PER_CHARACTER;
 
-    return Column(
-      key: ObjectKey(entry),
-      children: <Widget>[
-        RotatedBox(
-          quarterTurns: 3,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Text(
-              "${entry.amount.toStringAsFixed(2)}",
-              style: TextStyle(fontSize: 12.0),
+    return Container(
+      constraints: BoxConstraints(
+        minHeight: maxHeight + textSize,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        key: ObjectKey(entry),
+        children: <Widget>[
+          RotatedBox(
+            quarterTurns: 3,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(amount, style: TextStyle(fontSize: 12.0)),
             ),
           ),
-        ),
-        Padding(
-          key: ObjectKey(entry),
-          padding: _padding,
-          child: AnimatedBar(
-            width: width,
-            height: maxHeight * heightPercentage,
-            color: entry.color,
-            horizontal: false,
+          Padding(
+            key: ObjectKey(entry),
+            padding: _padding,
+            child: AnimatedBar(
+              width: width,
+              height: maxHeight * heightPercentage,
+              color: entry.color,
+              horizontal: false,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
