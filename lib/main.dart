@@ -5,6 +5,7 @@ import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/middleware.dart';
 import 'package:sink/redux/reducers.dart';
 import 'package:sink/redux/state.dart';
+import 'package:sink/theme/icons.dart';
 import 'package:sink/ui/home.dart';
 
 void main() {
@@ -32,8 +33,10 @@ class Sink extends StatelessWidget {
       child: MaterialApp(
         title: 'Sink',
         theme: ThemeData(
-          backgroundColor: Colors.purple,
-        ),
+            backgroundColor: Colors.purple,
+            iconTheme: IconThemeData(
+              size: ICON_SIZE,
+            )),
         home: HomeScreen(),
       ),
     );

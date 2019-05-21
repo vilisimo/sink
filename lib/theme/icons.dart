@@ -3,6 +3,9 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+const ICON_SIZE = 20.0;
+const ICON_BACKGROUND_SIZE = 36.0;
+
 final LinkedHashMap<String, IconData> icons = {
   // Generic
   "add": Icons.add,

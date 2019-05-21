@@ -46,8 +46,8 @@ class EntryItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: Container(
-                    width: 36,
-                    height: 36,
+                    width: ICON_BACKGROUND_SIZE,
+                    height: ICON_BACKGROUND_SIZE,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,

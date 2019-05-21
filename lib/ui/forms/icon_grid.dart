@@ -63,19 +63,18 @@ class IconGridState extends State<IconGrid> {
 
 class SelectableIconButton extends StatelessWidget {
   final String name;
-  final Icon icon;
+  final IconData iconData;
   final Color color;
   final bool _isSelected;
   final Function(String) _onTap;
 
   SelectableIconButton(
     this.name,
-    iconData,
+    this.iconData,
     this.color,
     this._isSelected,
     this._onTap,
-  )   : assert(iconData != null),
-        this.icon = Icon(iconData);
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +85,7 @@ class SelectableIconButton extends StatelessWidget {
             shape: BoxShape.circle,
             color: _isSelected ? color : Palette.lightGrey,
           ),
-          child: icon,
+          child: Icon(iconData),
         ),
       ),
       onTap: () => _onTap(name),
