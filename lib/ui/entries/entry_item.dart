@@ -6,6 +6,7 @@ import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
+import 'package:sink/theme/icons.dart';
 import 'package:sink/ui/common/amount.dart';
 import 'package:sink/ui/entries/edit_entry_page.dart';
 
@@ -40,19 +41,42 @@ class EntryItem extends StatelessWidget {
           },
           child: Container(
             color: Colors.white,
-            child: ListTile(
-              title: Text(vm.category.name),
-              subtitle: Text(entry.description),
-              trailing: VisualizedAmount(
-                amount: entry.amount,
-                income: entry.type == EntryType.INCOME,
-              ),
-              onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditExpensePage(entry),
+            child: Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Container(
+                    width: 36,
+                    height: 36,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: vm.category.color,
+                      ),
+                      child: Icon(
+                        icons[vm.category.icon],
+                        color: Colors.white,
+                      ),
                     ),
                   ),
+                ),
+                Flexible(
+                  child: ListTile(
+                    title: Text(vm.category.name),
+                    subtitle: Text(entry.description),
+                    trailing: VisualizedAmount(
+                      amount: entry.amount,
+                      income: entry.type == EntryType.INCOME,
+                    ),
+                    onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditExpensePage(entry),
+                          ),
+                        ),
+                  ),
+                ),
+              ],
             ),
           ),
         );
