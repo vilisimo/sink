@@ -1,10 +1,15 @@
 # Sink
-**Sink** is an app that allows you to track your expenses. Tracking costly bad 
-decisions has never been easier!
+**Sink** is an app that allows you to track your income and expenses.
 
 ## Current Status
 
 - [ ] Usable
-- [x] Unusable
+- [x] Visually bearable
+- [ ] Unusable
 
-It will take a while. I've never done anything with Flutter before.
+## Screenshots
+### Entry List
+![Entry List](screens/entries.png)
+
+### Breakdowns
+![Month's Breakdown](screens/month-summary.png) ![Year's Breakdown](screens/year-summary.png)
