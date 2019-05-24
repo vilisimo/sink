@@ -195,4 +195,33 @@ main() {
 
     expect(result, Set.from([Material.Colors.red]));
   });
+
+  test("finds category's colour", () {
+    var cat1 = Category(id: "1", name: "1", icon: "", color: white, type: null);
+    var cat2 = Category(id: "2", name: "2", icon: "", color: blue, type: null);
+    var cat3 = Category(id: "3", name: "3", icon: "", color: black, type: null);
+    var state = AppState(
+      categories: Set<Category>.from([cat1, cat2, cat3]),
+    );
+
+    var c1 = getCategoryColor(state, "1");
+    var c2 = getCategoryColor(state, "2");
+    var c3 = getCategoryColor(state, "3");
+
+    expect(c1, cat1.color);
+    expect(c2, cat2.color);
+    expect(c3, cat3.color);
+  });
+
+  test("throws exception if color of non-existent category is requested", () {
+    var state = AppState(
+        categories: Set<Category>.from([
+      Category(id: "1", name: "1", icon: "", color: white, type: null),
+    ]));
+
+    expect(
+      () => getCategoryColor(state, "non-existent"),
+      throwsA(TypeMatcher<CategoryNotFound>()),
+    );
+  });
 }

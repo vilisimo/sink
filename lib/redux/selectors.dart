@@ -28,4 +28,7 @@ Category getCategory(AppState state, String id) =>
       throw CategoryNotFound("Could not find a category with id[$id]");
     });
 
+Color getCategoryColor(AppState state, String id) =>
+    getCategory(state, id).color;
+
 bool areCategoriesLoading(AppState state) => state.areCategoriesLoading;
