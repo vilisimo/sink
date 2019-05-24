@@ -23,7 +23,7 @@ class VisualizedAmount extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Text("$amount", style: style),
+        Text("${amount.toStringAsFixed(2)}", style: style),
         Icon(
           income ? incomeIcon : expenseIcon,
           color: income ? Palette.income : Palette.expense,
