@@ -28,7 +28,7 @@ class HorizontalBarChart extends StatelessWidget {
     final percent = entry.amount / totalAmount * 100;
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: EdgeInsets.symmetric(vertical: 6.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
