@@ -38,9 +38,9 @@ main() {
   test('retrieves used colors', () {
     var state = AppState(
       categories: Set<Category>.from([
-        Category(id: "1", name: "1", icon: "", color: white, type: null),
-        Category(id: "2", name: "2", icon: "", color: blue, type: null),
-        Category(id: "3", name: "3", icon: "", color: black, type: null),
+        Category(id: '1', name: '1', icon: '', color: white, type: null),
+        Category(id: '2', name: '2', icon: '', color: blue, type: null),
+        Category(id: '3', name: '3', icon: '', color: black, type: null),
       ]),
     );
 
@@ -53,9 +53,9 @@ main() {
 
   test('retrieves a set of categories', () {
     var cat = Category(
-      id: "1",
-      name: "1",
-      icon: "",
+      id: '1',
+      name: '1',
+      icon: '',
       color: red,
       type: null,
     );
@@ -69,25 +69,25 @@ main() {
 
   test('retrieves a set of expense categories', () {
     var first = Category(
-      id: "1",
-      icon: "",
-      name: "expense 1",
+      id: '1',
+      icon: '',
+      name: 'expense 1',
       color: red,
       type: CategoryType.EXPENSE,
     );
 
     var second = Category(
-      id: "2",
-      icon: "",
-      name: "expense 2",
+      id: '2',
+      icon: '',
+      name: 'expense 2',
       color: red,
       type: CategoryType.INCOME,
     );
 
     var third = Category(
-      id: "3",
-      name: "income",
-      icon: "",
+      id: '3',
+      name: 'income',
+      icon: '',
       color: red,
       type: CategoryType.EXPENSE,
     );
@@ -110,25 +110,25 @@ main() {
 
   test('retrieves a set of income categories', () {
     var first = Category(
-      id: "1",
-      name: "expense 1",
-      icon: "",
+      id: '1',
+      name: 'expense 1',
+      icon: '',
       color: red,
       type: CategoryType.EXPENSE,
     );
 
     var second = Category(
-      id: "2",
-      name: "expense 2",
-      icon: "",
+      id: '2',
+      name: 'expense 2',
+      icon: '',
       color: red,
       type: CategoryType.INCOME,
     );
 
     var third = Category(
-      id: "3",
-      name: "income",
-      icon: "",
+      id: '3',
+      name: 'income',
+      icon: '',
       color: red,
       type: CategoryType.EXPENSE,
     );
@@ -152,29 +152,29 @@ main() {
   test('should retrieve a category by id', () {
     var state = AppState(
       categories: Set<Category>.from([
-        Category(id: "1", name: "1", icon: "", color: white, type: null),
-        Category(id: "2", name: "2", icon: "", color: blue, type: null),
-        Category(id: "3", name: "3", icon: "", color: black, type: null),
+        Category(id: '1', name: '1', icon: '', color: white, type: null),
+        Category(id: '2', name: '2', icon: '', color: blue, type: null),
+        Category(id: '3', name: '3', icon: '', color: black, type: null),
       ]),
     );
 
-    var category = getCategory(state, "2");
+    var category = getCategory(state, '2');
 
     expect(category,
-        Category(id: "2", name: "2", icon: "", color: blue, type: null));
+        Category(id: '2', name: '2', icon: '', color: blue, type: null));
   });
 
   test('should indicate that a category could not be found', () {
     var state = AppState(
       categories: Set<Category>.from([
-        Category(id: "1", name: "1", icon: "", color: white, type: null),
-        Category(id: "2", name: "2", icon: "", color: blue, type: null),
-        Category(id: "3", name: "3", icon: "", color: black, type: null),
+        Category(id: '1', name: '1', icon: '', color: white, type: null),
+        Category(id: '2', name: '2', icon: '', color: blue, type: null),
+        Category(id: '3', name: '3', icon: '', color: black, type: null),
       ]),
     );
 
     expect(
-      () => getCategory(state, "51"),
+      () => getCategory(state, '51'),
       throwsA(TypeMatcher<CategoryNotFound>()),
     );
   });
@@ -197,30 +197,30 @@ main() {
   });
 
   test("finds category's colour", () {
-    var cat1 = Category(id: "1", name: "1", icon: "", color: white, type: null);
-    var cat2 = Category(id: "2", name: "2", icon: "", color: blue, type: null);
-    var cat3 = Category(id: "3", name: "3", icon: "", color: black, type: null);
+    var cat1 = Category(id: '1', name: '1', icon: '', color: white, type: null);
+    var cat2 = Category(id: '2', name: '2', icon: '', color: blue, type: null);
+    var cat3 = Category(id: '3', name: '3', icon: '', color: black, type: null);
     var state = AppState(
       categories: Set<Category>.from([cat1, cat2, cat3]),
     );
 
-    var c1 = getCategoryColor(state, "1");
-    var c2 = getCategoryColor(state, "2");
-    var c3 = getCategoryColor(state, "3");
+    var c1 = getCategoryColor(state, '1');
+    var c2 = getCategoryColor(state, '2');
+    var c3 = getCategoryColor(state, '3');
 
     expect(c1, cat1.color);
     expect(c2, cat2.color);
     expect(c3, cat3.color);
   });
 
-  test("throws exception if color of non-existent category is requested", () {
+  test('throws exception if color of non-existent category is requested', () {
     var state = AppState(
         categories: Set<Category>.from([
-      Category(id: "1", name: "1", icon: "", color: white, type: null),
+      Category(id: '1', name: '1', icon: '', color: white, type: null),
     ]));
 
     expect(
-      () => getCategoryColor(state, "non-existent"),
+      () => getCategoryColor(state, 'non-existent'),
       throwsA(TypeMatcher<CategoryNotFound>()),
     );
   });

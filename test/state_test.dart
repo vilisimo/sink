@@ -46,16 +46,16 @@ main() {
   test('returns state with new categories', () {
     var state = AppState(
       categories: Set<Category>.from([
-        Category(id: "1", name: "1", icon: "", color: Colors.white, type: null),
-        Category(id: "2", name: "2", icon: "", color: Colors.blue, type: null),
-        Category(id: "3", name: "3", icon: "", color: Colors.black, type: null),
+        Category(id: '1', name: '1', icon: '', color: Colors.white, type: null),
+        Category(id: '2', name: '2', icon: '', color: Colors.blue, type: null),
+        Category(id: '3', name: '3', icon: '', color: Colors.black, type: null),
       ]),
     );
 
     final category = Category(
-      id: "4",
-      name: "4",
-      icon: "",
+      id: '4',
+      name: '4',
+      icon: '',
       color: Colors.pink,
       type: null,
     );
@@ -67,9 +67,9 @@ main() {
   test('returns state with old categories', () {
     var state = AppState(
       categories: Set<Category>.from([
-        Category(id: "1", name: "1", icon: "", color: Colors.white, type: null),
-        Category(id: "2", name: "2", icon: "", color: Colors.blue, type: null),
-        Category(id: "3", name: "3", icon: "", color: Colors.black, type: null),
+        Category(id: '1', name: '1', icon: '', color: Colors.white, type: null),
+        Category(id: '2', name: '2', icon: '', color: Colors.blue, type: null),
+        Category(id: '3', name: '3', icon: '', color: Colors.black, type: null),
       ]),
     );
 
