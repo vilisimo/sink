@@ -14,12 +14,6 @@ import 'package:sink/ui/statistics/charts/chart_components.dart';
 import 'package:sink/ui/statistics/charts/chart_entry.dart';
 
 class MonthExpenses extends StatelessWidget {
-  final DateTime from;
-  final DateTime to;
-
-  MonthExpenses({@required this.to})
-      : this.from = new DateTime(to.year, to.month, 1, 0, 0, 0, 0);
-
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
@@ -29,7 +23,7 @@ class MonthExpenses extends StatelessWidget {
           padding: const EdgeInsets.all(8.0).copyWith(bottom: 0.0),
           child: Card(
             child: StreamBuilder<QuerySnapshot>(
-              stream: FirestoreRepository.snapshotBetween(from, to),
+              stream: FirestoreRepository.snapshotBetween(vm.start, vm.end),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return PaddedCircularProgressIndicator();
@@ -40,7 +34,7 @@ class MonthExpenses extends StatelessWidget {
                     .map((ds) => Entry.fromSnapshot(ds))
                     .toList();
 
-                var label = monthsName(to);
+                var label = monthsName(vm.end);
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: entries.isEmpty
@@ -63,11 +57,21 @@ class MonthExpenses extends StatelessWidget {
 @immutable
 class _ViewModel {
   final Function(String) toCategory;
+  final DateTime start;
+  final DateTime end;
 
-  _ViewModel({@required this.toCategory});
+  _ViewModel({
+    @required this.toCategory,
+    @required this.start,
+    @required this.end,
+  });
 
   static _ViewModel fromState(Store<AppState> store) {
-    return _ViewModel(toCategory: (id) => getCategory(store.state, id));
+    return _ViewModel(
+      toCategory: (id) => getCategory(store.state, id),
+      start: getStatisticsMonthStart(store.state),
+      end: getStatisticsMonthEnd(store.state),
+    );
   }
 }
 

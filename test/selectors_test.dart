@@ -3,6 +3,7 @@ import 'package:sink/common/exceptions.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/selectors.dart';
+import 'package:sink/redux/selectors.dart' as prefix0;
 import 'package:sink/redux/state.dart';
 import 'package:test/test.dart';
 
@@ -223,5 +224,27 @@ main() {
       () => getCategoryColor(state, 'non-existent'),
       throwsA(TypeMatcher<CategoryNotFound>()),
     );
+  });
+
+  test("retrieves month's start for statistics", () {
+    var state1 = AppState(statisticsDate: DateTime(2000, 1, 27));
+    var state2 = AppState(statisticsDate: DateTime(2000, 3, 5));
+    var state3 = AppState(statisticsDate: DateTime(2000, 12, 7));
+
+    var result1 = getStatisticsMonthStart(state1);
+    var result2 = getStatisticsMonthStart(state2);
+    var result3 = getStatisticsMonthStart(state3);
+
+    expect(result1, DateTime(2000, 1, 1));
+    expect(result2, DateTime(2000, 3, 1));
+    expect(result3, DateTime(2000, 12, 1));
+  });
+
+  test("retrieves month's end for statistics", () {
+    var state = AppState(statisticsDate: DateTime(2000, 1, 1));
+
+    var result = prefix0.getStatisticsMonthEnd(state);
+
+    expect(result, DateTime(2000, 1, 1));
   });
 }

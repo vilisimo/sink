@@ -11,24 +11,33 @@ class AppState {
   // TODO: must be at least one default category
   final bool areCategoriesLoading;
   final Set<Color> availableColors;
+  final DateTime statisticsDate;
 
-  AppState({removed, categories, areCategoriesLoading, availableColors})
-      : this.removed = removed ?? List(),
+  AppState({
+    removed,
+    categories,
+    areCategoriesLoading,
+    availableColors,
+    statisticsDate,
+  })  : this.removed = removed ?? List(),
         this.categories = categories ?? Set(),
         this.areCategoriesLoading = areCategoriesLoading ?? true,
-        this.availableColors = availableColors ?? Set.from(materialColors);
+        this.availableColors = availableColors ?? Set.from(materialColors),
+        this.statisticsDate = statisticsDate ?? DateTime.now();
 
   AppState copyWith({
     List<Entry> removed,
     Set<Category> categories,
     bool areCategoriesLoading,
     Set<Color> availableColors,
+    DateTime statisticsPeriod,
   }) {
     return AppState(
       removed: removed ?? this.removed,
       categories: categories ?? this.categories,
       areCategoriesLoading: areCategoriesLoading ?? this.areCategoriesLoading,
       availableColors: availableColors ?? this.availableColors,
+      statisticsDate: statisticsPeriod ?? this.statisticsDate,
     );
   }
 }

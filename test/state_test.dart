@@ -110,4 +110,21 @@ main() {
 
     expect(result.availableColors, state.availableColors);
   });
+
+  test('returns state with new statistics period', () {
+    var state = AppState(statisticsDate: DateTime.now());
+
+    final newPeriod = DateTime(2000, 1, 1, 0);
+    final result = state.copyWith(statisticsPeriod: newPeriod);
+
+    expect(result.statisticsDate, newPeriod);
+  });
+
+  test('returns state with old statistics period', () {
+    var state = AppState(statisticsDate: DateTime(2000, 1, 1));
+
+    final result = state.copyWith(statisticsPeriod: null);
+
+    expect(result.statisticsDate, state.statisticsDate);
+  });
 }

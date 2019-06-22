@@ -32,3 +32,10 @@ Color getCategoryColor(AppState state, String id) =>
     getCategory(state, id).color;
 
 bool areCategoriesLoading(AppState state) => state.areCategoriesLoading;
+
+DateTime getStatisticsMonthStart(AppState state) {
+  final to = state.statisticsDate;
+  return new DateTime(to.year, to.month, 1, 0, 0, 0, 0);
+}
+
+DateTime getStatisticsMonthEnd(AppState state) => state.statisticsDate;
