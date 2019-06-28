@@ -17,13 +17,13 @@ AppState reduce(AppState state, dynamic action) {
       removed.removeLast();
       return state.copyWith(removed: removed);
 
-    case LoadCategories:
+    case ReloadCategories:
       return state.copyWith(
         categories: Set.from(action.categories),
         areCategoriesLoading: false,
       );
 
-    case LoadColors:
+    case ReloadColors:
       Set<Color> used = Set.from(action.usedColors);
       return state.copyWith(availableColors: materialColors.difference(used));
 

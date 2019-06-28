@@ -35,17 +35,17 @@ class UndoDelete {}
 class InitState {}
 
 @immutable
-class LoadCategories {
+class ReloadCategories {
   final Set<Category> categories;
 
-  LoadCategories(this.categories);
+  ReloadCategories(this.categories);
 }
 
 @immutable
-class LoadColors {
+class ReloadColors {
   final Set<Color> usedColors;
 
-  LoadColors(this.usedColors);
+  ReloadColors(this.usedColors);
 }
 
 @immutable

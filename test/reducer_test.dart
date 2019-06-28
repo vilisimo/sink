@@ -109,7 +109,7 @@ main() {
 
     var state = AppState(areCategoriesLoading: true);
 
-    var newState = reduce(state, LoadCategories(categories));
+    var newState = reduce(state, ReloadCategories(categories));
 
     expect(newState.categories, categories);
     expect(newState.areCategoriesLoading, false);
@@ -118,7 +118,7 @@ main() {
   test('LoadColors returns a state with colors', () {
     var state = AppState();
 
-    var newState = reduce(state, LoadColors(Set.from([])));
+    var newState = reduce(state, ReloadColors(Set.from([])));
 
     expect(newState.availableColors, materialColors);
   });
@@ -126,7 +126,7 @@ main() {
   test('LoadColors returns a state with intersection of colors', () {
     var state = AppState();
 
-    var newState = reduce(state, LoadColors(Set.from([Colors.red])));
+    var newState = reduce(state, ReloadColors(Set.from([Colors.red])));
 
     expect(newState.availableColors, isNotEmpty);
     expect(newState.availableColors.contains(Colors.red), false);
