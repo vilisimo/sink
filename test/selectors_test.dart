@@ -3,7 +3,6 @@ import 'package:sink/common/exceptions.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/selectors.dart';
-import 'package:sink/redux/selectors.dart' as prefix0;
 import 'package:sink/redux/state.dart';
 import 'package:test/test.dart';
 
@@ -243,8 +242,8 @@ main() {
   test("retrieves month's end for statistics", () {
     var state = AppState(statisticsDate: DateTime(2000, 1, 1));
 
-    var result = prefix0.getStatisticsMonthEnd(state);
+    var result = getStatisticsMonthEnd(state);
 
-    expect(result, DateTime(2000, 1, 1));
+    expect(result, DateTime(2000, 1, 31));
   });
 }
