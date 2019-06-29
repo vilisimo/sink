@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: cirrusci/flutter:beta
+    steps:
+      - checkout
+
+      - run:
+          flutter doctor
+
+      - run:
+          flutter test 
