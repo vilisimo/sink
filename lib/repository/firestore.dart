@@ -14,6 +14,10 @@ class FirestoreRepository {
     return entries.orderBy('date', descending: true).snapshots();
   }
 
+  static Stream<QuerySnapshot> getFirstEntry() {
+    return entries.orderBy('date', descending: false).limit(1).snapshots();
+  }
+
   static Stream<QuerySnapshot> snapshotBetween(DateTime from, DateTime to) {
     return entries
         .where('date', isGreaterThanOrEqualTo: from, isLessThanOrEqualTo: to)
