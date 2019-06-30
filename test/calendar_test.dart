@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:sink/common/calendar.dart';
+import 'package:sink/common/exceptions.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -106,6 +107,40 @@ void main() {
       expect(zeroth.hour, equals(0));
       expect(zeroth.minute, equals(0));
       expect(zeroth.second, equals(0));
+    });
+
+    test("calculates range between two dates", () {
+      var start = DateTime(2000, 1);
+      var end = DateTime(2000, 3);
+
+      var result = dateRange(start, end);
+
+      expect(result, [DateTime(2000, 3), DateTime(2000, 2), DateTime(2000, 1)]);
+    });
+
+    test("calculates range between two non starting dates", () {
+      var start = DateTime(2000, 1, 15);
+      var end = DateTime(2000, 3, 13);
+
+      var result = dateRange(start, end);
+
+      expect(result, [DateTime(2000, 3), DateTime(2000, 2), DateTime(2000, 1)]);
+    });
+
+    test("calculates range of one date when between two same month dates", () {
+      var start = DateTime(2000, 1, 15);
+      var end = DateTime(2000, 1, 18);
+
+      var result = dateRange(start, end);
+
+      expect(result, [DateTime(2000, 1)]);
+    });
+
+    test("does not allow 'from' to be greater than 'to'", () {
+      expect(
+        () => dateRange(DateTime(2000, 2), DateTime(2000, 1)),
+        throwsA(TypeMatcher<InvalidInput>()),
+      );
     });
   });
 }
