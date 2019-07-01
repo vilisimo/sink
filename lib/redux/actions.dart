@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 import 'package:sink/models/category.dart';
@@ -45,7 +47,7 @@ class LoadMonths {
 
 @immutable
 class SelectMonth {
-  final DateTime month;
+  final DoubleLinkedQueueEntry<DateTime> month;
 
   SelectMonth(this.month);
 }

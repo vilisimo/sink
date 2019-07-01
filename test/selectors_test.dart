@@ -1,9 +1,10 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart' as Material;
 import 'package:sink/common/exceptions.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/selectors.dart';
-import 'package:sink/redux/selectors.dart' as prefix0;
 import 'package:sink/redux/state.dart';
 import 'package:test/test.dart';
 
@@ -227,9 +228,15 @@ main() {
   });
 
   test("retrieves month's start for statistics", () {
-    var state1 = AppState(selectedMonth: DateTime(2000, 1, 27));
-    var state2 = AppState(selectedMonth: DateTime(2000, 3, 5));
-    var state3 = AppState(selectedMonth: DateTime(2000, 12, 7));
+    var state1 = AppState(
+      selectedMonth: DoubleLinkedQueueEntry(DateTime(2000, 1, 27)),
+    );
+    var state2 = AppState(
+      selectedMonth: DoubleLinkedQueueEntry(DateTime(2000, 3, 5)),
+    );
+    var state3 = AppState(
+      selectedMonth: DoubleLinkedQueueEntry(DateTime(2000, 12, 7)),
+    );
 
     var result1 = getStatisticsMonthStart(state1);
     var result2 = getStatisticsMonthStart(state2);
@@ -241,7 +248,9 @@ main() {
   });
 
   test("retrieves month's end for statistics", () {
-    var state = AppState(selectedMonth: DateTime(2000, 1, 1));
+    var state = AppState(
+      selectedMonth: DoubleLinkedQueueEntry(DateTime(2000, 1, 1)),
+    );
 
     var result = getStatisticsMonthEnd(state);
 
@@ -249,7 +258,9 @@ main() {
   });
 
   test("retrieves viewable months", () {
-    var state = AppState(viewableMonths: [DateTime(2000, 1, 1)]);
+    var state = AppState(
+      viewableMonths: DoubleLinkedQueue<DateTime>.from([DateTime(2000, 1, 1)]),
+    );
 
     var result = getViewableMonths(state);
 
@@ -257,8 +268,12 @@ main() {
   });
 
   test("retrieves selected month", () {
-    var state = AppState(selectedMonth: DateTime(2000, 1, 3));
+    var state = AppState(
+      selectedMonth: DoubleLinkedQueueEntry(DateTime(2000, 1, 3)),
+    );
 
-    expect(prefix0.getSelectedMonth(state), state.selectedMonth);
+    var result = getSelectedMonth(state);
+
+    expect(result.element, state.selectedMonth.element);
   });
 }

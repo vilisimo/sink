@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:sink/common/calendar.dart';
 import 'package:sink/models/entry.dart';
@@ -22,10 +24,26 @@ AppState reduce(AppState state, dynamic action) {
 
     case LoadMonths:
       var months = dateRange(action.from, action.to);
-      var yearsWorth = months.length > MONTHS_IN_YEAR
-          ? months.sublist(0, MONTHS_IN_YEAR)
-          : months;
-      return state.copyWith(viewableMonths: yearsWorth);
+      var linkedMonths = DoubleLinkedQueue<DateTime>.from(months);
+      var curr = state.selectedMonth;
+      if (curr == null) {
+        curr = linkedMonths.firstEntry();
+      } else {
+        var last = linkedMonths.firstEntry();
+        while (last.nextEntry() != null && last.element != curr.element) {
+          last = last.nextEntry();
+        }
+        if (last == null) {
+          curr = linkedMonths.lastEntry();
+        } else {
+          curr = last;
+        }
+      }
+
+      return state.copyWith(
+        viewableMonths: linkedMonths,
+        selectedMonth: curr,
+      );
 
     case SelectMonth:
       return state.copyWith(selectedMonth: action.month);

@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:sink/common/calendar.dart';
@@ -12,8 +14,8 @@ class AppState {
   // TODO: must be at least one default category
   final bool areCategoriesLoading;
   final Set<Color> availableColors;
-  final DateTime selectedMonth;
-  final List<DateTime> viewableMonths;
+  final DoubleLinkedQueueEntry<DateTime> selectedMonth;
+  final DoubleLinkedQueue<DateTime> viewableMonths;
 
   AppState({
     removed,
@@ -26,17 +28,17 @@ class AppState {
         this.categories = categories ?? Set(),
         this.areCategoriesLoading = areCategoriesLoading ?? true,
         this.availableColors = availableColors ?? Set.from(materialColors),
-        this.selectedMonth = selectedMonth ?? firstDay(DateTime.now()),
-        this.viewableMonths =
-            viewableMonths ?? List.from([firstDay(DateTime.now())]);
+        this.selectedMonth = selectedMonth,
+        this.viewableMonths = viewableMonths ??
+            DoubleLinkedQueue.from([firstDay(DateTime.now())]);
 
   AppState copyWith({
     List<Entry> removed,
     Set<Category> categories,
     bool areCategoriesLoading,
     Set<Color> availableColors,
-    DateTime selectedMonth,
-    List<DateTime> viewableMonths,
+    DoubleLinkedQueueEntry<DateTime> selectedMonth,
+    DoubleLinkedQueue<DateTime> viewableMonths,
   }) {
     return AppState(
       removed: removed ?? this.removed,

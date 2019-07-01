@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
@@ -141,11 +143,13 @@ main() {
 
     expect(
       result.viewableMonths,
-      [DateTime(2000, 3), DateTime(2000, 2), DateTime(2000, 1)],
+      DoubleLinkedQueue.from(
+        [DateTime(2000, 3), DateTime(2000, 2), DateTime(2000, 1)],
+      ),
     );
   });
 
-  test('Loads last 12 months instead of repeating already present', () {
+  test("Loads more than a year's worth of months", () {
     var state = AppState();
     var from = DateTime(2000, 1);
     var to = DateTime(2001, 3);
@@ -154,7 +158,7 @@ main() {
 
     expect(
       result.viewableMonths,
-      [
+      DoubleLinkedQueue.from([
         DateTime(2001, 3),
         DateTime(2001, 2),
         DateTime(2001, 1),
@@ -167,7 +171,10 @@ main() {
         DateTime(2000, 6),
         DateTime(2000, 5),
         DateTime(2000, 4),
-      ],
+        DateTime(2000, 3),
+        DateTime(2000, 2),
+        DateTime(2000, 1),
+      ]),
     );
   });
 
@@ -178,11 +185,13 @@ main() {
 
     var result = reduce(state, LoadMonths(from, to));
 
-    expect(result.viewableMonths, [DateTime(2000, 1)]);
+    expect(result.viewableMonths, DoubleLinkedQueue.from([DateTime(2000, 1)]));
   });
 
   test('Substitutes existing months in a state', () {
-    var state = AppState(viewableMonths: [DateTime(2004, 8)]);
+    var state = AppState(
+      viewableMonths: DoubleLinkedQueue<DateTime>.from([DateTime(2004, 8)]),
+    );
     var from = DateTime(2003, 5, 18);
     var to = DateTime(2003, 8, 11);
 
@@ -190,20 +199,77 @@ main() {
 
     expect(
       result.viewableMonths,
-      [
+      DoubleLinkedQueue.from([
         DateTime(2003, 8),
         DateTime(2003, 7),
         DateTime(2003, 6),
         DateTime(2003, 5),
-      ],
+      ]),
     );
   });
 
+  test('Selects a month when no month is selected', () {
+    var state = AppState();
+    var from = DateTime(2000, 1);
+    var to = DateTime(2000, 1);
+
+    var result = reduce(state, LoadMonths(from, to));
+
+    expect(
+      result.viewableMonths,
+      DoubleLinkedQueue.from([DateTime(2000, 1)]),
+    );
+
+    expect(
+      result.selectedMonth,
+      result.viewableMonths.lastEntry(),
+    );
+  });
+
+  test('Overwrites the old entry with the one from current months queue', () {
+    var state = AppState(selectedMonth: DoubleLinkedQueueEntry(DateTime.now()));
+    var from = DateTime(2000, 1);
+    var to = DateTime(2000, 1);
+
+    var firstState = reduce(state, LoadMonths(from, to));
+    expect(firstState.selectedMonth, firstState.viewableMonths.firstEntry());
+
+    to = DateTime(2000, 2);
+    var secondState = reduce(firstState, LoadMonths(from, to));
+
+    expect(
+      secondState.viewableMonths,
+      DoubleLinkedQueue.from([DateTime(2000, 2), DateTime(2000, 1)]),
+    );
+    expect(
+      secondState.selectedMonth,
+      isNot(secondState.viewableMonths.firstEntry()),
+    );
+  });
+
+  test('Sets stale selected month to first entry of viewable months', () {
+    var state = AppState(
+      selectedMonth: DoubleLinkedQueueEntry(DateTime(2000, 1)),
+    );
+    var from = DateTime(2000, 2);
+    var to = DateTime(2000, 3);
+
+    var result = reduce(state, LoadMonths(from, to));
+
+    expect(result.selectedMonth, result.viewableMonths.lastEntry());
+  });
+
   test('Selects a new month', () {
-    var state = AppState(selectedMonth: DateTime(2000, 1, 1));
+    var state = AppState(
+      selectedMonth: DoubleLinkedQueueEntry(DateTime(2000, 1, 1)),
+    );
+    var newMonth = DoubleLinkedQueueEntry(DateTime(2000, 1, 2));
 
-    var result = reduce(state, SelectMonth(DateTime(2000, 1, 2)));
+    var result = reduce(
+      state,
+      SelectMonth(newMonth),
+    );
 
-    expect(result.selectedMonth, DateTime(2000, 1, 2));
+    expect(result.selectedMonth.element, newMonth.element);
   });
 }

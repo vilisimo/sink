@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:sink/common/calendar.dart';
 import 'package:sink/common/exceptions.dart';
@@ -35,10 +37,13 @@ Color getCategoryColor(AppState state, String id) =>
 bool areCategoriesLoading(AppState state) => state.areCategoriesLoading;
 
 DateTime getStatisticsMonthStart(AppState state) =>
-    firstDay(state.selectedMonth);
+    firstDay(state.selectedMonth.element);
 
-DateTime getStatisticsMonthEnd(AppState state) => lastDay(state.selectedMonth);
+DateTime getStatisticsMonthEnd(AppState state) =>
+    lastDay(state.selectedMonth.element);
 
-List<DateTime> getViewableMonths(AppState state) => state.viewableMonths;
+DoubleLinkedQueue<DateTime> getViewableMonths(AppState state) =>
+    state.viewableMonths;
 
-DateTime getSelectedMonth(AppState state) => state.selectedMonth;
+DoubleLinkedQueueEntry<DateTime> getSelectedMonth(AppState state) =>
+    state.selectedMonth;

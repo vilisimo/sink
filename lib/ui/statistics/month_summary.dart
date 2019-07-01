@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -9,6 +11,7 @@ import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/repository/firestore.dart';
+import 'package:sink/theme/palette.dart' as Palette;
 import 'package:sink/ui/common/progress_indicator.dart';
 import 'package:sink/ui/statistics/charts/breakdown_chart.dart';
 import 'package:sink/ui/statistics/charts/chart_entry.dart';
@@ -101,7 +104,7 @@ class EmptyMonthBreakdown extends StatelessWidget {
           return Container(
             alignment: Alignment.center,
             child: Column(children: [
-              MonthsDropdown(),
+              MonthSlider(),
               Padding(
                 padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
                 child: Text('${vm.selectedMonth} has no entries yet'),
@@ -109,73 +112,6 @@ class EmptyMonthBreakdown extends StatelessWidget {
             ]),
           );
         });
-  }
-}
-
-class MonthsDropdown extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return buildDropdown(context);
-  }
-
-  Widget buildDropdown(BuildContext context) {
-    return StoreConnector<AppState, _MonthsDropdownViewModel>(
-      converter: _MonthsDropdownViewModel.fromState,
-      builder: (context, vm) {
-        return DropdownButtonHideUnderline(
-          child: DropdownButton(
-            isDense: true,
-            isExpanded: true,
-            value: vm.selectedMonth,
-            items: vm.options
-                .map((month) => buildDropdownItem(month, context))
-                .toList(),
-            onChanged: (newMonth) {
-              vm.select(newMonth);
-            },
-          ),
-        );
-      },
-    );
-  }
-
-  DropdownMenuItem<DateTime> buildDropdownItem(
-    DateTime month,
-    BuildContext context,
-  ) {
-    return DropdownMenuItem(
-      child: Center(
-        child: Text(
-          "${monthsName(month)} (${month.year})",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24.0,
-          ),
-        ),
-      ),
-      value: month,
-    );
-  }
-}
-
-@immutable
-class _MonthsDropdownViewModel {
-  final Function(DateTime) select;
-  final DateTime selectedMonth;
-  final List<DateTime> options;
-
-  _MonthsDropdownViewModel({
-    @required this.select,
-    @required this.selectedMonth,
-    @required this.options,
-  });
-
-  static _MonthsDropdownViewModel fromState(Store<AppState> store) {
-    return _MonthsDropdownViewModel(
-      select: (month) => store.dispatch(SelectMonth(month)),
-      selectedMonth: getSelectedMonth(store.state),
-      options: getViewableMonths(store.state),
-    );
   }
 }
 
@@ -188,7 +124,100 @@ class _EmptyMonthBreakdownViewModel {
 
   static _EmptyMonthBreakdownViewModel fromState(Store<AppState> store) {
     return _EmptyMonthBreakdownViewModel(
-      selectedMonth: monthsName(getSelectedMonth(store.state)),
+      selectedMonth: monthsName(getSelectedMonth(store.state).element),
+    );
+  }
+}
+
+class MonthSlider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, _MonthSliderViewModel>(
+      converter: _MonthSliderViewModel.fromState,
+      builder: (context, vm) {
+        var selectedMonth = vm.selectedMonth;
+        var nextMonth = selectedMonth.previousEntry();
+        var prevMonth = selectedMonth.nextEntry();
+        return Row(
+          children: <Widget>[
+            prevMonth == null
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.transparent,
+                      size: 24,
+                    ),
+                  )
+                : InkWell(
+                    enableFeedback: prevMonth != null,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Icon(
+                        Icons.keyboard_arrow_left,
+                        color:
+                            prevMonth == null ? Palette.disabled : Colors.black,
+                        size: 24,
+                      ),
+                    ),
+                    onTap: () =>
+                        prevMonth != null ? vm.selectMonth(prevMonth) : null,
+                  ),
+            Expanded(
+              child: Center(
+                child: Text(
+                  "${monthsName(selectedMonth.element)} "
+                  "(${selectedMonth.element.year})",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24.0,
+                  ),
+                ),
+              ),
+            ),
+            nextMonth == null
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.transparent,
+                      size: 24,
+                    ),
+                  )
+                : InkWell(
+                    enableFeedback: nextMonth != null,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Icon(
+                        Icons.keyboard_arrow_right,
+                        color:
+                            nextMonth == null ? Palette.disabled : Colors.black,
+                        size: 24,
+                      ),
+                    ),
+                    onTap: () =>
+                        nextMonth != null ? vm.selectMonth(nextMonth) : null,
+                  ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _MonthSliderViewModel {
+  final Function(DoubleLinkedQueueEntry<DateTime>) selectMonth;
+  final DoubleLinkedQueueEntry<DateTime> selectedMonth;
+
+  _MonthSliderViewModel({
+    @required this.selectedMonth,
+    @required this.selectMonth,
+  });
+
+  static _MonthSliderViewModel fromState(Store<AppState> store) {
+    return _MonthSliderViewModel(
+      selectedMonth: getSelectedMonth(store.state),
+      selectMonth: (month) => store.dispatch(SelectMonth(month)),
     );
   }
 }

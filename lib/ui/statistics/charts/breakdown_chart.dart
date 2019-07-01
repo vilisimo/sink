@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sink/ui/common/dot.dart';
 import 'package:sink/ui/statistics/charts/chart_entry.dart';
+import 'package:sink/ui/statistics/month_summary.dart';
 
-import '../month_summary.dart';
 import 'circular_chart.dart';
 import 'horizontal_bar_chart.dart';
 
@@ -44,7 +44,7 @@ class SortedBreakdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        MonthsDropdown(),
+        MonthSlider(),
         Padding(
           padding: const EdgeInsets.only(left: 24.0, top: 8.0, right: 24.0),
           child: Divider(),

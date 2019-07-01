@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
@@ -111,17 +113,21 @@ main() {
     expect(result.availableColors, state.availableColors);
   });
 
-  test('returns state with new statistics period', () {
-    var state = AppState(selectedMonth: DateTime.now());
+  test('returns state with new selected month', () {
+    var state = AppState(
+      selectedMonth: DoubleLinkedQueueEntry(DateTime.now()),
+    );
 
-    final newPeriod = DateTime(2000, 1, 1, 0);
+    final newPeriod = DoubleLinkedQueueEntry(DateTime(2000, 1, 1, 0));
     final result = state.copyWith(selectedMonth: newPeriod);
 
     expect(result.selectedMonth, newPeriod);
   });
 
-  test('returns state with old statistics period', () {
-    var state = AppState(selectedMonth: DateTime(2000, 1, 1));
+  test('returns state with old selected month', () {
+    var state = AppState(
+      selectedMonth: DoubleLinkedQueueEntry(DateTime(2000, 1, 1)),
+    );
 
     final result = state.copyWith(selectedMonth: null);
 
@@ -129,17 +135,24 @@ main() {
   });
 
   test('returns state with new viewable months list', () {
-    var months = List<DateTime>.from([DateTime(2000, 1), DateTime(2000, 2)]);
+    var months = DoubleLinkedQueue<DateTime>.from(
+      [DateTime(2000, 1), DateTime(2000, 2)],
+    );
     var state = AppState(viewableMonths: months);
 
-    final newMonths = [DateTime(2001, 1), DateTime(2001, 2)];
+    final newMonths = DoubleLinkedQueue<DateTime>.from([
+      DateTime(2001, 1),
+      DateTime(2001, 2),
+    ]);
     final result = state.copyWith(viewableMonths: newMonths);
 
     expect(result.viewableMonths, newMonths);
   });
 
   test('returns state with old viewable months list', () {
-    var months = List<DateTime>.from([DateTime(2000, 1), DateTime(2000, 2)]);
+    var months = DoubleLinkedQueue<DateTime>.from(
+      [DateTime(2000, 1), DateTime(2000, 2)],
+    );
     var state = AppState(viewableMonths: months);
 
     final result = state.copyWith(viewableMonths: null);
