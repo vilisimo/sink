@@ -28,7 +28,7 @@ AppState reduce(AppState state, dynamic action) {
       return state.copyWith(viewableMonths: yearsWorth);
 
     case SelectMonth:
-      return state.copyWith(statisticsDate: action.month);
+      return state.copyWith(selectedMonth: action.month);
 
     case ReloadCategories:
       return state.copyWith(

@@ -35,10 +35,10 @@ Color getCategoryColor(AppState state, String id) =>
 bool areCategoriesLoading(AppState state) => state.areCategoriesLoading;
 
 DateTime getStatisticsMonthStart(AppState state) =>
-    firstDay(state.statisticsDate);
+    firstDay(state.selectedMonth);
 
-DateTime getStatisticsMonthEnd(AppState state) => lastDay(state.statisticsDate);
+DateTime getStatisticsMonthEnd(AppState state) => lastDay(state.selectedMonth);
 
 List<DateTime> getViewableMonths(AppState state) => state.viewableMonths;
 
-DateTime getSelectedMonth(AppState state) => state.statisticsDate;
+DateTime getSelectedMonth(AppState state) => state.selectedMonth;

@@ -200,10 +200,10 @@ main() {
   });
 
   test('Selects a new month', () {
-    var state = AppState(statisticsDate: DateTime(2000, 1, 1));
+    var state = AppState(selectedMonth: DateTime(2000, 1, 1));
 
     var result = reduce(state, SelectMonth(DateTime(2000, 1, 2)));
 
-    expect(result.statisticsDate, DateTime(2000, 1, 2));
+    expect(result.selectedMonth, DateTime(2000, 1, 2));
   });
 }

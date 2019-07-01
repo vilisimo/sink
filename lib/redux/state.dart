@@ -12,7 +12,7 @@ class AppState {
   // TODO: must be at least one default category
   final bool areCategoriesLoading;
   final Set<Color> availableColors;
-  final DateTime statisticsDate;
+  final DateTime selectedMonth;
   final List<DateTime> viewableMonths;
 
   AppState({
@@ -20,13 +20,13 @@ class AppState {
     categories,
     areCategoriesLoading,
     availableColors,
-    statisticsDate,
+    selectedMonth,
     viewableMonths,
   })  : this.removed = removed ?? List(),
         this.categories = categories ?? Set(),
         this.areCategoriesLoading = areCategoriesLoading ?? true,
         this.availableColors = availableColors ?? Set.from(materialColors),
-        this.statisticsDate = statisticsDate ?? firstDay(DateTime.now()),
+        this.selectedMonth = selectedMonth ?? firstDay(DateTime.now()),
         this.viewableMonths =
             viewableMonths ?? List.from([firstDay(DateTime.now())]);
 
@@ -35,7 +35,7 @@ class AppState {
     Set<Category> categories,
     bool areCategoriesLoading,
     Set<Color> availableColors,
-    DateTime statisticsDate,
+    DateTime selectedMonth,
     List<DateTime> viewableMonths,
   }) {
     return AppState(
@@ -43,7 +43,7 @@ class AppState {
       categories: categories ?? this.categories,
       areCategoriesLoading: areCategoriesLoading ?? this.areCategoriesLoading,
       availableColors: availableColors ?? this.availableColors,
-      statisticsDate: statisticsDate ?? this.statisticsDate,
+      selectedMonth: selectedMonth ?? this.selectedMonth,
       viewableMonths: viewableMonths ?? this.viewableMonths,
     );
   }

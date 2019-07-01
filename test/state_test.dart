@@ -112,20 +112,20 @@ main() {
   });
 
   test('returns state with new statistics period', () {
-    var state = AppState(statisticsDate: DateTime.now());
+    var state = AppState(selectedMonth: DateTime.now());
 
     final newPeriod = DateTime(2000, 1, 1, 0);
-    final result = state.copyWith(statisticsDate: newPeriod);
+    final result = state.copyWith(selectedMonth: newPeriod);
 
-    expect(result.statisticsDate, newPeriod);
+    expect(result.selectedMonth, newPeriod);
   });
 
   test('returns state with old statistics period', () {
-    var state = AppState(statisticsDate: DateTime(2000, 1, 1));
+    var state = AppState(selectedMonth: DateTime(2000, 1, 1));
 
-    final result = state.copyWith(statisticsDate: null);
+    final result = state.copyWith(selectedMonth: null);
 
-    expect(result.statisticsDate, state.statisticsDate);
+    expect(result.selectedMonth, state.selectedMonth);
   });
 
   test('returns state with new viewable months list', () {
