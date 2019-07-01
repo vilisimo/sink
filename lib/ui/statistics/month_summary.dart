@@ -11,10 +11,12 @@ import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/repository/firestore.dart';
-import 'package:sink/theme/palette.dart' as Palette;
+import 'package:sink/ui/common/arrows.dart';
 import 'package:sink/ui/common/progress_indicator.dart';
 import 'package:sink/ui/statistics/charts/breakdown_chart.dart';
 import 'package:sink/ui/statistics/charts/chart_entry.dart';
+
+import 'charts/chart_components.dart';
 
 class MonthExpenses extends StatelessWidget {
   @override
@@ -136,68 +138,26 @@ class MonthSlider extends StatelessWidget {
       converter: _MonthSliderViewModel.fromState,
       builder: (context, vm) {
         var selectedMonth = vm.selectedMonth;
-        var nextMonth = selectedMonth.previousEntry();
-        var prevMonth = selectedMonth.nextEntry();
+        var next = selectedMonth.previousEntry(); // prev due to desc. queue
+        var prev = selectedMonth.nextEntry();
+        var title = "${monthsName(selectedMonth.element)} "
+            "(${selectedMonth.element.year})";
+
         return Row(
           children: <Widget>[
-            prevMonth == null
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Icon(
-                      Icons.keyboard_arrow_right,
-                      color: Colors.transparent,
-                      size: 24,
-                    ),
+            prev == null
+                ? TransparentArrow()
+                : ClickableArrow(
+                    right: false,
+                    onTap: () => prev != null ? vm.selectMonth(prev) : null,
+                  ),
+            Expanded(child: Center(child: ChartTitle(title: title))),
+            next == null
+                ? TransparentArrow()
+                : ClickableArrow(
+                    right: true,
+                    onTap: () => next != null ? vm.selectMonth(next) : null,
                   )
-                : InkWell(
-                    enableFeedback: prevMonth != null,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Icon(
-                        Icons.keyboard_arrow_left,
-                        color:
-                            prevMonth == null ? Palette.disabled : Colors.black,
-                        size: 24,
-                      ),
-                    ),
-                    onTap: () =>
-                        prevMonth != null ? vm.selectMonth(prevMonth) : null,
-                  ),
-            Expanded(
-              child: Center(
-                child: Text(
-                  "${monthsName(selectedMonth.element)} "
-                  "(${selectedMonth.element.year})",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.0,
-                  ),
-                ),
-              ),
-            ),
-            nextMonth == null
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Icon(
-                      Icons.keyboard_arrow_right,
-                      color: Colors.transparent,
-                      size: 24,
-                    ),
-                  )
-                : InkWell(
-                    enableFeedback: nextMonth != null,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Icon(
-                        Icons.keyboard_arrow_right,
-                        color:
-                            nextMonth == null ? Palette.disabled : Colors.black,
-                        size: 24,
-                      ),
-                    ),
-                    onTap: () =>
-                        nextMonth != null ? vm.selectMonth(nextMonth) : null,
-                  ),
           ],
         );
       },
