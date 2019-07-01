@@ -29,10 +29,26 @@ class DeleteEntry {
 @immutable
 class UndoDelete {}
 
-/// Categories
-
 @immutable
 class InitState {}
+
+@immutable
+class LoadFirstEntry {}
+
+@immutable
+class LoadMonths {
+  final DateTime from;
+  final DateTime to;
+
+  LoadMonths(this.from, this.to);
+}
+
+@immutable
+class SelectMonth {
+  final DateTime month;
+
+  SelectMonth(this.month);
+}
 
 @immutable
 class ReloadCategories {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:sink/common/calendar.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/theme/palette.dart';
@@ -12,6 +13,7 @@ class AppState {
   final bool areCategoriesLoading;
   final Set<Color> availableColors;
   final DateTime statisticsDate;
+  final List<DateTime> viewableMonths;
 
   AppState({
     removed,
@@ -19,25 +21,30 @@ class AppState {
     areCategoriesLoading,
     availableColors,
     statisticsDate,
+    viewableMonths,
   })  : this.removed = removed ?? List(),
         this.categories = categories ?? Set(),
         this.areCategoriesLoading = areCategoriesLoading ?? true,
         this.availableColors = availableColors ?? Set.from(materialColors),
-        this.statisticsDate = statisticsDate ?? DateTime.now();
+        this.statisticsDate = statisticsDate ?? firstDay(DateTime.now()),
+        this.viewableMonths =
+            viewableMonths ?? List.from([firstDay(DateTime.now())]);
 
   AppState copyWith({
     List<Entry> removed,
     Set<Category> categories,
     bool areCategoriesLoading,
     Set<Color> availableColors,
-    DateTime statisticsPeriod,
+    DateTime statisticsDate,
+    List<DateTime> viewableMonths,
   }) {
     return AppState(
       removed: removed ?? this.removed,
       categories: categories ?? this.categories,
       areCategoriesLoading: areCategoriesLoading ?? this.areCategoriesLoading,
       availableColors: availableColors ?? this.availableColors,
-      statisticsDate: statisticsPeriod ?? this.statisticsDate,
+      statisticsDate: statisticsDate ?? this.statisticsDate,
+      viewableMonths: viewableMonths ?? this.viewableMonths,
     );
   }
 }

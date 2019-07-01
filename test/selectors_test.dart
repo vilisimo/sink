@@ -3,6 +3,7 @@ import 'package:sink/common/exceptions.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/selectors.dart';
+import 'package:sink/redux/selectors.dart' as prefix0;
 import 'package:sink/redux/state.dart';
 import 'package:test/test.dart';
 
@@ -245,5 +246,19 @@ main() {
     var result = getStatisticsMonthEnd(state);
 
     expect(result, DateTime(2000, 1, 31));
+  });
+
+  test("retrieves viewable months", () {
+    var state = AppState(viewableMonths: [DateTime(2000, 1, 1)]);
+
+    var result = getViewableMonths(state);
+
+    expect(result, state.viewableMonths);
+  });
+
+  test("retrieves selected month", () {
+    var state = AppState(statisticsDate: DateTime(2000, 1, 3));
+
+    expect(prefix0.getSelectedMonth(state), state.statisticsDate);
   });
 }

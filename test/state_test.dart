@@ -115,7 +115,7 @@ main() {
     var state = AppState(statisticsDate: DateTime.now());
 
     final newPeriod = DateTime(2000, 1, 1, 0);
-    final result = state.copyWith(statisticsPeriod: newPeriod);
+    final result = state.copyWith(statisticsDate: newPeriod);
 
     expect(result.statisticsDate, newPeriod);
   });
@@ -123,8 +123,27 @@ main() {
   test('returns state with old statistics period', () {
     var state = AppState(statisticsDate: DateTime(2000, 1, 1));
 
-    final result = state.copyWith(statisticsPeriod: null);
+    final result = state.copyWith(statisticsDate: null);
 
     expect(result.statisticsDate, state.statisticsDate);
+  });
+
+  test('returns state with new viewable months list', () {
+    var months = List<DateTime>.from([DateTime(2000, 1), DateTime(2000, 2)]);
+    var state = AppState(viewableMonths: months);
+
+    final newMonths = [DateTime(2001, 1), DateTime(2001, 2)];
+    final result = state.copyWith(viewableMonths: newMonths);
+
+    expect(result.viewableMonths, newMonths);
+  });
+
+  test('returns state with old viewable months list', () {
+    var months = List<DateTime>.from([DateTime(2000, 1), DateTime(2000, 2)]);
+    var state = AppState(viewableMonths: months);
+
+    final result = state.copyWith(viewableMonths: null);
+
+    expect(result.viewableMonths, state.viewableMonths);
   });
 }

@@ -131,4 +131,79 @@ main() {
     expect(newState.availableColors, isNotEmpty);
     expect(newState.availableColors.contains(Colors.red), false);
   });
+
+  test('Loads month range', () {
+    var state = AppState();
+    var from = DateTime(2000, 1);
+    var to = DateTime(2000, 3);
+
+    var result = reduce(state, LoadMonths(from, to));
+
+    expect(
+      result.viewableMonths,
+      [DateTime(2000, 3), DateTime(2000, 2), DateTime(2000, 1)],
+    );
+  });
+
+  test('Loads last 12 months instead of repeating already present', () {
+    var state = AppState();
+    var from = DateTime(2000, 1);
+    var to = DateTime(2001, 3);
+
+    var result = reduce(state, LoadMonths(from, to));
+
+    expect(
+      result.viewableMonths,
+      [
+        DateTime(2001, 3),
+        DateTime(2001, 2),
+        DateTime(2001, 1),
+        DateTime(2000, 12),
+        DateTime(2000, 11),
+        DateTime(2000, 10),
+        DateTime(2000, 9),
+        DateTime(2000, 8),
+        DateTime(2000, 7),
+        DateTime(2000, 6),
+        DateTime(2000, 5),
+        DateTime(2000, 4),
+      ],
+    );
+  });
+
+  test('Loads one month range when from and to are the same month', () {
+    var state = AppState();
+    var from = DateTime(2000, 1, 1);
+    var to = DateTime(2000, 1, 9);
+
+    var result = reduce(state, LoadMonths(from, to));
+
+    expect(result.viewableMonths, [DateTime(2000, 1)]);
+  });
+
+  test('Substitutes existing months in a state', () {
+    var state = AppState(viewableMonths: [DateTime(2004, 8)]);
+    var from = DateTime(2003, 5, 18);
+    var to = DateTime(2003, 8, 11);
+
+    var result = reduce(state, LoadMonths(from, to));
+
+    expect(
+      result.viewableMonths,
+      [
+        DateTime(2003, 8),
+        DateTime(2003, 7),
+        DateTime(2003, 6),
+        DateTime(2003, 5),
+      ],
+    );
+  });
+
+  test('Selects a new month', () {
+    var state = AppState(statisticsDate: DateTime(2000, 1, 1));
+
+    var result = reduce(state, SelectMonth(DateTime(2000, 1, 2)));
+
+    expect(result.statisticsDate, DateTime(2000, 1, 2));
+  });
 }

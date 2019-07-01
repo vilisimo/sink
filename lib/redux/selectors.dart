@@ -38,3 +38,7 @@ DateTime getStatisticsMonthStart(AppState state) =>
     firstDay(state.statisticsDate);
 
 DateTime getStatisticsMonthEnd(AppState state) => lastDay(state.statisticsDate);
+
+List<DateTime> getViewableMonths(AppState state) => state.viewableMonths;
+
+DateTime getSelectedMonth(AppState state) => state.statisticsDate;

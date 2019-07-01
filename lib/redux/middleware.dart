@@ -19,6 +19,12 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
         store.dispatch(ReloadCategories(categories));
         store.dispatch(ReloadColors(categories.map((c) => c.color).toSet()));
       });
+      store.dispatch(LoadFirstEntry());
+    } else if (action is LoadFirstEntry) {
+      FirestoreRepository.getFirstEntry().listen((event) {
+        var firstEntry = Entry.fromSnapshot(event.documents.first).date;
+        store.dispatch(LoadMonths(firstEntry, DateTime.now()));
+      });
     } else if (action is AddEntry) {
       FirestoreRepository.create(action.entry);
     } else if (action is DeleteEntry) {
