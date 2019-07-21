@@ -4,10 +4,9 @@ import 'package:sink/ui/statistics/charts/chart_entry.dart';
 
 const HEIGHT_PER_CHARACTER = 8;
 
-class VerticalBarChart extends StatelessWidget {
-  static const EdgeInsetsGeometry _padding =
-      const EdgeInsets.only(left: 2.0, right: 2.0);
+const EdgeInsetsGeometry PADDING = const EdgeInsets.only(left: 2.0, right: 2.0);
 
+class VerticalBarChart extends StatelessWidget {
   final List<DatedChartEntry> data;
   final double maxAmount;
   final double maxHeight;
@@ -29,24 +28,67 @@ class VerticalBarChart extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: data.map((m) => _toVerticalBar(m, barWidth)).toList(),
+            children: data
+                .map((m) => VerticalBar(
+                      entry: m,
+                      width: barWidth,
+                      maxHeight: maxHeight,
+                      maxAmount: maxAmount,
+                    ))
+                .toList(),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: data.map((m) => _toBarLabel(m, barWidth)).toList(),
+            children: data.map((m) => BarLabel(m, barWidth)).toList(),
           )
         ],
       ),
     );
   }
+}
 
-  Widget _toVerticalBar(DatedChartEntry entry, double width) {
+class VerticalBar extends StatelessWidget {
+  final DatedChartEntry entry;
+  final double width;
+  final double maxHeight;
+
+  final double heightPercentage;
+  final String amount;
+  final int textSize;
+
+  VerticalBar._(
+    this.entry,
+    this.width,
+    this.maxHeight,
+    this.heightPercentage,
+    this.amount,
+    this.textSize,
+  );
+
+  factory VerticalBar({
+    @required DatedChartEntry entry,
+    @required double width,
+    @required double maxHeight,
+    @required double maxAmount,
+  }) {
     final heightPercentage = entry.amount / maxAmount;
     final amount = entry.amount.toStringAsFixed(2);
     // fixme: a hack to prevent expansion of stats card
     final textSize = amount.length * HEIGHT_PER_CHARACTER;
 
+    return VerticalBar._(
+      entry,
+      width,
+      maxHeight,
+      heightPercentage,
+      amount,
+      textSize,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(
         minHeight: maxHeight + textSize,
@@ -67,7 +109,7 @@ class VerticalBarChart extends StatelessWidget {
           ),
           Padding(
             key: ObjectKey(entry),
-            padding: _padding,
+            padding: PADDING,
             child: AnimatedBar(
               width: width,
               height: maxHeight * heightPercentage,
@@ -79,11 +121,19 @@ class VerticalBarChart extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _toBarLabel(ChartEntry entry, double width) {
+class BarLabel extends StatelessWidget {
+  final ChartEntry entry;
+  final double width;
+
+  BarLabel(this.entry, this.width);
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       key: ObjectKey(entry),
-      padding: _padding,
+      padding: PADDING,
       child: Container(
         alignment: Alignment.center,
         width: width,
