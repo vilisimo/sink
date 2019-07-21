@@ -276,4 +276,23 @@ main() {
 
     expect(result.element, state.selectedMonth.element);
   });
+
+  test("retrieves a doubly linked entry from the queue given month", () {
+    var target = DateTime(2000, 5, 17);
+    var months = DoubleLinkedQueue<DateTime>.from([
+      DateTime(2000, 1, 1),
+      DateTime(2000, 2, 1),
+      DateTime(2000, 3, 1),
+      DateTime(2000, 4, 1),
+      DateTime(2000, 5, 1),
+    ]);
+    var state = AppState(viewableMonths: months);
+
+    var result = getMonthEntryByDate(state, target);
+
+    expect(
+      result.element,
+      DoubleLinkedQueueEntry(DateTime(2000, 5, 1)).element,
+    );
+  });
 }

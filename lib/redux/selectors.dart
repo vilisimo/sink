@@ -47,3 +47,11 @@ DoubleLinkedQueue<DateTime> getViewableMonths(AppState state) =>
 
 DoubleLinkedQueueEntry<DateTime> getSelectedMonth(AppState state) =>
     state.selectedMonth;
+
+DoubleLinkedQueueEntry<DateTime> getMonthEntryByDate(
+  AppState state,
+  DateTime date,
+) =>
+    DoubleLinkedQueueEntry<DateTime>(
+      state.viewableMonths.firstWhere((entry) => entry.month == date.month),
+    );
