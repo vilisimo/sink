@@ -47,3 +47,42 @@ class ChartEntry implements Comparable<ChartEntry> {
     return 'ChartEntry{label: $label, amount: $amount, color: $color, maxAmount: $maxAmount, totalAmount: $totalAmount}';
   }
 }
+
+class DatedChartEntry extends ChartEntry {
+  DateTime date;
+
+  DatedChartEntry({
+    @required this.date,
+    @required label,
+    @required amount,
+    color,
+    maxAmount,
+    totalAmount,
+  }) : super(
+          label: label,
+          amount: amount,
+          color: color,
+          maxAmount: maxAmount,
+          totalAmount: totalAmount,
+        );
+
+  @override
+  DatedChartEntry copyWith({
+    double maxAmount,
+    double totalAmount,
+  }) {
+    return DatedChartEntry(
+      date: this.date,
+      label: this.label,
+      amount: this.amount,
+      color: this.color,
+      maxAmount: maxAmount ?? this.maxAmount,
+      totalAmount: totalAmount ?? this.totalAmount,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'DatedChartEntry{date: $date, label: $label, amount: $amount, color: $color, maxAmount: $maxAmount, totalAmount: $totalAmount}';
+  }
+}

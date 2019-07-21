@@ -81,7 +81,8 @@ class YearExpenses extends StatelessWidget {
     });
 
     return grouped.entries
-        .map((e) => ChartEntry(
+        .map((e) => DatedChartEntry(
+              date: e.key,
               label: monthsName(e.key),
               amount: e.value,
               color: resolveCategory(topExpenses[e.key].categoryId),

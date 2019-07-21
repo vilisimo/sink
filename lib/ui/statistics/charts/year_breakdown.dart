@@ -6,7 +6,7 @@ import 'package:sink/ui/statistics/charts/vertical_bar_chart.dart';
 
 class YearBreakdown extends StatelessWidget {
   final String label;
-  final List<ChartEntry> data;
+  final List<DatedChartEntry> data;
   final double maxAmount;
   final double totalAmount;
 
@@ -14,7 +14,7 @@ class YearBreakdown extends StatelessWidget {
 
   factory YearBreakdown({
     @required String label,
-    @required List<ChartEntry> data,
+    @required List<DatedChartEntry> data,
   }) {
     var amounts = data.map((ce) => ce.amount);
     var maxAmount = max(amounts);
