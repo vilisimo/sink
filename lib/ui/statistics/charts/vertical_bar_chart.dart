@@ -8,7 +8,7 @@ class VerticalBarChart extends StatelessWidget {
   static const EdgeInsetsGeometry _padding =
       const EdgeInsets.only(left: 2.0, right: 2.0);
 
-  final List<ChartEntry> data;
+  final List<DatedChartEntry> data;
   final double maxAmount;
   final double maxHeight;
 
@@ -41,7 +41,7 @@ class VerticalBarChart extends StatelessWidget {
     );
   }
 
-  Widget _toVerticalBar(ChartEntry entry, double width) {
+  Widget _toVerticalBar(DatedChartEntry entry, double width) {
     final heightPercentage = entry.amount / maxAmount;
     final amount = entry.amount.toStringAsFixed(2);
     // fixme: a hack to prevent expansion of stats card
