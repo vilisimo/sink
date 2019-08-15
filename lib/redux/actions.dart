@@ -5,8 +5,6 @@ import 'package:meta/meta.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 
-/// Entries
-
 @immutable
 class AddEntry {
   final Entry entry;
