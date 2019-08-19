@@ -301,10 +301,18 @@ main() {
     expect(result.authStatus, AuthenticationStatus.LOGGED_IN);
   });
 
+  test('SetUserEmail sets user email', () {
+    var state = AppState(userEmail: null);
+
+    var result = reduce(state, SetUserEmail("email"));
+
+    expect(result.userEmail, "email");
+  });
+
   test('SetUserId sets status to anonymous when user id does not exist', () {
     var state = AppState(userId: Uuid().v4());
 
-    var result = reduce(state, SetUserId(null));
+    var result = reduce(state, SetUserId(""));
 
     expect(result.authStatus, AuthenticationStatus.ANONYMOUS);
     expect(result.userId, isNull);

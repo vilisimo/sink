@@ -18,12 +18,36 @@ main() {
     expect(result.userId, newUserId);
   });
 
-  test('returns state with null userId to facilitate logging out', () {
+  test('returns state with userId as null to facilitate logging out', () {
     var state = AppState(userId: Uuid().v4());
 
-    final result = state.copyWith(userId: null);
+    final result = state.copyWith(userId: "");
 
     expect(result.userId, isNull);
+  });
+
+  test('returns state with new user email', () {
+    var state = AppState(userEmail: Uuid().v4());
+
+    final result = state.copyWith(userEmail: "email");
+
+    expect(result.userEmail, "email");
+  });
+
+  test('returns state with null user email', () {
+    var state = AppState(userEmail: Uuid().v4());
+
+    final result = state.copyWith(userEmail: "");
+
+    expect(result.userEmail, isNull);
+  });
+
+  test('does not void user email when it is not passed in', () {
+    var state = AppState(userEmail: "email");
+
+    final result = state.copyWith(userId: "email is not passed");
+
+    expect(result.userEmail, "email");
   });
 
   test('returns state with new authentication status', () {

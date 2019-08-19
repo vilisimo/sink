@@ -42,10 +42,17 @@ class SignInFormState extends State<SignInForm> {
               );
 
         var baseForm = <Widget>[
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child:
+                  Text('Sign In', style: Theme.of(context).textTheme.headline),
+            ),
+          ),
           EmailFormField(onSaved: _onEmailSaved),
           PasswordFormField(onSaved: _onPasswordSaved, showHelpText: false),
-          button,
           if (errorMessage != "") FormError(errorMessage),
+          button,
         ];
 
         return Center(

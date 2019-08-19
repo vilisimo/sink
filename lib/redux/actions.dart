@@ -123,3 +123,10 @@ class SetUserId {
 
   SetUserId(this.userId);
 }
+
+@immutable
+class SetUserEmail {
+  final String email;
+
+  SetUserEmail(this.email);
+}

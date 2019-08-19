@@ -1,18 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+import 'package:sink/common/auth.dart';
+import 'package:sink/redux/selectors.dart';
+import 'package:sink/redux/state.dart';
+import 'package:sink/ui/drawer.dart';
 import 'package:sink/ui/entries/add_entry_page.dart';
 import 'package:sink/ui/entries/entries_page.dart';
 import 'package:sink/ui/statistics/statistics_page.dart';
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key}) : super(key: key);
+import '../main.dart';
 
+class HomeScreen extends StatelessWidget {
   @override
-  _HomeScreenState createState() {
-    return _HomeScreenState();
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, _ViewModel>(
+      converter: _ViewModel.fromState,
+      builder: (context, vm) {
+        if (vm.authStatus == AuthenticationStatus.LOGGED_IN) {
+          return HomePage();
+        } else {
+          return LoginScreen();
+        }
+      },
+    );
   }
 }
 
-class _HomeScreenState extends State<HomeScreen>
+class _ViewModel {
+  final AuthenticationStatus authStatus;
+
+  _ViewModel({@required this.authStatus});
+
+  static _ViewModel fromState(Store<AppState> store) {
+    return _ViewModel(authStatus: getAuthStatus(store.state));
+  }
+}
+
+class HomePage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => HomePageState();
+}
+
+class HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   static final _scaffoldKey = GlobalKey<ScaffoldState>();
   TabController _tabController;
@@ -32,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: HomeDrawer(),
       extendBody: true,
       key: _scaffoldKey,
       appBar: AppBar(
@@ -56,9 +87,9 @@ class _HomeScreenState extends State<HomeScreen>
         foregroundColor: Colors.black,
         child: Icon(Icons.add),
         onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AddExpensePage()),
-            ),
+          context,
+          MaterialPageRoute(builder: (context) => AddExpensePage()),
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         notchMargin: 5.0,

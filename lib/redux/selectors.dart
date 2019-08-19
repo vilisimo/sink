@@ -69,3 +69,5 @@ String getAuthenticationErrorMessage(AppState state) =>
 bool isRegistrationSuccessful(AppState state) => state.registrationSuccess;
 
 String getUserId(AppState state) => state.userId;
+
+String getUserEmail(AppState state) => state.userEmail;

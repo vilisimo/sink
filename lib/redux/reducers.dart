@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:quiver/strings.dart';
 import 'package:sink/common/auth.dart';
 import 'package:sink/common/calendar.dart';
 import 'package:sink/models/entry.dart';
@@ -63,13 +64,16 @@ AppState reduce(AppState state, dynamic action) {
       return state.copyWith(authStatus: AuthenticationStatus.LOADING);
 
     case SetUserId:
-      final anonymous = action.userId == null;
+      final anonymous = isEmpty(action.userId);
       return state.copyWith(
         userId: action.userId,
         authStatus: anonymous
             ? AuthenticationStatus.ANONYMOUS
             : AuthenticationStatus.LOGGED_IN,
       );
+
+    case SetUserEmail:
+      return state.copyWith(userEmail: action.email);
 
     case StartRegistration:
       return state.copyWith(

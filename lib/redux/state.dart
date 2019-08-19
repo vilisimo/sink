@@ -11,6 +11,7 @@ import 'package:sink/theme/palette.dart';
 @immutable
 class AppState {
   final String userId;
+  final String userEmail;
   final AuthenticationStatus authStatus;
   final bool registrationInProgress;
   final bool registrationSuccess;
@@ -26,6 +27,7 @@ class AppState {
 
   AppState({
     userId,
+    userEmail,
     authStatus,
     registrationInProgress,
     registrationSuccess,
@@ -38,6 +40,7 @@ class AppState {
     selectedMonth,
     viewableMonths,
   })  : this.userId = userId,
+        this.userEmail = userEmail,
         this.authStatus = authStatus ?? AuthenticationStatus.ANONYMOUS,
         this.registrationInProgress = registrationInProgress ?? false,
         this.registrationSuccess = registrationSuccess ?? false,
@@ -53,6 +56,7 @@ class AppState {
 
   AppState copyWith({
     String userId,
+    String userEmail,
     AuthenticationStatus authStatus,
     bool registrationInProgress,
     bool registrationSuccess,
@@ -66,7 +70,8 @@ class AppState {
     DoubleLinkedQueue<DateTime> viewableMonths,
   }) {
     return AppState(
-      userId: userId,
+      userId: chooseOldOrNull(this.userId, userId),
+      userEmail: chooseOldOrNull(this.userEmail, userEmail),
       authStatus: authStatus ?? this.authStatus,
       registrationInProgress:
           registrationInProgress ?? this.registrationInProgress,
@@ -81,5 +86,15 @@ class AppState {
       selectedMonth: selectedMonth ?? this.selectedMonth,
       viewableMonths: viewableMonths ?? this.viewableMonths,
     );
+  }
+}
+
+String chooseOldOrNull(String old, String fresh) {
+  if (fresh == null) {
+    return old;
+  } else if (fresh == "") {
+    return null;
+  } else {
+    return fresh;
   }
 }

@@ -9,7 +9,7 @@ enum AuthenticationStatus {
 abstract class Authentication {
   Future<String> signUp(String email, String password);
 
-  Future<String> signIn(String email, String password);
+  Future<FirebaseUser> signIn(String email, String password);
 
   Future<void> signOut();
 
@@ -33,14 +33,12 @@ class FirebaseEmailAuthentication implements Authentication {
     return user.uid;
   }
 
-  Future<String> signIn(String email, String password) async {
+  Future<FirebaseUser> signIn(String email, String password) async {
     var result = await _auth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
-    var user = result.user;
-
-    return user.uid;
+    return result.user;
   }
 
   Future<void> signOut() async {

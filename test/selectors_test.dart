@@ -314,6 +314,14 @@ main() {
     expect(result, state.userId);
   });
 
+  test("retrieves userEmail", () {
+    var state = AppState(userEmail: "email");
+
+    var result = getUserEmail(state);
+
+    expect(result, state.userEmail);
+  });
+
   test("informs whether user is being registered", () {
     var state = AppState(registrationInProgress: true);
 

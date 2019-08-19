@@ -15,21 +15,31 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
     if (action is RetrieveUser) {
       auth.getCurrentUser().then((user) {
         if (user != null && user.isEmailVerified) {
-          store.dispatch(SetUserId(user == null ? null : user.uid.toString()));
+          store.dispatch(SetUserId(user.uid.toString()));
+          store.dispatch(SetUserEmail(user.email));
           store.dispatch(RehydrateState());
         } else {
-          store.dispatch(SetUserId(null));
+          store.dispatch(SetUserId(""));
+          store.dispatch(SetUserEmail(""));
         }
       });
     } else if (action is SignIn) {
-      auth
-          .signIn(action.email, action.password)
-          .then((userId) => store.dispatch(SetUserId(userId)))
-          .then((value) => {store.dispatch(ReportSignInSuccess())})
-          .then((value) => store.dispatch(RehydrateState()))
-          .catchError((e) => store.dispatch(ReportAuthenticationError(e.code)));
+      auth.signIn(action.email, action.password).then((user) {
+        if (user.isEmailVerified) {
+          store.dispatch(SetUserId(user.uid));
+          store.dispatch(SetUserEmail(user.email));
+          store.dispatch(ReportSignInSuccess());
+          store.dispatch(RehydrateState());
+        } else {
+          store.dispatch(SignOut());
+          store.dispatch(ReportAuthenticationError("Email is not verified."));
+        }
+      }).catchError((e) => store.dispatch(ReportAuthenticationError(e.code)));
     } else if (action is SignOut) {
-      auth.signOut().then((value) => store.dispatch(SetUserId(null)));
+      auth
+          .signOut()
+          .then((value) => store.dispatch(SetUserId("")))
+          .then((value) => store.dispatch(SetUserEmail("")));
     } else if (action is Register) {
       store.dispatch(StartRegistration());
       auth
@@ -41,7 +51,8 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
       auth.sendEmailVerification();
     } else if (action is RehydrateState) {
       final userId = getUserId(store.state); // TODO: use to get user's data
-      print('User id: $userId');
+      final email = getUserEmail(store.state); // TODO: use to get user's data
+      print('User id: $userId, email: $email');
       FirestoreRepository.categories
           .orderBy('name', descending: false)
           .snapshots()
