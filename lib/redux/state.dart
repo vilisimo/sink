@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:sink/common/auth.dart';
 import 'package:sink/common/calendar.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
@@ -10,6 +11,7 @@ import 'package:sink/theme/palette.dart';
 @immutable
 class AppState {
   final String userId;
+  final AuthenticationStatus authStatus;
   final List<Entry> removed;
   final Set<Category> categories;
   // TODO: must be at least one default category
@@ -20,6 +22,7 @@ class AppState {
 
   AppState({
     userId,
+    authStatus,
     removed,
     categories,
     areCategoriesLoading,
@@ -27,6 +30,7 @@ class AppState {
     selectedMonth,
     viewableMonths,
   })  : this.userId = userId,
+        this.authStatus = authStatus ?? AuthenticationStatus.ANONYMOUS,
         this.removed = removed ?? List(),
         this.categories = categories ?? Set(),
         this.areCategoriesLoading = areCategoriesLoading ?? true,
@@ -37,6 +41,7 @@ class AppState {
 
   AppState copyWith({
     String userId,
+    AuthenticationStatus authStatus,
     List<Entry> removed,
     Set<Category> categories,
     bool areCategoriesLoading,
@@ -46,6 +51,7 @@ class AppState {
   }) {
     return AppState(
       userId: userId,
+      authStatus: authStatus ?? this.authStatus,
       removed: removed ?? this.removed,
       categories: categories ?? this.categories,
       areCategoriesLoading: areCategoriesLoading ?? this.areCategoriesLoading,

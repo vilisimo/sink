@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:sink/common/auth.dart';
 import 'package:sink/common/calendar.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
@@ -59,7 +60,13 @@ AppState reduce(AppState state, dynamic action) {
       return state.copyWith(availableColors: materialColors.difference(used));
 
     case SetUserId:
-      return state.copyWith(userId: action.userId);
+      final anonymous = action.userId == null;
+      return state.copyWith(
+        userId: action.userId,
+        authStatus: anonymous
+            ? AuthenticationStatus.ANONYMOUS
+            : AuthenticationStatus.LOGGED_IN,
+      );
 
     default:
       return state;

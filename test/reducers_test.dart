@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:sink/common/auth.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
@@ -281,5 +282,23 @@ main() {
     var result = reduce(state, SetUserId(userId));
 
     expect(result.userId, userId);
+  });
+
+  test('SetUserId sets status to logged in when user id exists', () {
+    var state = AppState(userId: null);
+
+    var userId = Uuid().v4();
+    var result = reduce(state, SetUserId(userId));
+
+    expect(result.authStatus, AuthenticationStatus.LOGGED_IN);
+  });
+
+  test('SetUserId sets status to anonymous when user id does not exist', () {
+    var state = AppState(userId: Uuid().v4());
+
+    var result = reduce(state, SetUserId(null));
+
+    expect(result.authStatus, AuthenticationStatus.ANONYMOUS);
+    expect(result.userId, isNull);
   });
 }

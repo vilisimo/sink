@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:sink/common/auth.dart';
 import 'package:sink/common/calendar.dart';
 import 'package:sink/common/exceptions.dart';
 import 'package:sink/models/category.dart';
@@ -55,3 +56,5 @@ DoubleLinkedQueueEntry<DateTime> getMonthEntryByDate(
     DoubleLinkedQueueEntry<DateTime>(
       state.viewableMonths.firstWhere((entry) => entry.month == date.month),
     );
+
+AuthenticationStatus getAuthStatus(AppState state) => state.authStatus;

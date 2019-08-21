@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart' as Material;
+import 'package:sink/common/auth.dart';
 import 'package:sink/common/exceptions.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
@@ -294,5 +295,13 @@ main() {
       result.element,
       DoubleLinkedQueueEntry(DateTime(2000, 5, 1)).element,
     );
+  });
+
+  test("retrieves authentication status", () {
+    var state = AppState(authStatus: AuthenticationStatus.LOADING);
+
+    var result = getAuthStatus(state);
+
+    expect(result, AuthenticationStatus.LOADING);
   });
 }

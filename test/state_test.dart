@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:sink/common/auth.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/state.dart';
@@ -23,6 +24,22 @@ main() {
     final result = state.copyWith(userId: null);
 
     expect(result.userId, isNull);
+  });
+
+  test('returns state with new authentication status', () {
+    var state = AppState(authStatus: AuthenticationStatus.ANONYMOUS);
+
+    final result = state.copyWith(authStatus: AuthenticationStatus.LOADING);
+
+    expect(result.authStatus, AuthenticationStatus.LOADING);
+  });
+
+  test('returns state with old authentication status', () {
+    var state = AppState(authStatus: AuthenticationStatus.ANONYMOUS);
+
+    final result = state.copyWith(authStatus: null);
+
+    expect(result.authStatus, AuthenticationStatus.ANONYMOUS);
   });
 
   test('returns state with new values', () {
