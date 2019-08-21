@@ -9,6 +9,7 @@ import 'package:sink/theme/palette.dart';
 
 @immutable
 class AppState {
+  final String userId;
   final List<Entry> removed;
   final Set<Category> categories;
   // TODO: must be at least one default category
@@ -18,13 +19,15 @@ class AppState {
   final DoubleLinkedQueue<DateTime> viewableMonths;
 
   AppState({
+    userId,
     removed,
     categories,
     areCategoriesLoading,
     availableColors,
     selectedMonth,
     viewableMonths,
-  })  : this.removed = removed ?? List(),
+  })  : this.userId = userId,
+        this.removed = removed ?? List(),
         this.categories = categories ?? Set(),
         this.areCategoriesLoading = areCategoriesLoading ?? true,
         this.availableColors = availableColors ?? Set.from(materialColors),
@@ -33,6 +36,7 @@ class AppState {
             DoubleLinkedQueue.from([firstDay(DateTime.now())]);
 
   AppState copyWith({
+    String userId,
     List<Entry> removed,
     Set<Category> categories,
     bool areCategoriesLoading,
@@ -41,6 +45,7 @@ class AppState {
     DoubleLinkedQueue<DateTime> viewableMonths,
   }) {
     return AppState(
+      userId: userId,
       removed: removed ?? this.removed,
       categories: categories ?? this.categories,
       areCategoriesLoading: areCategoriesLoading ?? this.areCategoriesLoading,

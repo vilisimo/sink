@@ -8,6 +8,7 @@ import 'package:sink/redux/reducers.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/theme/palette.dart';
 import 'package:test/test.dart';
+import 'package:uuid/uuid.dart';
 
 main() {
   test('DeleteEntry action appends an entry to a entries kept for undo', () {
@@ -271,5 +272,14 @@ main() {
     );
 
     expect(result.selectedMonth.element, newMonth.element);
+  });
+
+  test('SetUserId sets user id', () {
+    var state = AppState(userId: null);
+
+    var userId = Uuid().v4();
+    var result = reduce(state, SetUserId(userId));
+
+    expect(result.userId, userId);
   });
 }

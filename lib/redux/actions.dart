@@ -70,3 +70,10 @@ class CreateCategory {
 
   CreateCategory(this.category);
 }
+
+@immutable
+class SetUserId {
+  final String userId;
+
+  SetUserId(this.userId);
+}

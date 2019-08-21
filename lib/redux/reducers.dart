@@ -58,6 +58,9 @@ AppState reduce(AppState state, dynamic action) {
       Set<Color> used = Set.from(action.usedColors);
       return state.copyWith(availableColors: materialColors.difference(used));
 
+    case SetUserId:
+      return state.copyWith(userId: action.userId);
+
     default:
       return state;
   }

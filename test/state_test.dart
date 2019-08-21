@@ -5,8 +5,26 @@ import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/state.dart';
 import 'package:test/test.dart';
+import 'package:uuid/uuid.dart';
 
 main() {
+  test('returns state with new userId', () {
+    var state = AppState(userId: Uuid().v4());
+
+    final newUserId = Uuid().v4();
+    final result = state.copyWith(userId: newUserId);
+
+    expect(result.userId, newUserId);
+  });
+
+  test('returns state with null userId to facilitate logging out', () {
+    var state = AppState(userId: Uuid().v4());
+
+    final result = state.copyWith(userId: null);
+
+    expect(result.userId, isNull);
+  });
+
   test('returns state with new values', () {
     final state = AppState(removed: List<Entry>());
     final now = DateTime.now();
