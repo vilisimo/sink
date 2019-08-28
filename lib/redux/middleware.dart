@@ -9,7 +9,7 @@ import 'package:sink/repository/firestore.dart';
 class SinkMiddleware extends MiddlewareClass<AppState> {
   @override
   void call(Store<AppState> store, dynamic action, NextDispatcher next) async {
-    if (action is InitState) {
+    if (action is RehydrateState) {
       FirestoreRepository.categories
           .orderBy('name', descending: false)
           .snapshots()

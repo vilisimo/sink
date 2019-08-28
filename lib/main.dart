@@ -26,7 +26,7 @@ class Sink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    store.dispatch(InitState());
+    store.dispatch(RehydrateState());
 
     return StoreProvider<AppState>(
       store: store,

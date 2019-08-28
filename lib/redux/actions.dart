@@ -30,7 +30,7 @@ class DeleteEntry {
 class UndoDelete {}
 
 @immutable
-class InitState {}
+class RehydrateState {}
 
 @immutable
 class LoadFirstEntry {}
