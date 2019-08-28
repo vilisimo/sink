@@ -6,6 +6,7 @@ class ClearableTextInput extends StatefulWidget {
   final String value;
   final String hintText;
   final TextStyle style;
+  final TextInputType keyboardType;
   final int maxLines;
   final EdgeInsetsGeometry contentPadding;
   final InputBorder border;
@@ -16,6 +17,7 @@ class ClearableTextInput extends StatefulWidget {
     @required this.hintText,
     this.value,
     this.style,
+    this.keyboardType,
     this.maxLines,
     this.contentPadding,
     this.border,
@@ -66,6 +68,8 @@ class _TextInputState extends State<ClearableTextInput> {
       textCapitalization: TextCapitalization.sentences,
       obscureText: widget.obscureText ?? false,
       style: widget.style,
+      keyboardType: widget.keyboardType ??
+          (widget.maxLines == 1 ? TextInputType.text : TextInputType.multiline),
       maxLines: widget.maxLines ?? 1,
       focusNode: _focus,
       decoration: InputDecoration(
