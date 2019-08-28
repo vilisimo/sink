@@ -71,6 +71,11 @@ class CreateCategory {
   CreateCategory(this.category);
 }
 
+/// Sign up & log in
+
+@immutable
+class RetrieveUser {}
+
 @immutable
 class SetUserId {
   final String userId;

@@ -58,3 +58,5 @@ DoubleLinkedQueueEntry<DateTime> getMonthEntryByDate(
     );
 
 AuthenticationStatus getAuthStatus(AppState state) => state.authStatus;
+
+String getUserId(AppState state) => state.userId;

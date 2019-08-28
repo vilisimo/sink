@@ -275,6 +275,14 @@ main() {
     expect(result.selectedMonth.element, newMonth.element);
   });
 
+  test('RetrieveUser sets status to loading', () {
+    var state = AppState(authStatus: AuthenticationStatus.ANONYMOUS);
+
+    var result = reduce(state, RetrieveUser());
+
+    expect(result.authStatus, AuthenticationStatus.LOADING);
+  });
+
   test('SetUserId sets user id', () {
     var state = AppState(userId: null);
 

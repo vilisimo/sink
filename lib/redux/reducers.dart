@@ -59,6 +59,9 @@ AppState reduce(AppState state, dynamic action) {
       Set<Color> used = Set.from(action.usedColors);
       return state.copyWith(availableColors: materialColors.difference(used));
 
+    case RetrieveUser:
+      return state.copyWith(authStatus: AuthenticationStatus.LOADING);
+
     case SetUserId:
       final anonymous = action.userId == null;
       return state.copyWith(

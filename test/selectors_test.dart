@@ -302,6 +302,14 @@ main() {
 
     var result = getAuthStatus(state);
 
-    expect(result, AuthenticationStatus.LOADING);
+    expect(result, state.authStatus);
+  });
+
+  test("retrieves userId", () {
+    var state = AppState(userId: "some user");
+
+    var result = getUserId(state);
+
+    expect(result, state.userId);
   });
 }
