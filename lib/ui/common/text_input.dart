@@ -74,7 +74,16 @@ class _TextInputState extends State<ClearableTextInput> {
             ? IconButton(
                 icon: Icon(Icons.clear),
                 disabledColor: Colors.transparent,
-                onPressed: clearable ? () => _controller.clear() : null,
+                // TODO: breaks when clearing text input. Below is workaround.
+                //  For more information, see:
+                //  https://github.com/flutter/flutter/pull/38722
+                //  https://github.com/flutter/flutter/issues/36324
+                //  https://github.com/flutter/flutter/issues/17647
+                //  https://github.com/go-flutter-desktop/go-flutter/issues/221
+                onPressed: clearable
+                    ? () => WidgetsBinding.instance
+                        .addPostFrameCallback((_) => _controller.clear())
+                    : null,
               )
             : null,
       ),
