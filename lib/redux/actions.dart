@@ -77,6 +77,9 @@ class CreateCategory {
 class RetrieveUser {}
 
 @immutable
+class SignOut {}
+
+@immutable
 class SetUserId {
   final String userId;
 
