@@ -9,6 +9,7 @@ class ClearableTextInput extends StatefulWidget {
   final int maxLines;
   final EdgeInsetsGeometry contentPadding;
   final InputBorder border;
+  final bool obscureText;
 
   ClearableTextInput({
     @required this.onChange,
@@ -18,6 +19,7 @@ class ClearableTextInput extends StatefulWidget {
     this.maxLines,
     this.contentPadding,
     this.border,
+    this.obscureText,
   });
 
   @override
@@ -62,6 +64,7 @@ class _TextInputState extends State<ClearableTextInput> {
       controller: _controller,
       textInputAction: TextInputAction.done,
       textCapitalization: TextCapitalization.sentences,
+      obscureText: widget.obscureText ?? false,
       style: widget.style,
       maxLines: widget.maxLines ?? 1,
       focusNode: _focus,
