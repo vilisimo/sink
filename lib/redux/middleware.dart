@@ -18,11 +18,16 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
         store.dispatch(SetUserId(user?.uid.toString()));
         store.dispatch(RehydrateState());
       });
+    } else if (action is SignIn) {
+      final userId = await auth
+          .signIn(action.email, action.password)
+          .catchError((error) => print('Error: $error')); // TODO: show error
+      store.dispatch(SetUserId(userId));
     } else if (action is SignOut) {
       await auth.signOut();
       store.dispatch(SetUserId(null));
     } else if (action is RehydrateState) {
-      var userId = getUserId(store.state); // TODO: use to get user's data
+      final userId = getUserId(store.state); // TODO: use to get user's data
       FirestoreRepository.categories
           .orderBy('name', descending: false)
           .snapshots()

@@ -77,6 +77,14 @@ class CreateCategory {
 class RetrieveUser {}
 
 @immutable
+class SignIn {
+  final String email;
+  final String password;
+
+  SignIn({@required this.email, @required this.password});
+}
+
+@immutable
 class SignOut {}
 
 @immutable
