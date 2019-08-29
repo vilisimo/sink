@@ -12,6 +12,9 @@ import 'package:sink/theme/palette.dart';
 class AppState {
   final String userId;
   final AuthenticationStatus authStatus;
+  final bool registrationInProgress;
+  final bool registrationSuccess;
+  final String authenticationErrorMessage;
   final List<Entry> removed;
   final Set<Category> categories;
   // TODO: must be at least one default category
@@ -23,6 +26,9 @@ class AppState {
   AppState({
     userId,
     authStatus,
+    registrationInProgress,
+    registrationSuccess,
+    authenticationErrorMessage,
     removed,
     categories,
     areCategoriesLoading,
@@ -31,6 +37,9 @@ class AppState {
     viewableMonths,
   })  : this.userId = userId,
         this.authStatus = authStatus ?? AuthenticationStatus.ANONYMOUS,
+        this.registrationInProgress = registrationInProgress ?? false,
+        this.registrationSuccess = registrationSuccess ?? false,
+        this.authenticationErrorMessage = authenticationErrorMessage ?? "",
         this.removed = removed ?? List(),
         this.categories = categories ?? Set(),
         this.areCategoriesLoading = areCategoriesLoading ?? true,
@@ -42,6 +51,9 @@ class AppState {
   AppState copyWith({
     String userId,
     AuthenticationStatus authStatus,
+    bool registrationInProgress,
+    bool registrationSuccess,
+    String authenticationErrorMessage,
     List<Entry> removed,
     Set<Category> categories,
     bool areCategoriesLoading,
@@ -52,6 +64,11 @@ class AppState {
     return AppState(
       userId: userId,
       authStatus: authStatus ?? this.authStatus,
+      registrationInProgress:
+          registrationInProgress ?? this.registrationInProgress,
+      registrationSuccess: registrationSuccess ?? this.registrationSuccess,
+      authenticationErrorMessage:
+          authenticationErrorMessage ?? this.authenticationErrorMessage,
       removed: removed ?? this.removed,
       categories: categories ?? this.categories,
       areCategoriesLoading: areCategoriesLoading ?? this.areCategoriesLoading,

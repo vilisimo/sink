@@ -194,4 +194,52 @@ main() {
 
     expect(result.viewableMonths, state.viewableMonths);
   });
+
+  test('returns state with new registering flag', () {
+    var state = AppState(registrationInProgress: true);
+
+    final result = state.copyWith(registrationInProgress: false);
+
+    expect(result.registrationInProgress, false);
+  });
+
+  test('returns state with old registering flag', () {
+    var state = AppState(registrationInProgress: true);
+
+    final result = state.copyWith(registrationInProgress: null);
+
+    expect(result.registrationInProgress, state.registrationInProgress);
+  });
+
+  test('returns state with new registration success flag', () {
+    var state = AppState(registrationSuccess: true);
+
+    final result = state.copyWith(registrationSuccess: false);
+
+    expect(result.registrationSuccess, false);
+  });
+
+  test('returns state with old registration success flag', () {
+    var state = AppState(registrationInProgress: true);
+
+    final result = state.copyWith(registrationSuccess: null);
+
+    expect(result.registrationSuccess, state.registrationSuccess);
+  });
+
+  test('returns state with new authentication error', () {
+    var state = AppState(authenticationErrorMessage: "Old");
+
+    final result = state.copyWith(authenticationErrorMessage: "New");
+
+    expect(result.authenticationErrorMessage, "New");
+  });
+
+  test('returns state with old authentication error', () {
+    var state = AppState(authenticationErrorMessage: "Old");
+
+    final result = state.copyWith(authenticationErrorMessage: null);
+
+    expect(result.authenticationErrorMessage, state.authenticationErrorMessage);
+  });
 }

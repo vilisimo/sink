@@ -71,6 +71,34 @@ AppState reduce(AppState state, dynamic action) {
             : AuthenticationStatus.LOGGED_IN,
       );
 
+    case StartRegistration:
+      return state.copyWith(
+          registrationInProgress: true, registrationSuccess: false);
+
+    case ReportRegistrationSuccess:
+      return state.copyWith(
+        registrationInProgress: false,
+        registrationSuccess: true,
+        authenticationErrorMessage: "",
+      );
+
+    case ReportAuthenticationError:
+      if (action.code == "ERROR_EMAIL_ALREADY_IN_USE")
+        return state.copyWith(
+          authenticationErrorMessage:
+              "Supplied email address is already taken.",
+          registrationInProgress: false,
+        );
+      return state.copyWith(
+        authenticationErrorMessage: action.code,
+      );
+
+    case ClearAuthenticationState:
+      return state.copyWith(
+        authenticationErrorMessage: "",
+        registrationSuccess: false,
+      );
+
     default:
       return state;
   }

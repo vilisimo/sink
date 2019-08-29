@@ -15,19 +15,28 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
     if (action is RetrieveUser) {
       next(action);
       auth.getCurrentUser().then((user) {
-        store.dispatch(SetUserId(user?.uid.toString()));
-        store.dispatch(RehydrateState());
-      });
+        store.dispatch(SetUserId(user == null ? null : user.uid.toString()));
+      }).then((value) => store.dispatch(RehydrateState()));
     } else if (action is SignIn) {
-      final userId = await auth
+      auth
           .signIn(action.email, action.password)
+          .then((userId) => store.dispatch(SetUserId(userId)))
+          .then((value) => store.dispatch(RehydrateState()))
           .catchError((error) => print('Error: $error')); // TODO: show error
-      store.dispatch(SetUserId(userId));
     } else if (action is SignOut) {
-      await auth.signOut();
-      store.dispatch(SetUserId(null));
+      auth.signOut().then((value) => store.dispatch(SetUserId(null)));
+    } else if (action is Register) {
+      store.dispatch(StartRegistration());
+      auth
+          .signUp(action.email, action.password)
+          .then((value) => store.dispatch(SendVerificationEmail()))
+          .then((value) => store.dispatch(ReportRegistrationSuccess()))
+          .catchError((e) => store.dispatch(ReportAuthenticationError(e.code)));
+    } else if (action is SendVerificationEmail) {
+      auth.sendEmailVerification();
     } else if (action is RehydrateState) {
       final userId = getUserId(store.state); // TODO: use to get user's data
+      print('User id: $userId');
       FirestoreRepository.categories
           .orderBy('name', descending: false)
           .snapshots()

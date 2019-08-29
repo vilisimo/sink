@@ -309,4 +309,82 @@ main() {
     expect(result.authStatus, AuthenticationStatus.ANONYMOUS);
     expect(result.userId, isNull);
   });
+
+  test('StartRegistration marks registration as ongoing', () {
+    var state = AppState(registrationInProgress: false);
+
+    var result = reduce(state, StartRegistration());
+
+    expect(result.registrationInProgress, true);
+  });
+
+  test('StartRegistration marks registration success as false', () {
+    var state = AppState(registrationSuccess: true);
+
+    var result = reduce(state, StartRegistration());
+
+    expect(result.registrationSuccess, false);
+  });
+
+  test('ReportRegistrationSuccess marks registration process as false', () {
+    var state = AppState(registrationInProgress: true);
+
+    var result = reduce(state, ReportRegistrationSuccess());
+
+    expect(result.registrationInProgress, false);
+  });
+
+  test('ReportRegistrationSuccess marks registration success as true', () {
+    var state = AppState(registrationSuccess: false);
+
+    var result = reduce(state, ReportRegistrationSuccess());
+
+    expect(result.registrationSuccess, true);
+  });
+
+  test('ReportRegistrationSuccess clears errors', () {
+    var state = AppState(authenticationErrorMessage: "Error");
+
+    var result = reduce(state, ReportRegistrationSuccess());
+
+    expect(result.authenticationErrorMessage, "");
+  });
+
+  test('ReportAuthenticationError sets authentication error', () {
+    var state = AppState(authenticationErrorMessage: "");
+
+    var result = reduce(state, ReportAuthenticationError("code"));
+
+    expect(result.authenticationErrorMessage, "code");
+  });
+
+  test('ReportAuthenticationError returns message on email already in use', () {
+    var state = AppState(authenticationErrorMessage: "");
+
+    var result = reduce(
+      state,
+      ReportAuthenticationError("ERROR_EMAIL_ALREADY_IN_USE"),
+    );
+
+    expect(
+      result.authenticationErrorMessage,
+      "Supplied email address is already taken.",
+    );
+  });
+
+  test('ClearRegistrationState clears error message', () {
+    var state = AppState(authenticationErrorMessage: "Error");
+
+    var result = reduce(state, ClearAuthenticationState());
+
+    expect(result.authenticationErrorMessage, "");
+  });
+
+  test('ClearRegistrationState clears registration success', () {
+    var state = AppState(registrationSuccess: true);
+
+    var result = reduce(state, ClearAuthenticationState());
+
+    expect(result.registrationSuccess, false);
+  });
 }

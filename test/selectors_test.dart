@@ -312,4 +312,28 @@ main() {
 
     expect(result, state.userId);
   });
+
+  test("informs whether user is being registered", () {
+    var state = AppState(registrationInProgress: true);
+
+    var result = isRegistrationInProgress(state);
+
+    expect(result, state.registrationInProgress);
+  });
+
+  test("returns authentication error message", () {
+    var state = AppState(authenticationErrorMessage: "Error");
+
+    var result = getAuthenticationErrorMessage(state);
+
+    expect(result, state.authenticationErrorMessage);
+  });
+
+  test("informs whether registration was successful", () {
+    var state = AppState(registrationSuccess: true);
+
+    var result = isRegistrationSuccessful(state);
+
+    expect(result, state.registrationSuccess);
+  });
 }

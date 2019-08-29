@@ -59,4 +59,11 @@ DoubleLinkedQueueEntry<DateTime> getMonthEntryByDate(
 
 AuthenticationStatus getAuthStatus(AppState state) => state.authStatus;
 
+bool isRegistrationInProgress(AppState state) => state.registrationInProgress;
+
+String getAuthenticationErrorMessage(AppState state) =>
+    state.authenticationErrorMessage;
+
+bool isRegistrationSuccessful(AppState state) => state.registrationSuccess;
+
 String getUserId(AppState state) => state.userId;
