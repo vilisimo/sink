@@ -15,8 +15,13 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
     if (action is RetrieveUser) {
       next(action);
       auth.getCurrentUser().then((user) {
-        store.dispatch(SetUserId(user == null ? null : user.uid.toString()));
-      }).then((value) => store.dispatch(RehydrateState()));
+        if (user.isEmailVerified) {
+          store.dispatch(SetUserId(user == null ? null : user.uid.toString()));
+          store.dispatch(RehydrateState());
+        } else {
+          store.dispatch(SetUserId(null));
+        }
+      });
     } else if (action is SignIn) {
       auth
           .signIn(action.email, action.password)
