@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:sink/common/auth.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
@@ -8,6 +9,7 @@ import 'package:sink/redux/reducers.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/theme/palette.dart';
 import 'package:test/test.dart';
+import 'package:uuid/uuid.dart';
 
 main() {
   test('DeleteEntry action appends an entry to a entries kept for undo', () {
@@ -271,5 +273,207 @@ main() {
     );
 
     expect(result.selectedMonth.element, newMonth.element);
+  });
+
+  test('RetrieveUser sets status to loading', () {
+    var state = AppState(authStatus: AuthenticationStatus.ANONYMOUS);
+
+    var result = reduce(state, RetrieveUser());
+
+    expect(result.authStatus, AuthenticationStatus.LOADING);
+  });
+
+  test('SetUserId sets user id', () {
+    var state = AppState(userId: null);
+
+    var userId = Uuid().v4();
+    var result = reduce(state, SetUserId(userId));
+
+    expect(result.userId, userId);
+  });
+
+  test('SetUserId sets status to logged in when user id exists', () {
+    var state = AppState(userId: null);
+
+    var userId = Uuid().v4();
+    var result = reduce(state, SetUserId(userId));
+
+    expect(result.authStatus, AuthenticationStatus.LOGGED_IN);
+  });
+
+  test('SetUserEmail sets user email', () {
+    var state = AppState(userEmail: null);
+
+    var result = reduce(state, SetUserEmail("email"));
+
+    expect(result.userEmail, "email");
+  });
+
+  test('SetUserId sets status to anonymous when user id does not exist', () {
+    var state = AppState(userId: Uuid().v4());
+
+    var result = reduce(state, SetUserId(""));
+
+    expect(result.authStatus, AuthenticationStatus.ANONYMOUS);
+    expect(result.userId, isNull);
+  });
+
+  test('StartRegistration marks registration as ongoing', () {
+    var state = AppState(registrationInProgress: false);
+
+    var result = reduce(state, StartRegistration());
+
+    expect(result.registrationInProgress, true);
+  });
+
+  test('StartRegistration marks registration success as false', () {
+    var state = AppState(registrationSuccess: true);
+
+    var result = reduce(state, StartRegistration());
+
+    expect(result.registrationSuccess, false);
+  });
+
+  test('ReportRegistrationSuccess marks registration process as false', () {
+    var state = AppState(registrationInProgress: true);
+
+    var result = reduce(state, ReportRegistrationSuccess());
+
+    expect(result.registrationInProgress, false);
+  });
+
+  test('ReportRegistrationSuccess marks registration success as true', () {
+    var state = AppState(registrationSuccess: false);
+
+    var result = reduce(state, ReportRegistrationSuccess());
+
+    expect(result.registrationSuccess, true);
+  });
+
+  test('ReportRegistrationSuccess clears errors', () {
+    var state = AppState(authenticationErrorMessage: "Error");
+
+    var result = reduce(state, ReportRegistrationSuccess());
+
+    expect(result.authenticationErrorMessage, "");
+  });
+
+  test('ReportAuthenticationError sets authentication error', () {
+    var state = AppState(authenticationErrorMessage: "");
+
+    var result = reduce(state, ReportAuthenticationError("code"));
+
+    expect(result.authenticationErrorMessage, "code");
+  });
+
+  test('ReportAuthenticationError sets progress flags to false', () {
+    var state = AppState(
+      authenticationErrorMessage: "",
+      signInInProgress: true,
+      registrationInProgress: true,
+    );
+
+    var result = reduce(state, ReportAuthenticationError("code"));
+
+    expect(result.authenticationErrorMessage, "code");
+    expect(result.signInInProgress, false);
+    expect(result.registrationInProgress, false);
+  });
+
+  test('ReportAuthenticationError returns message on email already in use', () {
+    var state = AppState(authenticationErrorMessage: "");
+
+    var result = reduce(
+      state,
+      ReportAuthenticationError("ERROR_EMAIL_ALREADY_IN_USE"),
+    );
+
+    expect(
+      result.authenticationErrorMessage,
+      "Supplied email address is already taken.",
+    );
+  });
+
+  test('ReportAuthenticationError resets flag on email already in use', () {
+    var state = AppState(
+      authenticationErrorMessage: "",
+      registrationInProgress: true,
+    );
+
+    var result = reduce(
+      state,
+      ReportAuthenticationError("ERROR_EMAIL_ALREADY_IN_USE"),
+    );
+
+    expect(result.registrationInProgress, false);
+  });
+
+  test('ReportAuthenticationError returns message on incorrect password', () {
+    var state = AppState(authenticationErrorMessage: "");
+
+    var result = reduce(
+      state,
+      ReportAuthenticationError("ERROR_WRONG_PASSWORD"),
+    );
+
+    expect(
+      result.authenticationErrorMessage,
+      "Email and password do not match.",
+    );
+  });
+
+  test('ReportAuthenticationError resets progress flag on incorrect password',
+      () {
+    var state = AppState(
+      authenticationErrorMessage: "",
+      signInInProgress: true,
+    );
+
+    var result = reduce(
+      state,
+      ReportAuthenticationError("ERROR_WRONG_PASSWORD"),
+    );
+
+    expect(result.signInInProgress, false);
+  });
+
+  test('ClearRegistrationState clears error message', () {
+    var state = AppState(authenticationErrorMessage: "Error");
+
+    var result = reduce(state, ClearAuthenticationState());
+
+    expect(result.authenticationErrorMessage, "");
+  });
+
+  test('ClearRegistrationState clears registration success', () {
+    var state = AppState(registrationSuccess: true);
+
+    var result = reduce(state, ClearAuthenticationState());
+
+    expect(result.registrationSuccess, false);
+  });
+
+  test('SigIn indicates that sign in is in progress', () {
+    var state = AppState(signInInProgress: false);
+
+    var result = reduce(state, SignIn(email: 'email', password: 'password'));
+
+    expect(result.signInInProgress, true);
+  });
+
+  test('ReportRegistrationSuccess indicates sign in is not in progress', () {
+    var state = AppState(signInInProgress: true);
+
+    var result = reduce(state, ReportSignInSuccess());
+
+    expect(result.signInInProgress, false);
+  });
+
+  test('ReportRegistrationSuccess removes authentication errors', () {
+    var state = AppState(authenticationErrorMessage: "Error");
+
+    var result = reduce(state, ReportSignInSuccess());
+
+    expect(result.authenticationErrorMessage, "");
   });
 }

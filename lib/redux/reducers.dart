@@ -1,6 +1,8 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:quiver/strings.dart';
+import 'package:sink/common/auth.dart';
 import 'package:sink/common/calendar.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
@@ -57,6 +59,68 @@ AppState reduce(AppState state, dynamic action) {
     case ReloadColors:
       Set<Color> used = Set.from(action.usedColors);
       return state.copyWith(availableColors: materialColors.difference(used));
+
+    case RetrieveUser:
+      return state.copyWith(authStatus: AuthenticationStatus.LOADING);
+
+    case SetUserId:
+      final anonymous = isEmpty(action.userId);
+      return state.copyWith(
+        userId: action.userId,
+        authStatus: anonymous
+            ? AuthenticationStatus.ANONYMOUS
+            : AuthenticationStatus.LOGGED_IN,
+      );
+
+    case SetUserEmail:
+      return state.copyWith(userEmail: action.email);
+
+    case StartRegistration:
+      return state.copyWith(
+          registrationInProgress: true, registrationSuccess: false);
+
+    case ReportRegistrationSuccess:
+      return state.copyWith(
+        registrationInProgress: false,
+        registrationSuccess: true,
+        authenticationErrorMessage: "",
+      );
+
+    case SignIn:
+      return state.copyWith(signInInProgress: true);
+
+    case ReportSignInSuccess:
+      return state.copyWith(
+        signInInProgress: false,
+        authenticationErrorMessage: "",
+      );
+
+    case ReportAuthenticationError:
+      switch (action.code) {
+        case "ERROR_EMAIL_ALREADY_IN_USE":
+          return state.copyWith(
+            authenticationErrorMessage:
+                "Supplied email address is already taken.",
+            registrationInProgress: false,
+          );
+
+        case "ERROR_WRONG_PASSWORD":
+          return state.copyWith(
+            authenticationErrorMessage: "Email and password do not match.",
+            signInInProgress: false,
+          );
+      }
+      return state.copyWith(
+        authenticationErrorMessage: action.code,
+        registrationInProgress: false,
+        signInInProgress: false,
+      );
+
+    case ClearAuthenticationState:
+      return state.copyWith(
+        authenticationErrorMessage: "",
+        registrationSuccess: false,
+      );
 
     default:
       return state;

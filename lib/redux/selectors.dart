@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:sink/common/auth.dart';
 import 'package:sink/common/calendar.dart';
 import 'package:sink/common/exceptions.dart';
 import 'package:sink/models/category.dart';
@@ -55,3 +56,18 @@ DoubleLinkedQueueEntry<DateTime> getMonthEntryByDate(
     DoubleLinkedQueueEntry<DateTime>(
       state.viewableMonths.firstWhere((entry) => entry.month == date.month),
     );
+
+AuthenticationStatus getAuthStatus(AppState state) => state.authStatus;
+
+bool isRegistrationInProgress(AppState state) => state.registrationInProgress;
+
+bool isSignInInProgress(AppState state) => state.signInInProgress;
+
+String getAuthenticationErrorMessage(AppState state) =>
+    state.authenticationErrorMessage;
+
+bool isRegistrationSuccessful(AppState state) => state.registrationSuccess;
+
+String getUserId(AppState state) => state.userId;
+
+String getUserEmail(AppState state) => state.userEmail;

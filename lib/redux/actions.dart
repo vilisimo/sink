@@ -30,7 +30,7 @@ class DeleteEntry {
 class UndoDelete {}
 
 @immutable
-class InitState {}
+class RehydrateState {}
 
 @immutable
 class LoadFirstEntry {}
@@ -69,4 +69,64 @@ class CreateCategory {
   final Category category;
 
   CreateCategory(this.category);
+}
+
+/// Sign up & log in
+
+@immutable
+class RetrieveUser {}
+
+@immutable
+class SignIn {
+  final String email;
+  final String password;
+
+  SignIn({@required this.email, @required this.password});
+}
+
+@immutable
+class SignOut {}
+
+@immutable
+class StartRegistration {}
+
+@immutable
+class Register {
+  final String email;
+  final String password;
+
+  Register({@required this.email, @required this.password});
+}
+
+@immutable
+class ReportRegistrationSuccess {}
+
+@immutable
+class ReportSignInSuccess {}
+
+@immutable
+class ReportAuthenticationError {
+  final String code;
+
+  ReportAuthenticationError(this.code);
+}
+
+@immutable
+class ClearAuthenticationState {}
+
+@immutable
+class SendVerificationEmail {}
+
+@immutable
+class SetUserId {
+  final String userId;
+
+  SetUserId(this.userId);
+}
+
+@immutable
+class SetUserEmail {
+  final String email;
+
+  SetUserEmail(this.email);
 }

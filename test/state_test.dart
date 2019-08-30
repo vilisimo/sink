@@ -1,12 +1,71 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:sink/common/auth.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/state.dart';
 import 'package:test/test.dart';
+import 'package:uuid/uuid.dart';
 
 main() {
+  test('returns state with new userId', () {
+    var state = AppState(userId: Uuid().v4());
+
+    final newUserId = Uuid().v4();
+    final result = state.copyWith(userId: newUserId);
+
+    expect(result.userId, newUserId);
+  });
+
+  test('returns state with userId as null to facilitate logging out', () {
+    var state = AppState(userId: Uuid().v4());
+
+    final result = state.copyWith(userId: "");
+
+    expect(result.userId, isNull);
+  });
+
+  test('returns state with new user email', () {
+    var state = AppState(userEmail: Uuid().v4());
+
+    final result = state.copyWith(userEmail: "email");
+
+    expect(result.userEmail, "email");
+  });
+
+  test('returns state with null user email', () {
+    var state = AppState(userEmail: Uuid().v4());
+
+    final result = state.copyWith(userEmail: "");
+
+    expect(result.userEmail, isNull);
+  });
+
+  test('does not void user email when it is not passed in', () {
+    var state = AppState(userEmail: "email");
+
+    final result = state.copyWith(userId: "email is not passed");
+
+    expect(result.userEmail, "email");
+  });
+
+  test('returns state with new authentication status', () {
+    var state = AppState(authStatus: AuthenticationStatus.ANONYMOUS);
+
+    final result = state.copyWith(authStatus: AuthenticationStatus.LOADING);
+
+    expect(result.authStatus, AuthenticationStatus.LOADING);
+  });
+
+  test('returns state with old authentication status', () {
+    var state = AppState(authStatus: AuthenticationStatus.ANONYMOUS);
+
+    final result = state.copyWith(authStatus: null);
+
+    expect(result.authStatus, AuthenticationStatus.ANONYMOUS);
+  });
+
   test('returns state with new values', () {
     final state = AppState(removed: List<Entry>());
     final now = DateTime.now();
@@ -158,5 +217,69 @@ main() {
     final result = state.copyWith(viewableMonths: null);
 
     expect(result.viewableMonths, state.viewableMonths);
+  });
+
+  test('returns state with new registering flag', () {
+    var state = AppState(registrationInProgress: true);
+
+    final result = state.copyWith(registrationInProgress: false);
+
+    expect(result.registrationInProgress, false);
+  });
+
+  test('returns state with old registering flag', () {
+    var state = AppState(registrationInProgress: true);
+
+    final result = state.copyWith(registrationInProgress: null);
+
+    expect(result.registrationInProgress, state.registrationInProgress);
+  });
+
+  test('returns state with new registration success flag', () {
+    var state = AppState(registrationSuccess: true);
+
+    final result = state.copyWith(registrationSuccess: false);
+
+    expect(result.registrationSuccess, false);
+  });
+
+  test('returns state with old registration success flag', () {
+    var state = AppState(registrationInProgress: true);
+
+    final result = state.copyWith(registrationSuccess: null);
+
+    expect(result.registrationSuccess, state.registrationSuccess);
+  });
+
+  test('returns state with new authentication error', () {
+    var state = AppState(authenticationErrorMessage: "Old");
+
+    final result = state.copyWith(authenticationErrorMessage: "New");
+
+    expect(result.authenticationErrorMessage, "New");
+  });
+
+  test('returns state with old authentication error', () {
+    var state = AppState(authenticationErrorMessage: "Old");
+
+    final result = state.copyWith(authenticationErrorMessage: null);
+
+    expect(result.authenticationErrorMessage, state.authenticationErrorMessage);
+  });
+
+  test('returns state with new sign in progress indicator', () {
+    var state = AppState(signInInProgress: true);
+
+    final result = state.copyWith(signInInProgress: false);
+
+    expect(result.signInInProgress, false);
+  });
+
+  test('returns state with old sign in progress indicator', () {
+    var state = AppState(signInInProgress: true);
+
+    final result = state.copyWith(signInInProgress: null);
+
+    expect(result.signInInProgress, true);
   });
 }

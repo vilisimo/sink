@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiver/strings.dart';
+import 'package:sink/ui/common/text.dart';
 
 class ClearableTextInput extends StatefulWidget {
   final Function(String) onChange;
@@ -95,5 +96,97 @@ class _TextInputState extends State<ClearableTextInput> {
             : null,
       ),
     );
+  }
+}
+
+class EmailFormField extends StatelessWidget {
+  static const pattern =
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+  final regEx = RegExp(pattern);
+
+  final Function(String) onSaved;
+  final bool showHelpText;
+
+  EmailFormField({@required this.onSaved, showHelpText})
+      : this.showHelpText = showHelpText ?? true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          FormTitleText(text: "Email"),
+          if (showHelpText)
+            Text(
+              "The address should be of a form email@provider.domain. "
+              "For example: email@example.com",
+              style: TextStyle(fontSize: 14.0),
+            ),
+          TextFormField(
+            maxLines: 1,
+            keyboardType: TextInputType.emailAddress,
+            autofocus: false,
+            validator: (value) => _validateEmail(value),
+            onSaved: (value) => onSaved(value),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _validateEmail(String email) {
+    email = email.trim();
+    if (email.length == 0) {
+      return "Email field cannot be empty";
+    } else if (!regEx.hasMatch(email)) {
+      return "Invalid email: use 'email@provider.domain' form";
+    } else {
+      return null;
+    }
+  }
+}
+
+class PasswordFormField extends StatelessWidget {
+  final Function(String) onSaved;
+  final bool showHelpText;
+
+  PasswordFormField({@required this.onSaved, showHelpText})
+      : this.showHelpText = showHelpText ?? true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          FormTitleText(text: "Password", padding: EdgeInsets.only(top: 8.0)),
+          if (showHelpText)
+            Text(
+              "Make sure to use a strong password: use lowercase and capital "
+              "letters, special symbols, numbers.",
+              style: TextStyle(fontSize: 14.0),
+            ),
+          TextFormField(
+            maxLines: 1,
+            obscureText: true,
+            autofocus: false,
+            validator: (value) => _validatePassword(value),
+            onSaved: (value) => onSaved(value),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _validatePassword(String password) {
+    if (password.isEmpty) {
+      return "Password field cannot be empty";
+    } else if (password.length < 6) {
+      return "Password should contain at least 6 symbols";
+    }
+    return null;
   }
 }

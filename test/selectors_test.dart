@@ -1,10 +1,12 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart' as Material;
+import 'package:sink/common/auth.dart';
 import 'package:sink/common/exceptions.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/selectors.dart';
+import 'package:sink/redux/selectors.dart' as prefix0;
 import 'package:sink/redux/state.dart';
 import 'package:test/test.dart';
 
@@ -294,5 +296,61 @@ main() {
       result.element,
       DoubleLinkedQueueEntry(DateTime(2000, 5, 1)).element,
     );
+  });
+
+  test("retrieves authentication status", () {
+    var state = AppState(authStatus: AuthenticationStatus.LOADING);
+
+    var result = getAuthStatus(state);
+
+    expect(result, state.authStatus);
+  });
+
+  test("retrieves userId", () {
+    var state = AppState(userId: "some user");
+
+    var result = getUserId(state);
+
+    expect(result, state.userId);
+  });
+
+  test("retrieves userEmail", () {
+    var state = AppState(userEmail: "email");
+
+    var result = getUserEmail(state);
+
+    expect(result, state.userEmail);
+  });
+
+  test("informs whether user is being registered", () {
+    var state = AppState(registrationInProgress: true);
+
+    var result = isRegistrationInProgress(state);
+
+    expect(result, state.registrationInProgress);
+  });
+
+  test("informs whether user is being signed in", () {
+    var state = AppState(signInInProgress: true);
+
+    var result = prefix0.isSignInInProgress(state);
+
+    expect(result, state.signInInProgress);
+  });
+
+  test("returns authentication error message", () {
+    var state = AppState(authenticationErrorMessage: "Error");
+
+    var result = getAuthenticationErrorMessage(state);
+
+    expect(result, state.authenticationErrorMessage);
+  });
+
+  test("informs whether registration was successful", () {
+    var state = AppState(registrationSuccess: true);
+
+    var result = isRegistrationSuccessful(state);
+
+    expect(result, state.registrationSuccess);
   });
 }
