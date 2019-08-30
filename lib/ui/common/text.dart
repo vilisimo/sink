@@ -25,13 +25,15 @@ class CenteredText extends StatelessWidget {
 
 class FormTitleText extends StatelessWidget {
   final String text;
+  final EdgeInsets padding;
 
-  FormTitleText({@required this.text});
+  FormTitleText({@required this.text, padding})
+      : this.padding = padding ?? EdgeInsets.only(top: 8.0, bottom: 8.0);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+      padding: padding,
       child: Text(
         text,
         style: Theme.of(context).textTheme.body2,

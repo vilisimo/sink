@@ -102,6 +102,9 @@ class Register {
 class ReportRegistrationSuccess {}
 
 @immutable
+class ReportSignInSuccess {}
+
+@immutable
 class ReportAuthenticationError {
   final String code;
 

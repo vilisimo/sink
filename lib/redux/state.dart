@@ -14,6 +14,7 @@ class AppState {
   final AuthenticationStatus authStatus;
   final bool registrationInProgress;
   final bool registrationSuccess;
+  final bool signInInProgress;
   final String authenticationErrorMessage;
   final List<Entry> removed;
   final Set<Category> categories;
@@ -28,6 +29,7 @@ class AppState {
     authStatus,
     registrationInProgress,
     registrationSuccess,
+    signInInProgress,
     authenticationErrorMessage,
     removed,
     categories,
@@ -39,6 +41,7 @@ class AppState {
         this.authStatus = authStatus ?? AuthenticationStatus.ANONYMOUS,
         this.registrationInProgress = registrationInProgress ?? false,
         this.registrationSuccess = registrationSuccess ?? false,
+        this.signInInProgress = signInInProgress ?? false,
         this.authenticationErrorMessage = authenticationErrorMessage ?? "",
         this.removed = removed ?? List(),
         this.categories = categories ?? Set(),
@@ -53,6 +56,7 @@ class AppState {
     AuthenticationStatus authStatus,
     bool registrationInProgress,
     bool registrationSuccess,
+    bool signInInProgress,
     String authenticationErrorMessage,
     List<Entry> removed,
     Set<Category> categories,
@@ -67,6 +71,7 @@ class AppState {
       registrationInProgress:
           registrationInProgress ?? this.registrationInProgress,
       registrationSuccess: registrationSuccess ?? this.registrationSuccess,
+      signInInProgress: signInInProgress ?? this.signInInProgress,
       authenticationErrorMessage:
           authenticationErrorMessage ?? this.authenticationErrorMessage,
       removed: removed ?? this.removed,

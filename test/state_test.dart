@@ -242,4 +242,20 @@ main() {
 
     expect(result.authenticationErrorMessage, state.authenticationErrorMessage);
   });
+
+  test('returns state with new sign in progress indicator', () {
+    var state = AppState(signInInProgress: true);
+
+    final result = state.copyWith(signInInProgress: false);
+
+    expect(result.signInInProgress, false);
+  });
+
+  test('returns state with old sign in progress indicator', () {
+    var state = AppState(signInInProgress: true);
+
+    final result = state.copyWith(signInInProgress: null);
+
+    expect(result.signInInProgress, true);
+  });
 }

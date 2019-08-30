@@ -82,15 +82,34 @@ AppState reduce(AppState state, dynamic action) {
         authenticationErrorMessage: "",
       );
 
+    case SignIn:
+      return state.copyWith(signInInProgress: true);
+
+    case ReportSignInSuccess:
+      return state.copyWith(
+        signInInProgress: false,
+        authenticationErrorMessage: "",
+      );
+
     case ReportAuthenticationError:
-      if (action.code == "ERROR_EMAIL_ALREADY_IN_USE")
-        return state.copyWith(
-          authenticationErrorMessage:
-              "Supplied email address is already taken.",
-          registrationInProgress: false,
-        );
+      switch (action.code) {
+        case "ERROR_EMAIL_ALREADY_IN_USE":
+          return state.copyWith(
+            authenticationErrorMessage:
+                "Supplied email address is already taken.",
+            registrationInProgress: false,
+          );
+
+        case "ERROR_WRONG_PASSWORD":
+          return state.copyWith(
+            authenticationErrorMessage: "Email and password do not match.",
+            signInInProgress: false,
+          );
+      }
       return state.copyWith(
         authenticationErrorMessage: action.code,
+        registrationInProgress: false,
+        signInInProgress: false,
       );
 
     case ClearAuthenticationState:

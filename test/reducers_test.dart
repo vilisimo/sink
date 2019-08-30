@@ -358,6 +358,20 @@ main() {
     expect(result.authenticationErrorMessage, "code");
   });
 
+  test('ReportAuthenticationError sets progress flags to false', () {
+    var state = AppState(
+      authenticationErrorMessage: "",
+      signInInProgress: true,
+      registrationInProgress: true,
+    );
+
+    var result = reduce(state, ReportAuthenticationError("code"));
+
+    expect(result.authenticationErrorMessage, "code");
+    expect(result.signInInProgress, false);
+    expect(result.registrationInProgress, false);
+  });
+
   test('ReportAuthenticationError returns message on email already in use', () {
     var state = AppState(authenticationErrorMessage: "");
 
@@ -370,6 +384,49 @@ main() {
       result.authenticationErrorMessage,
       "Supplied email address is already taken.",
     );
+  });
+
+  test('ReportAuthenticationError resets flag on email already in use', () {
+    var state = AppState(
+      authenticationErrorMessage: "",
+      registrationInProgress: true,
+    );
+
+    var result = reduce(
+      state,
+      ReportAuthenticationError("ERROR_EMAIL_ALREADY_IN_USE"),
+    );
+
+    expect(result.registrationInProgress, false);
+  });
+
+  test('ReportAuthenticationError returns message on incorrect password', () {
+    var state = AppState(authenticationErrorMessage: "");
+
+    var result = reduce(
+      state,
+      ReportAuthenticationError("ERROR_WRONG_PASSWORD"),
+    );
+
+    expect(
+      result.authenticationErrorMessage,
+      "Email and password do not match.",
+    );
+  });
+
+  test('ReportAuthenticationError resets progress flag on incorrect password',
+      () {
+    var state = AppState(
+      authenticationErrorMessage: "",
+      signInInProgress: true,
+    );
+
+    var result = reduce(
+      state,
+      ReportAuthenticationError("ERROR_WRONG_PASSWORD"),
+    );
+
+    expect(result.signInInProgress, false);
   });
 
   test('ClearRegistrationState clears error message', () {
@@ -386,5 +443,29 @@ main() {
     var result = reduce(state, ClearAuthenticationState());
 
     expect(result.registrationSuccess, false);
+  });
+
+  test('SigIn indicates that sign in is in progress', () {
+    var state = AppState(signInInProgress: false);
+
+    var result = reduce(state, SignIn(email: 'email', password: 'password'));
+
+    expect(result.signInInProgress, true);
+  });
+
+  test('ReportRegistrationSuccess indicates sign in is not in progress', () {
+    var state = AppState(signInInProgress: true);
+
+    var result = reduce(state, ReportSignInSuccess());
+
+    expect(result.signInInProgress, false);
+  });
+
+  test('ReportRegistrationSuccess removes authentication errors', () {
+    var state = AppState(authenticationErrorMessage: "Error");
+
+    var result = reduce(state, ReportSignInSuccess());
+
+    expect(result.authenticationErrorMessage, "");
   });
 }

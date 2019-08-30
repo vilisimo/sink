@@ -6,6 +6,7 @@ import 'package:sink/common/exceptions.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/selectors.dart';
+import 'package:sink/redux/selectors.dart' as prefix0;
 import 'package:sink/redux/state.dart';
 import 'package:test/test.dart';
 
@@ -319,6 +320,14 @@ main() {
     var result = isRegistrationInProgress(state);
 
     expect(result, state.registrationInProgress);
+  });
+
+  test("informs whether user is being signed in", () {
+    var state = AppState(signInInProgress: true);
+
+    var result = prefix0.isSignInInProgress(state);
+
+    expect(result, state.signInInProgress);
   });
 
   test("returns authentication error message", () {

@@ -13,9 +13,8 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
   @override
   void call(Store<AppState> store, dynamic action, NextDispatcher next) async {
     if (action is RetrieveUser) {
-      next(action);
       auth.getCurrentUser().then((user) {
-        if (user.isEmailVerified) {
+        if (user != null && user.isEmailVerified) {
           store.dispatch(SetUserId(user == null ? null : user.uid.toString()));
           store.dispatch(RehydrateState());
         } else {
@@ -26,8 +25,9 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
       auth
           .signIn(action.email, action.password)
           .then((userId) => store.dispatch(SetUserId(userId)))
+          .then((value) => {store.dispatch(ReportSignInSuccess())})
           .then((value) => store.dispatch(RehydrateState()))
-          .catchError((error) => print('Error: $error')); // TODO: show error
+          .catchError((e) => store.dispatch(ReportAuthenticationError(e.code)));
     } else if (action is SignOut) {
       auth.signOut().then((value) => store.dispatch(SetUserId(null)));
     } else if (action is Register) {

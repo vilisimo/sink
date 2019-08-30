@@ -61,6 +61,8 @@ AuthenticationStatus getAuthStatus(AppState state) => state.authStatus;
 
 bool isRegistrationInProgress(AppState state) => state.registrationInProgress;
 
+bool isSignInInProgress(AppState state) => state.signInInProgress;
+
 String getAuthenticationErrorMessage(AppState state) =>
     state.authenticationErrorMessage;
 
