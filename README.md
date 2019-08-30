@@ -8,6 +8,9 @@
 - [ ] Unusable
 
 ## Screenshots
+### Registration & Sign In
+![Sign In](screens/signin.png) ![Registration](screens/register.png)
+
 ### Entry List
 ![Entry List](screens/entries.png)
 
