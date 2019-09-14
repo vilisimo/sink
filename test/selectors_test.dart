@@ -8,6 +8,7 @@ import 'package:sink/models/entry.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/selectors.dart' as prefix0;
 import 'package:sink/redux/state.dart';
+import 'package:sink/repository/firestore.dart';
 import 'package:test/test.dart';
 
 const white = Material.Colors.white;
@@ -352,5 +353,13 @@ main() {
     var result = isRegistrationSuccessful(state);
 
     expect(result, state.registrationSuccess);
+  });
+
+  test("retrieves repository", () {
+    var state = AppState(database: FirestoreDatabase("user"));
+
+    var result = getRepository(state);
+
+    expect(result, state.database);
   });
 }

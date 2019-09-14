@@ -6,6 +6,7 @@ import 'package:sink/common/auth.dart';
 import 'package:sink/common/calendar.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
+import 'package:sink/repository/firestore.dart';
 import 'package:sink/theme/palette.dart';
 
 @immutable
@@ -24,6 +25,7 @@ class AppState {
   final Set<Color> availableColors;
   final DoubleLinkedQueueEntry<DateTime> selectedMonth;
   final DoubleLinkedQueue<DateTime> viewableMonths;
+  final FirestoreDatabase database;
 
   AppState({
     userId,
@@ -39,6 +41,7 @@ class AppState {
     availableColors,
     selectedMonth,
     viewableMonths,
+    database,
   })  : this.userId = userId,
         this.userEmail = userEmail,
         this.authStatus = authStatus ?? AuthenticationStatus.ANONYMOUS,
@@ -52,7 +55,8 @@ class AppState {
         this.availableColors = availableColors ?? Set.from(materialColors),
         this.selectedMonth = selectedMonth,
         this.viewableMonths = viewableMonths ??
-            DoubleLinkedQueue.from([firstDay(DateTime.now())]);
+            DoubleLinkedQueue.from([firstDay(DateTime.now())]),
+        this.database = database;
 
   AppState copyWith({
     String userId,
@@ -68,6 +72,7 @@ class AppState {
     Set<Color> availableColors,
     DoubleLinkedQueueEntry<DateTime> selectedMonth,
     DoubleLinkedQueue<DateTime> viewableMonths,
+    FirestoreDatabase database,
   }) {
     return AppState(
       userId: chooseOldOrNull(this.userId, userId),
@@ -85,6 +90,7 @@ class AppState {
       availableColors: availableColors ?? this.availableColors,
       selectedMonth: selectedMonth ?? this.selectedMonth,
       viewableMonths: viewableMonths ?? this.viewableMonths,
+      database: database ?? this.database,
     );
   }
 }

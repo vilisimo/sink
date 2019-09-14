@@ -7,6 +7,7 @@ import 'package:sink/common/exceptions.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/state.dart';
+import 'package:sink/repository/firestore.dart';
 
 Entry getLastRemoved(AppState state) => state.removed.last;
 
@@ -71,3 +72,5 @@ bool isRegistrationSuccessful(AppState state) => state.registrationSuccess;
 String getUserId(AppState state) => state.userId;
 
 String getUserEmail(AppState state) => state.userEmail;
+
+FirestoreDatabase getRepository(AppState state) => state.database;

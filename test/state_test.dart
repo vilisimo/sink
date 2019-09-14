@@ -5,6 +5,7 @@ import 'package:sink/common/auth.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/state.dart';
+import 'package:sink/repository/firestore.dart';
 import 'package:test/test.dart';
 import 'package:uuid/uuid.dart';
 
@@ -281,5 +282,23 @@ main() {
     final result = state.copyWith(signInInProgress: null);
 
     expect(result.signInInProgress, true);
+  });
+
+  test('returns state with new firestore repository', () {
+    var state = AppState(database: FirestoreDatabase("old"));
+
+    final database = FirestoreDatabase("new");
+    final result = state.copyWith(database: database);
+
+    expect(result.database, database);
+  });
+
+  test('returns state with old firestore repository', () {
+    final database = FirestoreDatabase("old");
+    var state = AppState(database: database);
+
+    final result = state.copyWith(database: null);
+
+    expect(result.database, database);
   });
 }
