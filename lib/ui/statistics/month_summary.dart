@@ -28,7 +28,7 @@ class MonthExpenses extends StatelessWidget {
           padding: const EdgeInsets.all(8.0).copyWith(bottom: 0.0),
           child: Card(
             child: StreamBuilder<QuerySnapshot>(
-              stream: FirestoreRepository.snapshotBetween(vm.start, vm.end),
+              stream: vm.database.snapshotBetween(vm.start, vm.end),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return PaddedCircularProgressIndicator();
@@ -64,11 +64,13 @@ class _MonthExpensesViewModel {
   final Function(String) toCategory;
   final DateTime start;
   final DateTime end;
+  final FirestoreDatabase database;
 
   _MonthExpensesViewModel({
     @required this.toCategory,
     @required this.start,
     @required this.end,
+    @required this.database,
   });
 
   static _MonthExpensesViewModel fromState(Store<AppState> store) {
@@ -76,6 +78,7 @@ class _MonthExpensesViewModel {
       toCategory: (id) => getCategory(store.state, id),
       start: getStatisticsMonthStart(store.state),
       end: getStatisticsMonthEnd(store.state),
+      database: getRepository(store.state),
     );
   }
 }

@@ -5,7 +5,6 @@ import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
-import 'package:sink/repository/firestore.dart';
 
 class SinkMiddleware extends MiddlewareClass<AppState> {
   final Authentication auth = FirebaseEmailAuthentication();
@@ -17,6 +16,7 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
         if (user != null && user.isEmailVerified) {
           store.dispatch(SetUserId(user.uid.toString()));
           store.dispatch(SetUserEmail(user.email));
+          store.dispatch(InitializeDatabase(user.uid));
           store.dispatch(RehydrateState());
         } else {
           store.dispatch(SetUserId(""));
@@ -28,6 +28,7 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
         if (user.isEmailVerified) {
           store.dispatch(SetUserId(user.uid));
           store.dispatch(SetUserEmail(user.email));
+          store.dispatch(InitializeDatabase(user.uid));
           store.dispatch(ReportSignInSuccess());
           store.dispatch(RehydrateState());
         } else {
@@ -50,10 +51,8 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
     } else if (action is SendVerificationEmail) {
       auth.sendEmailVerification();
     } else if (action is RehydrateState) {
-      final userId = getUserId(store.state); // TODO: use to get user's data
-      final email = getUserEmail(store.state); // TODO: use to get user's data
-      print('User id: $userId, email: $email');
-      FirestoreRepository.categories
+      final database = getRepository(store.state);
+      database.categories
           .orderBy('name', descending: false)
           .snapshots()
           .listen((qs) {
@@ -64,21 +63,31 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
       });
       store.dispatch(LoadFirstEntry());
     } else if (action is LoadFirstEntry) {
-      FirestoreRepository.getFirstEntry().listen((event) {
-        var firstEntry = Entry.fromSnapshot(event.documents.first).date;
-        store.dispatch(LoadMonths(firstEntry, DateTime.now()));
+      final database = getRepository(store.state);
+      database.getFirstEntry().listen((event) {
+        if (event.documents.isNotEmpty) {
+          var firstEntry = Entry.fromSnapshot(event.documents.first).date;
+          store.dispatch(LoadMonths(firstEntry, DateTime.now()));
+        } else {
+          store.dispatch(LoadMonths(DateTime.now(), DateTime.now()));
+        }
       });
     } else if (action is AddEntry) {
-      FirestoreRepository.create(action.entry);
+      final database = getRepository(store.state);
+      database.create(action.entry);
     } else if (action is DeleteEntry) {
-      FirestoreRepository.delete(action.entry);
+      final database = getRepository(store.state);
+      database.delete(action.entry);
     } else if (action is UndoDelete) {
+      final database = getRepository(store.state);
       Entry lastRemoved = getLastRemoved(store.state);
-      FirestoreRepository.create(lastRemoved);
+      database.create(lastRemoved);
     } else if (action is EditEntry) {
-      FirestoreRepository.create(action.entry);
+      final database = getRepository(store.state);
+      database.create(action.entry);
     } else if (action is CreateCategory) {
-      FirestoreRepository.createCategory(action.category);
+      final database = getRepository(store.state);
+      database.createCategory(action.category);
     }
 
     next(action);

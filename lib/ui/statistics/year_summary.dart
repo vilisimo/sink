@@ -30,7 +30,7 @@ class YearExpenses extends StatelessWidget {
           builder: (BuildContext context, _ViewModel vm) {
             return Card(
               child: StreamBuilder<QuerySnapshot>(
-                stream: FirestoreRepository.snapshotBetween(from, to),
+                stream: vm.database.snapshotBetween(from, to),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return PaddedCircularProgressIndicator();
@@ -93,12 +93,14 @@ class YearExpenses extends StatelessWidget {
 
 class _ViewModel {
   final Function(String) resolveColor;
+  final FirestoreDatabase database;
 
-  _ViewModel({@required this.resolveColor});
+  _ViewModel({@required this.resolveColor, @required this.database});
 
   static _ViewModel fromState(Store<AppState> store) {
     return _ViewModel(
       resolveColor: (id) => getCategoryColor(store.state, id),
+      database: getRepository(store.state),
     );
   }
 }

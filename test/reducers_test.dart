@@ -476,4 +476,12 @@ main() {
 
     expect(result.authenticationErrorMessage, "");
   });
+
+  test('InitializeDatabase creates a database instance', () {
+    var state = AppState(database: null);
+
+    var result = reduce(state, InitializeDatabase("user"));
+
+    expect(result.database.userId, "user");
+  });
 }

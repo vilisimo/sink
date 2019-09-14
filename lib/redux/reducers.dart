@@ -7,6 +7,7 @@ import 'package:sink/common/calendar.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/state.dart';
+import 'package:sink/repository/firestore.dart';
 import 'package:sink/theme/palette.dart';
 
 const MONTHS_IN_YEAR = 12;
@@ -121,6 +122,9 @@ AppState reduce(AppState state, dynamic action) {
         authenticationErrorMessage: "",
         registrationSuccess: false,
       );
+
+    case InitializeDatabase:
+      return state.copyWith(database: FirestoreDatabase(action.userId));
 
     default:
       return state;

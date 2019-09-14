@@ -130,3 +130,10 @@ class SetUserEmail {
 
   SetUserEmail(this.email);
 }
+
+@immutable
+class InitializeDatabase {
+  final String userId;
+
+  InitializeDatabase(this.userId);
+}
