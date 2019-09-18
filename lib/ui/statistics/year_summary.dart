@@ -41,12 +41,16 @@ class YearExpenses extends StatelessWidget {
                       .map((ds) => Entry.fromSnapshot(ds))
                       .toList();
 
-                  List<ChartEntry> months = toChartEntries(
+                  List<DatedChartEntry> months = toChartEntries(
                     entries,
                     vm.resolveColor,
                   );
 
-                  var label = "${from.year} - ${to.year}";
+                  var same = months.isEmpty ||
+                      months.first.date.year == months.last.date.year;
+
+                  var label = same ? "${to.year}" : "${from.year} - ${to.year}";
+
                   return Padding(
                     padding: EdgeInsets.all(8.0),
                     child: months.isEmpty
@@ -60,7 +64,7 @@ class YearExpenses extends StatelessWidget {
     );
   }
 
-  List<ChartEntry> toChartEntries(
+  List<DatedChartEntry> toChartEntries(
     List<Entry> entries,
     Function(String) resolveCategory,
   ) {
