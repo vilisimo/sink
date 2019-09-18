@@ -21,7 +21,6 @@ class EntryForm extends StatefulWidget {
 }
 
 class EntryFormState extends State<EntryForm> {
-  static const style = TextStyle(fontSize: 16.0, color: Colors.black);
   static const inputPadding = EdgeInsets.all(16.0);
   static const cardPadding = EdgeInsets.only(left: 16.0, right: 16.0);
   static const datePadding = EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0);
@@ -102,7 +101,7 @@ class EntryFormState extends State<EntryForm> {
                 },
                 value: _amount,
                 hintText: '0.0',
-                style: style,
+                style: Theme.of(context).textTheme.body1,
                 contentPadding: inputPadding,
                 border: InputBorder.none,
               ),
@@ -119,7 +118,7 @@ class EntryFormState extends State<EntryForm> {
                 },
                 value: _description,
                 hintText: 'Description',
-                style: style,
+                style: Theme.of(context).textTheme.body1,
                 maxLines: 3,
                 contentPadding: inputPadding,
                 border: InputBorder.none,

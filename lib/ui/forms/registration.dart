@@ -171,8 +171,12 @@ class RegistrationToSignInText extends StatelessWidget {
           children: <Widget>[
             Text("$plainText "),
             InkWell(
-              child:
-                  Text(hyperlinkedText, style: TextStyle(color: Colors.blue)),
+              child: Text(
+                hyperlinkedText,
+                style: Theme.of(context).textTheme.body1.copyWith(
+                      color: Colors.blue,
+                    ),
+              ),
               onTap: () {
                 vm.clearRegistrationState();
                 Navigator.of(context).pop();

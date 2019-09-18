@@ -29,10 +29,10 @@ class ChartTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 24.0,
-      ),
+      style: Theme.of(context)
+          .textTheme
+          .headline
+          .copyWith(fontWeight: FontWeight.bold),
     );
   }
 }
@@ -44,12 +44,9 @@ class ChartSubtitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      subtitle,
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 18.0,
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Text(subtitle, style: Theme.of(context).textTheme.subhead),
     );
   }
 }

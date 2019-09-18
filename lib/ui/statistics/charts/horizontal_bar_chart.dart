@@ -76,7 +76,10 @@ class _HorizontalBarLabel extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Text(
                       label,
-                      style: TextStyle(fontSize: 14.0),
+                      style: Theme.of(context)
+                          .textTheme
+                          .body1
+                          .copyWith(fontSize: 14.0),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -84,14 +87,19 @@ class _HorizontalBarLabel extends StatelessWidget {
                 Expanded(
                   child: Text(
                     "$percent%",
-                    style:
-                        TextStyle(fontSize: 12.0, color: Palette.dimBlueGrey),
+                    style: Theme.of(context)
+                        .textTheme
+                        .body1
+                        .copyWith(fontSize: 12.0, color: Palette.dimBlueGrey),
                   ),
                 ),
               ],
             ),
           ),
-          Text("$amount", style: TextStyle(fontSize: 12.0)),
+          Text(
+            "$amount",
+            style: Theme.of(context).textTheme.body1.copyWith(fontSize: 12.0),
+          ),
         ],
       ),
     );

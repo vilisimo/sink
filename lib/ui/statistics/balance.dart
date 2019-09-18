@@ -48,9 +48,9 @@ class BalanceCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        summary("Income", income),
-                        summary("Expenses", expenses),
-                        summary("Balance", balance),
+                        summary(context, "Income", income),
+                        summary(context, "Expenses", expenses),
+                        summary(context, "Balance", balance),
                       ],
                     ),
                   ],
@@ -74,20 +74,20 @@ class _ViewModel {
   }
 }
 
-Widget summary(String text, double amount) => Padding(
+Widget summary(BuildContext context, String text, double amount) => Padding(
       padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: Column(
         children: <Widget>[
           Text(
             text,
-            style: TextStyle(
-              fontSize: 14.0,
-              color: Palette.dimBlueGrey,
-            ),
+            style: Theme.of(context).textTheme.body1.copyWith(
+                  fontSize: 14.0,
+                  color: Palette.dimBlueGrey,
+                ),
           ),
           Text(
             amount.toStringAsFixed(2),
-            style: TextStyle(fontSize: 16.0),
+            style: Theme.of(context).textTheme.body1,
           ),
         ],
       ),

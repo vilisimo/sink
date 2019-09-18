@@ -46,6 +46,7 @@ class Sink extends StatelessWidget {
           textTheme: TextTheme(
             body1: TextStyle(fontSize: 16.0),
             body2: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            subhead: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
           ),
         ),
         routes: {

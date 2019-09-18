@@ -115,7 +115,13 @@ class ClickableVerticalBar extends StatelessWidget {
                   quarterTurns: 3,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8.0),
-                    child: Text(amount, style: TextStyle(fontSize: 12.0)),
+                    child: Text(
+                      amount,
+                      style: Theme.of(context)
+                          .textTheme
+                          .body1
+                          .copyWith(fontSize: 12.0),
+                    ),
                   ),
                 ),
                 Padding(

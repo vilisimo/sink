@@ -19,20 +19,20 @@ class DaySummaryTile extends StatelessWidget {
           Expanded(
             child: Text(
               DateFormat.yMMMMd().format(_date),
-              style: TextStyle(
-                fontSize: 12.0,
-                color: Palette.dimBlueGrey,
-              ),
+              style: Theme.of(context)
+                  .textTheme
+                  .body1
+                  .copyWith(fontSize: 12.0, color: Palette.dimBlueGrey),
             ),
           ),
           VisualizedAmount(
             amount: _amount,
             income: _amount >= 0.0,
-            style: TextStyle(
-              color: Palette.dimBlueGrey,
-              fontSize: 12.0,
-            ),
-          )
+            style: Theme.of(context)
+                .textTheme
+                .body1
+                .copyWith(fontSize: 12.0, color: Palette.dimBlueGrey),
+          ),
         ],
       ),
     );

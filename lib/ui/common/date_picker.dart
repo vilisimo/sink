@@ -49,7 +49,7 @@ class DatePicker extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 16.0),
                     child: Text(
                       DateFormat.yMMMMEEEEd().format(selectedDate),
-                      style: TextStyle(fontSize: 18.0),
+                      style: Theme.of(context).textTheme.body1,
                     ),
                   ),
                   Padding(

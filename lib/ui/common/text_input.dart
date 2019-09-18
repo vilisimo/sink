@@ -122,7 +122,7 @@ class EmailFormField extends StatelessWidget {
             Text(
               "The address should be of a form email@provider.domain. "
               "For example: email@example.com",
-              style: TextStyle(fontSize: 14.0),
+              style: Theme.of(context).textTheme.body1.copyWith(fontSize: 14),
             ),
           TextFormField(
             maxLines: 1,
@@ -167,7 +167,7 @@ class PasswordFormField extends StatelessWidget {
             Text(
               "Make sure to use a strong password: use lowercase and capital "
               "letters, special symbols, numbers.",
-              style: TextStyle(fontSize: 14.0),
+              style: Theme.of(context).textTheme.body1.copyWith(fontSize: 14),
             ),
           TextFormField(
             maxLines: 1,

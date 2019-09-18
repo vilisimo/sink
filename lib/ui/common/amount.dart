@@ -12,22 +12,19 @@ class VisualizedAmount extends StatelessWidget {
   final bool income;
   final TextStyle style;
 
-  VisualizedAmount({
-    @required this.amount,
-    @required this.income,
-    style,
-  }) : this.style = style ?? TextStyle(fontSize: 16.0);
+  VisualizedAmount({@required this.amount, @required this.income, this.style});
 
   @override
   Widget build(BuildContext context) {
+    var actualStyle = style ?? Theme.of(context).textTheme.body1;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Text("${amount.toStringAsFixed(2)}", style: style),
+        Text("${amount.toStringAsFixed(2)}", style: actualStyle),
         Icon(
           income ? incomeIcon : expenseIcon,
           color: income ? Palette.income : Palette.expense,
-          size: style.fontSize * iconScalingFactor,
+          size: actualStyle.fontSize * iconScalingFactor,
         ),
       ],
     );
