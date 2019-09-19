@@ -67,10 +67,8 @@ class HomePageState extends State<HomePage>
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
-        title: Container(
-          child: Text('Sink'),
-          alignment: Alignment.center,
-        ),
+        centerTitle: true,
+        title: Text('Sink'),
       ),
       body: TabBarView(
         controller: _tabController,
