@@ -14,6 +14,18 @@ class CategoryList extends StatelessWidget {
     return StoreConnector<AppState, _ViewModel>(
       converter: _ViewModel.fromState,
       builder: (context, vm) {
+        var expenseCategories = vm.categories
+            .where((Category category) => category.type == CategoryType.EXPENSE)
+            .toList();
+        var expense =
+            TypedCategoryList(type: "Expenses", categories: expenseCategories);
+
+        var incomeCategories = vm.categories
+            .where((Category category) => category.type == CategoryType.INCOME)
+            .toList();
+        var income =
+            TypedCategoryList(type: "Income", categories: incomeCategories);
+
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Theme.of(context).backgroundColor,
@@ -25,8 +37,10 @@ class CategoryList extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               shrinkWrap: true,
               padding: EdgeInsets.all(8.0),
-              children:
-                  vm.categories.map((Category c) => CategoryTile(c)).toList(),
+              children: <Widget>[
+                expense,
+                income,
+              ],
             ),
           ),
         );
@@ -42,6 +56,34 @@ class _ViewModel {
 
   static _ViewModel fromState(Store<AppState> store) {
     return _ViewModel(categories: getCategories(store.state));
+  }
+}
+
+class TypedCategoryList extends StatelessWidget {
+  final List<Category> categories;
+  final String type;
+
+  TypedCategoryList({@required this.type, @required this.categories});
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> tiles = [
+      Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Text(
+          this.type,
+          style: Theme.of(context).textTheme.subhead,
+        ),
+      )
+    ];
+    tiles
+      ..addAll(
+        categories.map<Widget>((Category c) => CategoryTile(c)).toList(),
+      );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: tiles,
+    );
   }
 }
 
