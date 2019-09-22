@@ -33,6 +33,13 @@ class HomeDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text(
+                    'Categories',
+                    style: Theme.of(context).textTheme.body2,
+                  ),
+                  onTap: () => Navigator.pushNamed(context, '/categories'),
+                ),
+                ListTile(
+                  title: Text(
                     'Sign out',
                     style: Theme.of(context).textTheme.body2.copyWith(
                           color: Palette.discouraged,

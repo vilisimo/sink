@@ -8,6 +8,7 @@ import 'package:sink/redux/reducers.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/theme/icons.dart';
+import 'package:sink/ui/categories/category_list.dart';
 import 'package:sink/ui/common/buttons.dart';
 import 'package:sink/ui/common/progress_indicator.dart';
 import 'package:sink/ui/forms/registration.dart';
@@ -51,6 +52,7 @@ class Sink extends StatelessWidget {
         ),
         routes: {
           '/login': (context) => LoginScreen(),
+          '/categories': (context) => CategoryList(),
         },
         home: LoginScreen(),
       ),
