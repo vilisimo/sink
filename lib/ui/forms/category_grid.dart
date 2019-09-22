@@ -6,6 +6,7 @@ import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/theme/icons.dart';
 import 'package:sink/theme/palette.dart' as Palette;
+import 'package:sink/ui/categories/category.dart';
 import 'package:sink/ui/forms/category_form.dart';
 
 class CategoryGrid extends StatelessWidget {
@@ -29,9 +30,9 @@ class CategoryGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget addCategoryTile = CategoryTile(
       handleTap: (filler) => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => CategoryForm(type: type)),
-          ),
+        context,
+        MaterialPageRoute(builder: (context) => CategoryForm(type: type)),
+      ),
       category: Category(
         id: ADD_CATEGORY_ID,
         name: ADD_CATEGORY_ID,
@@ -112,21 +113,10 @@ class CategoryTile extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              width: 40.0,
-              height: 40.0,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: isSelected
-                      ? Color.fromRGBO(color.red, color.green, color.blue, .8)
-                      : Palette.lightGrey,
-                ),
-                child: Icon(
-                  icons[category.icon],
-                  color: isSelected ? Colors.white : Colors.black,
-                ),
-              ),
+            CategoryIcon(
+              iconData: icons[category.icon],
+              color: isSelected ? category.color : Palette.lightGrey,
+              isActive: isSelected,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
