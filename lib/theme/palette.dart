@@ -7,6 +7,7 @@ var income = Colors.lightGreen;
 var expense = Colors.red;
 
 var disabled = Color.fromRGBO(90, 90, 90, .4);
+var discouraged = Color.fromRGBO(220, 20, 60, 1);
 
 /// Uses plain [Color] instances, as material colors mess up with equality.
 final Set<Color> materialColors = Set.from(

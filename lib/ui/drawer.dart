@@ -5,6 +5,7 @@ import 'package:redux/redux.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
+import 'package:sink/theme/palette.dart' as Palette;
 
 class HomeDrawer extends StatelessWidget {
   @override
@@ -31,8 +32,12 @@ class HomeDrawer extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  title: Text('Sign out',
-                      style: Theme.of(context).textTheme.body2),
+                  title: Text(
+                    'Sign out',
+                    style: Theme.of(context).textTheme.body2.copyWith(
+                          color: Palette.discouraged,
+                        ),
+                  ),
                   trailing: Icon(Icons.exit_to_app),
                   onTap: () {
                     Navigator.of(context).pop();
