@@ -14,18 +14,6 @@ class CategoryList extends StatelessWidget {
     return StoreConnector<AppState, _ViewModel>(
       converter: _ViewModel.fromState,
       builder: (context, vm) {
-        var expenseCategories = vm.categories
-            .where((Category category) => category.type == CategoryType.EXPENSE)
-            .toList();
-        var expense =
-            TypedCategoryList(type: "Expenses", categories: expenseCategories);
-
-        var incomeCategories = vm.categories
-            .where((Category category) => category.type == CategoryType.INCOME)
-            .toList();
-        var income =
-            TypedCategoryList(type: "Income", categories: incomeCategories);
-
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Theme.of(context).backgroundColor,
@@ -38,8 +26,8 @@ class CategoryList extends StatelessWidget {
               shrinkWrap: true,
               padding: EdgeInsets.all(8.0),
               children: <Widget>[
-                expense,
-                income,
+                TypedCategoryList(type: "Expenses", categories: vm.expenses),
+                TypedCategoryList(type: "Income", categories: vm.income),
               ],
             ),
           ),
@@ -50,39 +38,55 @@ class CategoryList extends StatelessWidget {
 }
 
 class _ViewModel {
-  Set<Category> categories;
+  List<Category> income;
+  List<Category> expenses;
 
-  _ViewModel({@required this.categories});
+  _ViewModel({@required this.income, @required this.expenses});
 
   static _ViewModel fromState(Store<AppState> store) {
-    return _ViewModel(categories: getCategories(store.state));
+    List<Category> income = [], expenses = [];
+    getCategories(store.state).toList().forEach(
+        (c) => c.type == CategoryType.INCOME ? income.add(c) : expenses.add(c));
+
+    return _ViewModel(income: income, expenses: expenses);
   }
 }
 
 class TypedCategoryList extends StatelessWidget {
-  final List<Category> categories;
   final String type;
+  final List<Widget> tiles;
 
-  TypedCategoryList({@required this.type, @required this.categories});
+  TypedCategoryList._(this.type, this.tiles);
+
+  factory TypedCategoryList({
+    @required String type,
+    @required List<Category> categories,
+  }) {
+    List<Widget> tiles = [TypedCategoryTitle(type)];
+    tiles.addAll(categories.map<Widget>((c) => CategoryTile(c)).toList());
+
+    return TypedCategoryList._(type, tiles);
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> tiles = [
-      Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(
-          this.type,
-          style: Theme.of(context).textTheme.subhead,
-        ),
-      )
-    ];
-    tiles
-      ..addAll(
-        categories.map<Widget>((Category c) => CategoryTile(c)).toList(),
-      );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: tiles,
+    );
+  }
+}
+
+class TypedCategoryTitle extends StatelessWidget {
+  final String type;
+
+  TypedCategoryTitle(this.type);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Text(this.type, style: Theme.of(context).textTheme.subhead),
     );
   }
 }
