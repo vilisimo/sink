@@ -47,8 +47,13 @@ class RegistrationFormState extends State<RegistrationForm> {
                   Text('Register', style: Theme.of(context).textTheme.headline),
             ),
           ),
-          EmailFormField(onSaved: _onEmailSaved),
-          PasswordFormField(onSaved: _onPasswordSaved),
+          EmailFormField(
+            key: ValueKey("Registration email"),
+            onSaved: _onEmailSaved,
+          ),
+          PasswordFormField(
+              key: ValueKey("Registration password"),
+              onSaved: _onPasswordSaved),
           button,
           if (errorMessage != "") FormError(errorMessage),
           RegistrationToSignInText(

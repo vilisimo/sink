@@ -107,8 +107,9 @@ class EmailFormField extends StatelessWidget {
   final Function(String) onSaved;
   final bool showHelpText;
 
-  EmailFormField({@required this.onSaved, showHelpText})
-      : this.showHelpText = showHelpText ?? true;
+  EmailFormField({Key key, @required this.onSaved, showHelpText})
+      : this.showHelpText = showHelpText ?? true,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -148,12 +149,21 @@ class EmailFormField extends StatelessWidget {
   }
 }
 
-class PasswordFormField extends StatelessWidget {
+class PasswordFormField extends StatefulWidget {
   final Function(String) onSaved;
   final bool showHelpText;
 
-  PasswordFormField({@required this.onSaved, showHelpText})
-      : this.showHelpText = showHelpText ?? true;
+  PasswordFormField({Key key, @required this.onSaved, showHelpText})
+      : this.showHelpText = showHelpText ?? true,
+        super(key: key);
+
+  @override
+  _PasswordFormFieldState createState() => _PasswordFormFieldState();
+}
+
+class _PasswordFormFieldState extends State<PasswordFormField> {
+  bool hideText = true;
+  bool touched = false;
 
   @override
   Widget build(BuildContext context) {
@@ -163,18 +173,35 @@ class PasswordFormField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           FormTitleText(text: "Password", padding: EdgeInsets.only(top: 8.0)),
-          if (showHelpText)
+          if (widget.showHelpText)
             Text(
               "Make sure to use a strong password: use lowercase and capital "
               "letters, special symbols, numbers.",
               style: Theme.of(context).textTheme.body1.copyWith(fontSize: 14),
             ),
           TextFormField(
+            key: widget.key,
             maxLines: 1,
-            obscureText: true,
+            obscureText: hideText,
             autofocus: false,
+            onChanged: (String value) => setState(() {
+              this.touched = isNotEmpty(value);
+            }),
             validator: (value) => _validatePassword(value),
-            onSaved: (value) => onSaved(value),
+            onSaved: (value) => widget.onSaved(value),
+            decoration: touched
+                ? InputDecoration(
+                    suffixIcon: InkWell(
+                      child: Icon(
+                        Icons.remove_red_eye,
+                        color: hideText ? Colors.grey : Colors.blue,
+                      ),
+                      onTap: () => setState(() {
+                        this.hideText = !hideText;
+                      }),
+                    ),
+                  )
+                : null,
           ),
         ],
       ),

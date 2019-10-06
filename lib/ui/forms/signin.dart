@@ -49,8 +49,15 @@ class SignInFormState extends State<SignInForm> {
                   Text('Sign In', style: Theme.of(context).textTheme.headline),
             ),
           ),
-          EmailFormField(onSaved: _onEmailSaved),
-          PasswordFormField(onSaved: _onPasswordSaved, showHelpText: false),
+          EmailFormField(
+            key: ValueKey("SignIn email"),
+            onSaved: _onEmailSaved,
+          ),
+          PasswordFormField(
+            key: ValueKey("SignIn password"),
+            onSaved: _onPasswordSaved,
+            showHelpText: false,
+          ),
           if (errorMessage != "") FormError(errorMessage),
           button,
         ];
