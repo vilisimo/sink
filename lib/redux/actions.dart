@@ -134,6 +134,7 @@ class SetUserEmail {
 @immutable
 class InitializeDatabase {
   final String userId;
+  final bool test;
 
-  InitializeDatabase(this.userId);
+  InitializeDatabase(this.userId, [this.test = false]);
 }

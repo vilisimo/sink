@@ -124,7 +124,11 @@ AppState reduce(AppState state, dynamic action) {
       );
 
     case InitializeDatabase:
-      return state.copyWith(database: FirestoreDatabase(action.userId));
+      return state.copyWith(
+        database: action.test
+            ? TestFirestoreDatabase()
+            : FirestoreDatabase(action.userId),
+      );
 
     default:
       return state;

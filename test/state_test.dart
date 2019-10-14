@@ -285,16 +285,16 @@ main() {
   });
 
   test('returns state with new firestore repository', () {
-    var state = AppState(database: FirestoreDatabase("old"));
+    var state = AppState(database: TestFirestoreDatabase());
 
-    final database = FirestoreDatabase("new");
+    final database = TestFirestoreDatabase();
     final result = state.copyWith(database: database);
 
     expect(result.database, database);
   });
 
   test('returns state with old firestore repository', () {
-    final database = FirestoreDatabase("old");
+    final database = TestFirestoreDatabase();
     var state = AppState(database: database);
 
     final result = state.copyWith(database: null);

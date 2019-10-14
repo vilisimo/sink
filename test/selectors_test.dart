@@ -356,7 +356,7 @@ main() {
   });
 
   test("retrieves repository", () {
-    var state = AppState(database: FirestoreDatabase("user"));
+    var state = AppState(database: TestFirestoreDatabase());
 
     var result = getRepository(state);
 

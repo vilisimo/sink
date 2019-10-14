@@ -480,8 +480,8 @@ main() {
   test('InitializeDatabase creates a database instance', () {
     var state = AppState(database: null);
 
-    var result = reduce(state, InitializeDatabase("user"));
+    var result = reduce(state, InitializeDatabase("user", true));
 
-    expect(result.database.userId, "user");
+    expect(result.database, isNotNull);
   });
 }

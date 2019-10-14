@@ -9,6 +9,12 @@ class FirestoreDatabase {
   final CollectionReference entries;
   final CollectionReference categories;
 
+  FirestoreDatabase._()
+      // For testing only
+      : this.userId = '',
+        this.entries = null,
+        this.categories = null;
+
   FirestoreDatabase(this.userId)
       : this.entries =
             _db.collection("users").document(userId).collection("entry"),
@@ -50,4 +56,10 @@ class FirestoreDatabase {
       'type': category.type.index,
     });
   }
+}
+
+class TestFirestoreDatabase extends FirestoreDatabase {
+  String userId;
+
+  TestFirestoreDatabase() : super._();
 }
