@@ -70,8 +70,8 @@ email/password combinations.
 3. Click on `Database` on the left hand side
 4. Click `Create Database`
 5. Make sure you create `Cloud Firestore`. However, even if you select another
-type there is an option to switch the type of a database is at the top of the
-Firebase console screen later on.
+type, there is an option to switch the type of a database later on. You can find
+it at the top of the Firebase console screen once inside the database section.
 
 Once the steps are complete, the app will run and take care of the rest of its
 business itself.
