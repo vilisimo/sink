@@ -99,10 +99,10 @@ class _TextInputState extends State<ClearableTextInput> {
   }
 }
 
-class EmailFormField extends StatelessWidget {
+class EmailFormField extends StatefulWidget {
+  final regEx = RegExp(EmailFormField.pattern);
   static const pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-  final regEx = RegExp(pattern);
 
   final Function(String) onSaved;
   final bool showHelpText;
@@ -112,6 +112,21 @@ class EmailFormField extends StatelessWidget {
         super(key: key);
 
   @override
+  _EmailFormFieldState createState() => _EmailFormFieldState();
+}
+
+class _EmailFormFieldState extends State<EmailFormField> {
+  final _controller = TextEditingController();
+
+  bool touched = false;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(24.0),
@@ -119,29 +134,48 @@ class EmailFormField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           FormTitleText(text: "Email"),
-          if (showHelpText)
+          if (widget.showHelpText)
             Text(
               "The address should be of a form email@provider.domain. "
               "For example: email@example.com",
               style: Theme.of(context).textTheme.body1.copyWith(fontSize: 14),
             ),
           TextFormField(
+            controller: _controller,
             maxLines: 1,
             keyboardType: TextInputType.emailAddress,
             autofocus: false,
             validator: (value) => _validateEmail(value),
-            onSaved: (value) => onSaved(value),
+            onChanged: (String value) => setState(() {
+              this.touched = isNotEmpty(value);
+            }),
+            onSaved: (value) => widget.onSaved(value),
+            decoration: touched
+                ? InputDecoration(
+                    suffixIcon: InkWell(
+                      child: Icon(Icons.clear, color: Colors.grey),
+                      onTap: () => _clearInput(),
+                    ),
+                  )
+                : null,
           ),
         ],
       ),
     );
   }
 
+  void _clearInput() {
+    WidgetsBinding.instance.addPostFrameCallback((_) => _controller.clear());
+    setState(() {
+      touched = false;
+    });
+  }
+
   String _validateEmail(String email) {
     email = email.trim();
     if (email.length == 0) {
       return "Email field cannot be empty";
-    } else if (!regEx.hasMatch(email)) {
+    } else if (!widget.regEx.hasMatch(email)) {
       return "Invalid email: use 'email@provider.domain' form";
     } else {
       return null;
