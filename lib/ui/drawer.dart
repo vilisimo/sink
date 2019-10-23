@@ -37,10 +37,8 @@ class HomeDrawer extends StatelessWidget {
                     'Categories',
                     style: Theme.of(context).textTheme.body2,
                   ),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.pushNamed(context, '/categories');
-                  },
+                  onTap: () =>
+                      Navigator.popAndPushNamed(context, '/categories'),
                 ),
                 ListTile(
                   title: Text(
