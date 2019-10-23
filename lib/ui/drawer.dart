@@ -6,6 +6,7 @@ import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/theme/palette.dart' as Palette;
+import 'package:sink/ui/common/dialogs.dart';
 
 class HomeDrawer extends StatelessWidget {
   @override
@@ -50,8 +51,22 @@ class HomeDrawer extends StatelessWidget {
                   ),
                   trailing: Icon(Icons.exit_to_app),
                   onTap: () {
-                    Navigator.of(context).pop();
-                    vm.signOut();
+                    showDialog(
+                      context: context,
+                      builder: (context) => ConfirmationDialog(
+                        title: "Sign Out",
+                        confirmationText: "You are about to sign out",
+                        proceedText: "Sign out",
+                        cancelText: "Stay",
+                        onProceed: () {
+                          // Hack until routes are cleaned up - prefer popUntil
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                          vm.signOut();
+                        },
+                        onCancel: () => Navigator.of(context).pop(),
+                      ),
+                    );
                   },
                 ),
               ],
