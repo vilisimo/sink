@@ -110,6 +110,12 @@ AppState reduce(AppState state, dynamic action) {
             authenticationErrorMessage: "Email and password do not match.",
             signInInProgress: false,
           );
+
+        case "ERROR_USER_NOT_FOUND":
+          return state.copyWith(
+            authenticationErrorMessage: "User could not be not found.",
+            signInInProgress: false,
+          );
       }
       return state.copyWith(
         authenticationErrorMessage: action.code,

@@ -437,6 +437,20 @@ main() {
     expect(result.signInInProgress, false);
   });
 
+  test('ReportAuthenticationError resets progress flag on incorrect user', () {
+    var state = AppState(
+      authenticationErrorMessage: "",
+      signInInProgress: true,
+    );
+
+    var result = reduce(
+      state,
+      ReportAuthenticationError("ERROR_USER_NOT_FOUND"),
+    );
+
+    expect(result.signInInProgress, false);
+  });
+
   test('ClearRegistrationState clears error message', () {
     var state = AppState(authenticationErrorMessage: "Error");
 
