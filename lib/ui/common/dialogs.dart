@@ -28,8 +28,17 @@ class ConfirmationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Center(child: Text(title)),
-      content: Text(confirmationText, textAlign: TextAlign.center),
+      title: Center(
+        child: Text(
+          title,
+          style: Theme.of(context).textTheme.headline,
+        ),
+      ),
+      content: Text(
+        confirmationText,
+        textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.subhead,
+      ),
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.only(right: 4.0, bottom: 8.0),
