@@ -283,39 +283,38 @@ main() {
     expect(result.authStatus, AuthenticationStatus.LOADING);
   });
 
-  test('SetUserId sets user id', () {
+  test('SetUserDetails sets user id', () {
     var state = AppState(userId: null);
 
     var userId = Uuid().v4();
-    var result = reduce(state, SetUserId(userId));
+    var result = reduce(state, SetUserDetails(id: userId, email: ""));
 
     expect(result.userId, userId);
   });
 
-  test('SetUserId sets status to logged in when user id exists', () {
+  test('SetUserDetails sets status to logged in when user id exists', () {
     var state = AppState(userId: null);
 
-    var userId = Uuid().v4();
-    var result = reduce(state, SetUserId(userId));
+    var result = reduce(state, SetUserDetails(id: Uuid().v4(), email: ""));
 
     expect(result.authStatus, AuthenticationStatus.LOGGED_IN);
   });
 
-  test('SetUserEmail sets user email', () {
-    var state = AppState(userEmail: null);
-
-    var result = reduce(state, SetUserEmail("email"));
-
-    expect(result.userEmail, "email");
-  });
-
-  test('SetUserId sets status to anonymous when user id does not exist', () {
+  test('SetUserDetails sets status to anonymous when user id does not exist', () {
     var state = AppState(userId: Uuid().v4());
 
-    var result = reduce(state, SetUserId(""));
+    var result = reduce(state, SetUserDetails(id: "", email: ""));
 
     expect(result.authStatus, AuthenticationStatus.ANONYMOUS);
     expect(result.userId, isNull);
+  });
+
+  test('SetUserDetails sets user email', () {
+    var state = AppState(userEmail: null);
+
+    var result = reduce(state, SetUserDetails(id: "", email: "email"));
+
+    expect(result.userEmail, "email");
   });
 
   test('StartRegistration marks registration as ongoing', () {

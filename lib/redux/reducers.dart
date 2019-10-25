@@ -64,17 +64,17 @@ AppState reduce(AppState state, dynamic action) {
     case RetrieveUser:
       return state.copyWith(authStatus: AuthenticationStatus.LOADING);
 
-    case SetUserId:
-      final anonymous = isEmpty(action.userId);
-      return state.copyWith(
-        userId: action.userId,
-        authStatus: anonymous
-            ? AuthenticationStatus.ANONYMOUS
-            : AuthenticationStatus.LOGGED_IN,
-      );
+    case SetUserDetails:
+      final anonymous = isEmpty(action.id);
+      final status = anonymous
+          ? AuthenticationStatus.ANONYMOUS
+          : AuthenticationStatus.LOGGED_IN;
 
-    case SetUserEmail:
-      return state.copyWith(userEmail: action.email);
+      return state.copyWith(
+        userId: action.id,
+        userEmail: action.email,
+        authStatus: status,
+      );
 
     case StartRegistration:
       return state.copyWith(

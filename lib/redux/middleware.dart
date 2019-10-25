@@ -14,20 +14,18 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
     if (action is RetrieveUser) {
       auth.getCurrentUser().then((user) {
         if (user != null && user.isEmailVerified) {
-          store.dispatch(SetUserId(user.uid.toString()));
-          store.dispatch(SetUserEmail(user.email));
+          final userId = user.uid.toString();
+          store.dispatch(SetUserDetails(id: userId, email: user.email));
           store.dispatch(InitializeDatabase(user.uid));
           store.dispatch(RehydrateState());
         } else {
-          store.dispatch(SetUserId(""));
-          store.dispatch(SetUserEmail(""));
+          store.dispatch(SetUserDetails(id: "", email: ""));
         }
       });
     } else if (action is SignIn) {
       auth.signIn(action.email, action.password).then((user) {
         if (user.isEmailVerified) {
-          store.dispatch(SetUserId(user.uid));
-          store.dispatch(SetUserEmail(user.email));
+          store.dispatch(SetUserDetails(id: user.uid, email: user.email));
           store.dispatch(InitializeDatabase(user.uid));
           store.dispatch(ReportSignInSuccess());
           store.dispatch(RehydrateState());
@@ -39,8 +37,7 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
     } else if (action is SignOut) {
       auth
           .signOut()
-          .then((value) => store.dispatch(SetUserId("")))
-          .then((value) => store.dispatch(SetUserEmail("")));
+          .then((value) => store.dispatch(SetUserDetails(id: "", email: "")));
     } else if (action is Register) {
       store.dispatch(StartRegistration());
       auth

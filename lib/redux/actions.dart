@@ -118,17 +118,11 @@ class ClearAuthenticationState {}
 class SendVerificationEmail {}
 
 @immutable
-class SetUserId {
-  final String userId;
-
-  SetUserId(this.userId);
-}
-
-@immutable
-class SetUserEmail {
+class SetUserDetails {
+  final String id;
   final String email;
 
-  SetUserEmail(this.email);
+  SetUserDetails({@required this.id, @required this.email});
 }
 
 @immutable
