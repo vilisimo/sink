@@ -31,17 +31,23 @@ class ConfirmationDialog extends StatelessWidget {
       title: Center(child: Text(title)),
       content: Text(confirmationText, textAlign: TextAlign.center),
       actions: <Widget>[
-        FlatButton(
-          child: Text(cancelText),
-          textColor: Colors.white,
-          color: cancelColor,
-          onPressed: () => onCancel(),
+        Padding(
+          padding: const EdgeInsets.only(right: 4.0, bottom: 8.0),
+          child: FlatButton(
+            child: Text(cancelText),
+            textColor: Colors.white,
+            color: cancelColor,
+            onPressed: () => onCancel(),
+          ),
         ),
-        FlatButton(
-          child: Text(proceedText),
-          textColor: Colors.white,
-          color: proceedColor,
-          onPressed: () => onProceed(),
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0, bottom: 8.0),
+          child: FlatButton(
+            child: Text(proceedText),
+            textColor: Colors.white,
+            color: proceedColor,
+            onPressed: () => onProceed(),
+          ),
         ),
       ],
     );
