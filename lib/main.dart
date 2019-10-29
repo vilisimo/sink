@@ -56,6 +56,7 @@ class Sink extends StatelessWidget {
         routes: {
           '/login': (context) => LoginScreen(),
           '/categories': (context) => CategoryList(),
+          '/home': (context) => HomeScreen(),
         },
         home: LoginScreen(),
       ),
