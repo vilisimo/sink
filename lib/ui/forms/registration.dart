@@ -194,24 +194,6 @@ class RegistrationToSignInText extends StatelessWidget {
   }
 }
 
-class AuthenticationBackButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return StoreConnector<AppState, _RegistrationBackButtonViewModel>(
-      converter: _RegistrationBackButtonViewModel.fromState,
-      builder: (context, vm) {
-        return IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            vm.clearRegistrationState();
-            Navigator.of(context).pop();
-          },
-        );
-      },
-    );
-  }
-}
-
 class _RegistrationBackButtonViewModel {
   final Function clearRegistrationState;
 
