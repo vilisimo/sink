@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:sink/common/auth.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/middleware.dart';
 import 'package:sink/redux/reducers.dart';
-import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/theme/icons.dart';
 import 'package:sink/ui/categories/category_list.dart';
 import 'package:sink/ui/common/buttons.dart';
-import 'package:sink/ui/common/progress_indicator.dart';
+import 'package:sink/ui/entries/add_entry_page.dart';
 import 'package:sink/ui/forms/registration.dart';
 import 'package:sink/ui/forms/signin.dart';
 import 'package:sink/ui/home.dart';
@@ -23,6 +21,7 @@ void main() {
     initialState: AppState(areCategoriesLoading: true),
     middleware: [SinkMiddleware(navigatorKey)],
   );
+  store.dispatch(RetrieveUser());
 
   runApp(Sink(navigatorKey, store));
 }
@@ -35,8 +34,6 @@ class Sink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    store.dispatch(RetrieveUser());
-
     return StoreProvider<AppState>(
       store: store,
       child: MaterialApp(
@@ -54,58 +51,13 @@ class Sink extends StatelessWidget {
         ),
         navigatorKey: navigatorKey,
         routes: {
-          '/login': (context) => LoginScreen(),
+          '/': (context) => InitialPage(),
+          '/register': (context) => RegistrationForm(),
           '/categories': (context) => CategoryList(),
           '/home': (context) => HomeScreen(),
+          '/expense': (context) => AddExpensePage(),
         },
-        home: LoginScreen(),
-      ),
-    );
-  }
-}
-
-class LoginScreen extends StatelessWidget {
-  bool _isLoading(AuthenticationStatus status) {
-    return status == AuthenticationStatus.LOADING;
-  }
-
-  bool _isAnonymous(AuthenticationStatus status) {
-    return status == AuthenticationStatus.ANONYMOUS;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return StoreConnector<AppState, _ViewModel>(
-      converter: _ViewModel.fromState,
-      builder: (context, vm) {
-        if (_isLoading(vm.authStatus)) {
-          return LoadingPage();
-        } else if (_isAnonymous(vm.authStatus)) {
-          return InitialPage();
-        } else {
-          return HomeScreen();
-        }
-      },
-    );
-  }
-}
-
-class _ViewModel {
-  final AuthenticationStatus authStatus;
-
-  _ViewModel({@required this.authStatus});
-
-  static _ViewModel fromState(Store<AppState> store) {
-    return _ViewModel(authStatus: getAuthStatus(store.state));
-  }
-}
-
-class LoadingPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: PaddedCircularProgressIndicator(),
+        initialRoute: '/',
       ),
     );
   }
@@ -125,12 +77,7 @@ class InitialPage extends StatelessWidget {
               RoundedButton(
                 text: 'Register',
                 buttonColor: Colors.blue,
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => RegistrationForm(),
-                  ),
-                ),
+                onPressed: () => Navigator.pushNamed(context, "/register"),
               ),
             ],
           ),

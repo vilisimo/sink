@@ -57,8 +57,6 @@ class HomeDrawer extends StatelessWidget {
                         proceedText: "Sign out",
                         cancelText: "Stay",
                         onProceed: () {
-                          // Hack until routes are cleaned up - prefer popUntil
-                          Navigator.of(context).pop();
                           Navigator.of(context).pop();
                           vm.signOut();
                         },
@@ -88,7 +86,7 @@ class _ViewModel {
   static _ViewModel fromState(Store<AppState> store) {
     return _ViewModel(
       signOut: () => store.dispatch(SignOut()),
-      email: getUserEmail(store.state),
+      email: getUserEmail(store.state) ?? "",
     );
   }
 }

@@ -17,6 +17,7 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
 
   @override
   void call(Store<AppState> store, dynamic action, NextDispatcher next) async {
+    print('Received action: ${action.runtimeType}');
     if (action is RetrieveUser) {
       auth.getCurrentUser().then((user) => attemptUserRetrieval(store, user));
     } else if (action is SignIn) {
@@ -27,7 +28,8 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
     } else if (action is SignOut) {
       auth
           .signOut()
-          .then((value) => store.dispatch(SetUserDetails(id: "", email: "")));
+          .then((value) => store.dispatch(SetUserDetails(id: "", email: "")))
+          .then((_) => navigatorKey.currentState.pushReplacementNamed("/"));
     } else if (action is Register) {
       store.dispatch(StartRegistration());
       auth
@@ -74,8 +76,10 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
       store.dispatch(SetUserDetails(id: userId, email: user.email));
       store.dispatch(InitializeDatabase(user.uid));
       store.dispatch(RehydrateState());
+      navigatorKey.currentState.popAndPushNamed('/home');
     } else {
       store.dispatch(SetUserDetails(id: "", email: ""));
+      navigatorKey.currentState.popAndPushNamed('/');
     }
   }
 
@@ -85,6 +89,7 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
       store.dispatch(InitializeDatabase(user.uid));
       store.dispatch(ReportSignInSuccess());
       store.dispatch(RehydrateState());
+      navigatorKey.currentState.popAndPushNamed('/home');
     } else {
       store.dispatch(SignOut());
       store.dispatch(ReportAuthenticationError("Email is not verified."));
