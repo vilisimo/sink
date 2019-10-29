@@ -16,20 +16,22 @@ import 'package:sink/ui/forms/signin.dart';
 import 'package:sink/ui/home.dart';
 
 void main() {
+  final navigatorKey = GlobalKey<NavigatorState>();
   final Store store = Store<AppState>(
     reduce,
     distinct: true,
     initialState: AppState(areCategoriesLoading: true),
-    middleware: [SinkMiddleware()],
+    middleware: [SinkMiddleware(navigatorKey)],
   );
 
-  runApp(Sink(store));
+  runApp(Sink(navigatorKey, store));
 }
 
 class Sink extends StatelessWidget {
+  final GlobalKey<NavigatorState> navigatorKey;
   final Store<AppState> store;
 
-  Sink(this.store);
+  Sink(this.navigatorKey, this.store);
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,7 @@ class Sink extends StatelessWidget {
             subhead: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
           ),
         ),
+        navigatorKey: navigatorKey,
         routes: {
           '/login': (context) => LoginScreen(),
           '/categories': (context) => CategoryList(),

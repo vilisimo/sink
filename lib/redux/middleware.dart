@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:redux/redux.dart';
 import 'package:sink/common/auth.dart';
 import 'package:sink/models/category.dart';
@@ -9,7 +10,10 @@ import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 
 class SinkMiddleware extends MiddlewareClass<AppState> {
-  final Authentication auth = FirebaseEmailAuthentication();
+  final GlobalKey<NavigatorState> navigatorKey;
+  final Authentication auth;
+
+  SinkMiddleware(this.navigatorKey) : this.auth = FirebaseEmailAuthentication();
 
   @override
   void call(Store<AppState> store, dynamic action, NextDispatcher next) async {
