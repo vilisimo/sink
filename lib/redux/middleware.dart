@@ -17,7 +17,6 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
 
   @override
   void call(Store<AppState> store, dynamic action, NextDispatcher next) async {
-    print('Received action: ${action.runtimeType}');
     if (action is RetrieveUser) {
       auth.getCurrentUser().then((user) => attemptUserRetrieval(store, user));
     } else if (action is SignIn) {
