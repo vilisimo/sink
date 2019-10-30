@@ -12,11 +12,13 @@ import 'package:uuid/uuid.dart';
 
 import 'icon_grid.dart';
 
-class CategoryForm extends StatefulWidget {
+class CategoryFormArgs {
   final CategoryType type;
 
-  CategoryForm({@required this.type});
+  CategoryFormArgs(this.type);
+}
 
+class CategoryForm extends StatefulWidget {
   @override
   CategoryFormState createState() => CategoryFormState();
 }
@@ -55,8 +57,9 @@ class CategoryFormState extends State<CategoryForm> {
 
   @override
   Widget build(BuildContext context) {
+    final CategoryFormArgs args = ModalRoute.of(context).settings.arguments;
     return StoreConnector<AppState, _ViewModel>(
-      converter: (state) => _ViewModel.fromState(state, widget.type),
+      converter: (state) => _ViewModel.fromState(state, args.type),
       builder: (BuildContext context, _ViewModel vm) {
         Set<Color> colors = vm.availableColors;
 

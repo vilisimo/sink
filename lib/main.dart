@@ -10,6 +10,7 @@ import 'package:sink/ui/categories/category_list.dart';
 import 'package:sink/ui/common/buttons.dart';
 import 'package:sink/ui/entries/add_entry_page.dart';
 import 'package:sink/ui/entries/edit_entry_page.dart';
+import 'package:sink/ui/forms/category_form.dart';
 import 'package:sink/ui/forms/registration.dart';
 import 'package:sink/ui/forms/signin.dart';
 import 'package:sink/ui/home.dart';
@@ -55,6 +56,7 @@ class Sink extends StatelessWidget {
           '/': (context) => InitialPage(),
           '/register': (context) => RegistrationForm(),
           '/categories': (context) => CategoryList(),
+          '/categoryForm': (context) => CategoryForm(),
           '/home': (context) => HomeScreen(),
           '/expense/add': (context) => AddExpensePage(),
           '/expense/edit': (context) => EditExpensePage(),

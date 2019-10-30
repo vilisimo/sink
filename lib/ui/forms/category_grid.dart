@@ -29,9 +29,10 @@ class CategoryGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget addCategoryTile = CategoryTile(
-      handleTap: (filler) => Navigator.push(
+      handleTap: (filler) => Navigator.pushNamed(
         context,
-        MaterialPageRoute(builder: (context) => CategoryForm(type: type)),
+        '/categoryForm',
+        arguments: CategoryFormArgs(type),
       ),
       category: Category(
         id: ADD_CATEGORY_ID,
