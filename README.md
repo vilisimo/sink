@@ -7,18 +7,6 @@
 - [x] Visually bearable
 - [ ] Unusable
 
-## Screenshots
-### Registration & Sign In
-![Sign In](screens/signin.png) ![Registration](screens/register.png)
-
-### Entry List
-![Entry List](screens/entries.png)
-
-### Breakdowns
-![Month's Breakdown](screens/month-summary.png) ![Year's Breakdown](screens/year-summary.png)
-
-
-
 ## Local App Setup
 
 While working on and interacting with the app is relatively straightforward, 
@@ -75,3 +63,13 @@ it at the top of the Firebase console screen once inside the database section.
 
 Once the steps are complete, the app will run and take care of the rest of its
 business itself.
+
+## Screenshots
+### Registration & Sign In
+![Sign In](screens/signin.png) ![Registration](screens/register.png)
+
+### Entry List
+![Entry List](screens/entries.png)
+
+### Breakdowns
+![Month's Breakdown](screens/month-summary.png) ![Year's Breakdown](screens/year-summary.png)
