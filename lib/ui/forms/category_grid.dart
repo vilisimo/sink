@@ -104,8 +104,6 @@ class CategoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var color = category.color;
-
     return Center(
       child: GestureDetector(
         onTap: () {

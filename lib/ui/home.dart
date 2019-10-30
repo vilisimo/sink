@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:redux/redux.dart';
-import 'package:sink/common/auth.dart';
-import 'package:sink/redux/selectors.dart';
-import 'package:sink/redux/state.dart';
 import 'package:sink/ui/drawer.dart';
 import 'package:sink/ui/entries/entries_page.dart';
 import 'package:sink/ui/statistics/statistics_page.dart';
@@ -11,16 +7,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HomePage();
-  }
-}
-
-class _ViewModel {
-  final AuthenticationStatus authStatus;
-
-  _ViewModel({@required this.authStatus});
-
-  static _ViewModel fromState(Store<AppState> store) {
-    return _ViewModel(authStatus: getAuthStatus(store.state));
   }
 }
 
