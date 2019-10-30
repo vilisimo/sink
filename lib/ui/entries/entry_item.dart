@@ -68,12 +68,11 @@ class EntryItem extends StatelessWidget {
                       amount: entry.amount,
                       income: entry.type == EntryType.INCOME,
                     ),
-                    onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditExpensePage(entry),
-                          ),
-                        ),
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      '/expense/edit',
+                      arguments: EditExpensePageArgs(entry),
+                    ),
                   ),
                 ),
               ],

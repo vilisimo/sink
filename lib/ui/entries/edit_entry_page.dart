@@ -6,19 +6,22 @@ import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/ui/forms/entry_form.dart';
 
-class EditExpensePage extends StatelessWidget {
+class EditExpensePageArgs {
   final Entry entry;
 
-  EditExpensePage(this.entry);
+  EditExpensePageArgs(this.entry);
+}
 
+class EditExpensePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final EditExpensePageArgs args = ModalRoute.of(context).settings.arguments;
     return StoreConnector<AppState, _EditViewModel>(
       converter: _EditViewModel.fromState,
       builder: (context, vm) {
         return EntryForm(
           onSave: vm.onSave,
-          entry: this.entry,
+          entry: args.entry,
         );
       },
     );

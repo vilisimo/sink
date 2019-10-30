@@ -72,7 +72,7 @@ class HomePageState extends State<HomePage>
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         child: Icon(Icons.add),
-        onPressed: () => Navigator.pushNamed(context, "/expense"),
+        onPressed: () => Navigator.pushNamed(context, "/expense/add"),
       ),
       bottomNavigationBar: BottomAppBar(
         notchMargin: 5.0,
