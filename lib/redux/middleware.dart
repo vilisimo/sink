@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +17,9 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
   final GlobalKey<NavigatorState> navigatorKey;
   final Authentication auth;
 
+  StreamSubscription<QuerySnapshot> categoriesListener;
+  StreamSubscription<QuerySnapshot> entryListener;
+
   SinkMiddleware(this.navigatorKey) : this.auth = FirebaseEmailAuthentication();
 
   @override
@@ -27,11 +32,13 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
           .then((user) => attemptSignIn(store, user))
           .catchError((e) => store.dispatch(ReportAuthenticationError(e.code)));
     } else if (action is SignOut) {
+      await categoriesListener?.cancel();
+      await entryListener?.cancel();
       auth
           .signOut()
-          .then((value) => store.dispatch(SetUserDetails(id: "", email: "")))
-          .then((_) => navigatorKey.currentState
-              .pushReplacementNamed(InitialPage.route));
+          .then((_) =>
+              navigatorKey.currentState.pushReplacementNamed(InitialPage.route))
+          .then((value) => store.dispatch(SetUserDetails(id: "", email: "")));
     } else if (action is Register) {
       store.dispatch(StartRegistration());
       auth
@@ -43,14 +50,16 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
       auth.sendEmailVerification();
     } else if (action is RehydrateState) {
       final database = getRepository(store.state);
-      database.categories
+      categoriesListener = database.categories
           .orderBy('name', descending: false)
           .snapshots()
           .listen((qs) => reloadCategories(store, qs));
       store.dispatch(LoadFirstEntry());
     } else if (action is LoadFirstEntry) {
       final database = getRepository(store.state);
-      database.getFirstEntry().listen((event) => loadMonths(store, event));
+      entryListener = database.getFirstEntry().listen(
+            (event) => loadMonths(store, event),
+          );
     } else if (action is AddEntry) {
       final database = getRepository(store.state);
       database.create(action.entry);
