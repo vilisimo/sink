@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sink/ui/drawer.dart';
+import 'package:sink/ui/entries/add_entry_page.dart';
 import 'package:sink/ui/entries/entries_page.dart';
 import 'package:sink/ui/statistics/statistics_page.dart';
 
 class HomeScreen extends StatelessWidget {
+  static const route = '/home';
+
   @override
   Widget build(BuildContext context) {
     return HomePage();
@@ -58,7 +61,7 @@ class HomePageState extends State<HomePage>
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         child: Icon(Icons.add),
-        onPressed: () => Navigator.pushNamed(context, "/expense/add"),
+        onPressed: () => Navigator.pushNamed(context, AddExpensePage.route),
       ),
       bottomNavigationBar: BottomAppBar(
         notchMargin: 5.0,

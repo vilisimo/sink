@@ -6,6 +6,7 @@ import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/theme/palette.dart' as Palette;
+import 'package:sink/ui/categories/category_list.dart';
 import 'package:sink/ui/common/dialogs.dart';
 
 class HomeDrawer extends StatelessWidget {
@@ -38,7 +39,7 @@ class HomeDrawer extends StatelessWidget {
                     style: Theme.of(context).textTheme.body2,
                   ),
                   onTap: () =>
-                      Navigator.popAndPushNamed(context, '/categories'),
+                      Navigator.popAndPushNamed(context, CategoryList.route),
                 ),
                 ListTile(
                   title: Text(

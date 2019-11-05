@@ -9,6 +9,8 @@ import 'package:sink/theme/icons.dart';
 import 'category.dart';
 
 class CategoryList extends StatelessWidget {
+  static const route = '/categories';
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(

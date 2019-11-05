@@ -7,6 +7,8 @@ import 'package:sink/redux/state.dart';
 import 'package:sink/ui/forms/entry_form.dart';
 
 class AddExpensePage extends StatelessWidget {
+  static const route = '/expense/add';
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _AddViewModel>(

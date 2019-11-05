@@ -43,21 +43,23 @@ class Sink extends StatelessWidget {
         theme: appTheme,
         navigatorKey: navigatorKey,
         routes: {
-          '/': (context) => InitialPage(),
-          '/register': (context) => RegistrationForm(),
-          '/categories': (context) => CategoryList(),
-          '/categoryForm': (context) => CategoryForm(),
-          '/home': (context) => HomeScreen(),
-          '/expense/add': (context) => AddExpensePage(),
-          '/expense/edit': (context) => EditExpensePage(),
+          InitialPage.route: (context) => InitialPage(),
+          RegistrationForm.route: (context) => RegistrationForm(),
+          CategoryList.route: (context) => CategoryList(),
+          CategoryForm.route: (context) => CategoryForm(),
+          HomeScreen.route: (context) => HomeScreen(),
+          AddExpensePage.route: (context) => AddExpensePage(),
+          EditExpensePage.route: (context) => EditExpensePage(),
         },
-        initialRoute: '/',
+        initialRoute: InitialPage.route,
       ),
     );
   }
 }
 
 class InitialPage extends StatelessWidget {
+  static const route = '/';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +73,10 @@ class InitialPage extends StatelessWidget {
               RoundedButton(
                 text: 'Register',
                 buttonColor: Colors.blue,
-                onPressed: () => Navigator.pushNamed(context, "/register"),
+                onPressed: () => Navigator.pushNamed(
+                  context,
+                  RegistrationForm.route,
+                ),
               ),
             ],
           ),

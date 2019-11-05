@@ -31,7 +31,7 @@ class CategoryGrid extends StatelessWidget {
     Widget addCategoryTile = CategoryTile(
       handleTap: (filler) => Navigator.pushNamed(
         context,
-        '/categoryForm',
+        CategoryForm.route,
         arguments: CategoryFormArgs(type),
       ),
       category: Category(

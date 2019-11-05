@@ -3,11 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:redux/redux.dart';
 import 'package:sink/common/auth.dart';
+import 'package:sink/main.dart';
 import 'package:sink/models/category.dart';
 import 'package:sink/models/entry.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
+import 'package:sink/ui/home.dart';
 
 class SinkMiddleware extends MiddlewareClass<AppState> {
   final GlobalKey<NavigatorState> navigatorKey;
@@ -28,7 +30,8 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
       auth
           .signOut()
           .then((value) => store.dispatch(SetUserDetails(id: "", email: "")))
-          .then((_) => navigatorKey.currentState.pushReplacementNamed("/"));
+          .then((_) => navigatorKey.currentState
+              .pushReplacementNamed(InitialPage.route));
     } else if (action is Register) {
       store.dispatch(StartRegistration());
       auth
@@ -75,10 +78,10 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
       store.dispatch(SetUserDetails(id: userId, email: user.email));
       store.dispatch(InitializeDatabase(user.uid));
       store.dispatch(RehydrateState());
-      navigatorKey.currentState.popAndPushNamed('/home');
+      navigatorKey.currentState.popAndPushNamed(HomeScreen.route);
     } else {
       store.dispatch(SetUserDetails(id: "", email: ""));
-      navigatorKey.currentState.popAndPushNamed('/');
+      navigatorKey.currentState.popAndPushNamed(InitialPage.route);
     }
   }
 
@@ -88,7 +91,7 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
       store.dispatch(InitializeDatabase(user.uid));
       store.dispatch(ReportSignInSuccess());
       store.dispatch(RehydrateState());
-      navigatorKey.currentState.popAndPushNamed('/home');
+      navigatorKey.currentState.popAndPushNamed(HomeScreen.route);
     } else {
       store.dispatch(SignOut());
       store.dispatch(ReportAuthenticationError("Email is not verified."));

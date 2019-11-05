@@ -13,6 +13,8 @@ class EditExpensePageArgs {
 }
 
 class EditExpensePage extends StatelessWidget {
+  static const route = '/expense/edit';
+
   @override
   Widget build(BuildContext context) {
     final EditExpensePageArgs args = ModalRoute.of(context).settings.arguments;

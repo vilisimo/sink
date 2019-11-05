@@ -19,6 +19,8 @@ class CategoryFormArgs {
 }
 
 class CategoryForm extends StatefulWidget {
+  static const route = '/categoryForm';
+
   @override
   CategoryFormState createState() => CategoryFormState();
 }

@@ -10,6 +10,8 @@ import 'package:sink/ui/common/form_errors.dart';
 import 'package:sink/ui/common/text_input.dart';
 
 class RegistrationForm extends StatefulWidget {
+  static const route = '/register';
+
   @override
   State<StatefulWidget> createState() => RegistrationFormState();
 }

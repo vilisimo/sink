@@ -70,7 +70,7 @@ class EntryItem extends StatelessWidget {
                     ),
                     onTap: () => Navigator.pushNamed(
                       context,
-                      '/expense/edit',
+                      EditExpensePage.route,
                       arguments: EditExpensePageArgs(entry),
                     ),
                   ),
