@@ -21,7 +21,7 @@ void main() {
     reduce,
     distinct: true,
     initialState: AppState(areCategoriesLoading: true),
-    middleware: [SinkMiddleware(navigatorKey)],
+    middleware: [SinkMiddleware(), AuthMiddleware(navigatorKey)],
   );
   store.dispatch(RetrieveUser());
 

@@ -132,3 +132,6 @@ class InitializeDatabase {
 
   InitializeDatabase(this.userId, [this.test = false]);
 }
+
+@immutable
+class CancelSubscriptions {}
