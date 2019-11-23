@@ -9,7 +9,7 @@ dependencies:
   cloud_firestore: ^0.12.9
   firebase_auth: ^0.14.0
   google_sign_in: ^4.0.4
-  flutter_redux: ^0.5.3
+  flutter_redux: ^0.5.4
   flutter_circular_chart: ^0.1.0
   font_awesome_flutter: ^8.4.0
   intl: ^0.15.8
