@@ -134,4 +134,4 @@ class InitializeDatabase {
 }
 
 @immutable
-class CancelSubscriptions {}
+class PreSignOut {}

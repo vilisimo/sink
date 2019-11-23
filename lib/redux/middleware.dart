@@ -19,9 +19,10 @@ class SinkMiddleware extends MiddlewareClass<AppState> {
 
   @override
   void call(Store<AppState> store, dynamic action, NextDispatcher next) async {
-    if (action is CancelSubscriptions) {
-      categoriesListener?.cancel();
-      entryListener?.cancel();
+    if (action is PreSignOut) {
+      await categoriesListener?.cancel();
+      await entryListener?.cancel();
+      store.dispatch(SignOut());
     } else if (action is RehydrateState) {
       final database = getRepository(store.state);
       categoriesListener = database.categories
@@ -88,7 +89,6 @@ class AuthMiddleware extends MiddlewareClass<AppState> {
           .then((user) => attemptSignIn(store, user))
           .catchError((e) => store.dispatch(ReportAuthenticationError(e.code)));
     } else if (action is SignOut) {
-      store.dispatch(CancelSubscriptions());
       auth
           .signOut()
           .then((_) =>

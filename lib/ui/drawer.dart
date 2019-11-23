@@ -86,7 +86,7 @@ class _ViewModel {
 
   static _ViewModel fromState(Store<AppState> store) {
     return _ViewModel(
-      signOut: () => store.dispatch(SignOut()),
+      signOut: () => store.dispatch(PreSignOut()),
       email: getUserEmail(store.state) ?? "",
     );
   }
