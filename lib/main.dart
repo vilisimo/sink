@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:sink/redux/actions.dart';
-import 'package:sink/redux/middleware.dart';
+import 'package:sink/redux/middlewares/auth.dart';
+import 'package:sink/redux/middlewares/categories.dart';
+import 'package:sink/redux/middlewares/entries.dart';
 import 'package:sink/redux/reducers.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/theme/theme.dart';
@@ -21,7 +23,11 @@ void main() {
     reduce,
     distinct: true,
     initialState: AppState(areCategoriesLoading: true),
-    middleware: [SinkMiddleware(), AuthMiddleware(navigatorKey)],
+    middleware: [
+      CategoryMiddleware(),
+      EntryMiddleware(),
+      AuthMiddleware(navigatorKey),
+    ],
   );
   store.dispatch(RetrieveUser());
 
