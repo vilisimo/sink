@@ -54,8 +54,9 @@ class RegistrationFormState extends State<RegistrationForm> {
             onSaved: _onEmailSaved,
           ),
           PasswordFormField(
-              key: ValueKey("Registration password"),
-              onSaved: _onPasswordSaved),
+            key: ValueKey("Registration password"),
+            onSaved: _onPasswordSaved,
+          ),
           button,
           if (errorMessage != "") FormError(errorMessage),
           RegistrationToSignInText(
