@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiver/strings.dart';
+import 'package:sink/common/validations.dart';
 import 'package:sink/ui/common/text.dart';
 
 class ClearableTextInput extends StatefulWidget {
@@ -216,7 +217,7 @@ class _SignInPasswordFormFieldState extends State<SignInPasswordFormField> {
             onChanged: (String value) => setState(() {
               this.touched = isNotEmpty(value);
             }),
-            validator: (value) => _validatePassword(value),
+            validator: (value) => validatePassword(value),
             onSaved: (value) => widget.onSaved(value),
             decoration: touched
                 ? InputDecoration(
@@ -235,15 +236,6 @@ class _SignInPasswordFormFieldState extends State<SignInPasswordFormField> {
         ],
       ),
     );
-  }
-
-  String _validatePassword(String password) {
-    if (password.isEmpty) {
-      return "Password field cannot be empty";
-    } else if (password.length < 6) {
-      return "Password should contain at least 6 symbols";
-    }
-    return null;
   }
 }
 
@@ -288,7 +280,7 @@ class _RegistrationPasswordFormFieldState
             onChanged: (String value) => setState(() {
               this.touched = isNotEmpty(value);
             }),
-            validator: (value) => _validatePassword(value),
+            validator: (value) => validatePassword(value),
             onSaved: (value) => widget.onSaved(value),
             decoration: touched
                 ? InputDecoration(
@@ -339,15 +331,6 @@ class _RegistrationPasswordFormFieldState
         ],
       ),
     );
-  }
-
-  String _validatePassword(String password) {
-    if (password.isEmpty) {
-      return "Password field cannot be empty";
-    } else if (password.length < 6) {
-      return "Password should contain at least 6 symbols";
-    }
-    return null;
   }
 
   String _ensureSamePassword(String password) {

@@ -14,3 +14,12 @@ nonNegative(String value) {
     throw InvalidInput('Value must be non-negative');
   }
 }
+
+validatePassword(String password) {
+  if (password.isEmpty) {
+    return "Password field cannot be empty";
+  } else if (password.length < 6) {
+    return "Password should contain at least 6 symbols";
+  }
+  return null;
+}
