@@ -198,6 +198,8 @@ class SignInPasswordFormField extends StatefulWidget {
 }
 
 class _SignInPasswordFormFieldState extends State<SignInPasswordFormField> {
+  final _controller = TextEditingController();
+
   bool hideText = true;
   bool touched = false;
 
@@ -209,29 +211,10 @@ class _SignInPasswordFormFieldState extends State<SignInPasswordFormField> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           FormTitleText(text: "Password", padding: EdgeInsets.only(top: 8.0)),
-          TextFormField(
-            key: widget.key,
-            maxLines: 1,
-            obscureText: hideText,
-            autofocus: false,
-            onChanged: (String value) => setState(() {
-              this.touched = isNotEmpty(value);
-            }),
-            validator: (value) => validatePassword(value),
-            onSaved: (value) => widget.onSaved(value),
-            decoration: touched
-                ? InputDecoration(
-                    suffixIcon: InkWell(
-                      child: Icon(
-                        Icons.remove_red_eye,
-                        color: hideText ? Colors.grey : Colors.blue,
-                      ),
-                      onTap: () => setState(() {
-                        this.hideText = !hideText;
-                      }),
-                    ),
-                  )
-                : null,
+          RevealableTextFormField(
+            controller: _controller,
+            onValidate: validatePassword,
+            onSaved: widget.onSaved,
           ),
         ],
       ),
@@ -271,30 +254,10 @@ class _RegistrationPasswordFormFieldState
             "letters, special symbols, numbers.",
             style: Theme.of(context).textTheme.body1.copyWith(fontSize: 14),
           ),
-          TextFormField(
+          RevealableTextFormField(
             controller: _passwordController,
-            key: widget.key,
-            maxLines: 1,
-            obscureText: hideText,
-            autofocus: false,
-            onChanged: (String value) => setState(() {
-              this.touched = isNotEmpty(value);
-            }),
-            validator: (value) => validatePassword(value),
-            onSaved: (value) => widget.onSaved(value),
-            decoration: touched
-                ? InputDecoration(
-                    suffixIcon: InkWell(
-                      child: Icon(
-                        Icons.remove_red_eye,
-                        color: hideText ? Colors.grey : Colors.blue,
-                      ),
-                      onTap: () => setState(() {
-                        this.hideText = !hideText;
-                      }),
-                    ),
-                  )
-                : null,
+            onValidate: validatePassword,
+            onSaved: widget.onSaved,
           ),
           FormTitleText(
             text: "Repeat the password",
@@ -304,29 +267,10 @@ class _RegistrationPasswordFormFieldState
             "Make sure that the password matches the one above.",
             style: Theme.of(context).textTheme.body1.copyWith(fontSize: 14),
           ),
-          TextFormField(
+          RevealableTextFormField(
             controller: _repetitionController,
-            maxLines: 1,
-            obscureText: hideText,
-            autofocus: false,
-            validator: (value) => _ensureSamePassword(value),
-            onSaved: null,
-            onChanged: (String value) => setState(() {
-              this.touched = isNotEmpty(value);
-            }),
-            decoration: touched
-                ? InputDecoration(
-                    suffixIcon: InkWell(
-                      child: Icon(
-                        Icons.remove_red_eye,
-                        color: hideText ? Colors.grey : Colors.blue,
-                      ),
-                      onTap: () => setState(() {
-                        this.hideText = !hideText;
-                      }),
-                    ),
-                  )
-                : null,
+            onValidate: _ensureSamePassword,
+            onSaved: (_) => null,
           ),
         ],
       ),
@@ -338,5 +282,54 @@ class _RegistrationPasswordFormFieldState
       return "Passwords must match";
     }
     return null;
+  }
+}
+
+class RevealableTextFormField extends StatefulWidget {
+  final TextEditingController controller;
+  final Function(String) onValidate;
+  final Function(String) onSaved;
+
+  RevealableTextFormField({
+    Key key,
+    @required this.controller,
+    @required this.onValidate,
+    @required this.onSaved,
+  }) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => RevealableTextFormFieldState();
+}
+
+class RevealableTextFormFieldState extends State<RevealableTextFormField> {
+  bool hideText = true;
+  bool touched = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      key: widget.key,
+      controller: widget.controller,
+      maxLines: 1,
+      obscureText: hideText,
+      autofocus: false,
+      validator: (value) => widget.onValidate(value),
+      onSaved: (value) => widget.onSaved(value),
+      onChanged: (String value) => setState(() {
+        this.touched = isNotEmpty(value);
+      }),
+      decoration: touched
+          ? InputDecoration(
+              suffixIcon: InkWell(
+                  child: Icon(
+                    Icons.remove_red_eye,
+                    color: hideText ? Colors.grey : Colors.blue,
+                  ),
+                  onTap: () => setState(() {
+                        this.hideText = !hideText;
+                      })),
+            )
+          : null,
+    );
   }
 }
