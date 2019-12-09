@@ -53,7 +53,7 @@ class RegistrationFormState extends State<RegistrationForm> {
             key: ValueKey("Registration email"),
             onSaved: _onEmailSaved,
           ),
-          PasswordFormField(
+          RegistrationPasswordFormField(
             key: ValueKey("Registration password"),
             onSaved: _onPasswordSaved,
           ),

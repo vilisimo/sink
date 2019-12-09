@@ -183,19 +183,20 @@ class _EmailFormFieldState extends State<EmailFormField> {
   }
 }
 
-class PasswordFormField extends StatefulWidget {
+class SignInPasswordFormField extends StatefulWidget {
   final Function(String) onSaved;
   final bool showHelpText;
 
-  PasswordFormField({Key key, @required this.onSaved, showHelpText})
+  SignInPasswordFormField({Key key, @required this.onSaved, showHelpText})
       : this.showHelpText = showHelpText ?? true,
         super(key: key);
 
   @override
-  _PasswordFormFieldState createState() => _PasswordFormFieldState();
+  _SignInPasswordFormFieldState createState() =>
+      _SignInPasswordFormFieldState();
 }
 
-class _PasswordFormFieldState extends State<PasswordFormField> {
+class _SignInPasswordFormFieldState extends State<SignInPasswordFormField> {
   bool hideText = true;
   bool touched = false;
 
@@ -207,12 +208,6 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           FormTitleText(text: "Password", padding: EdgeInsets.only(top: 8.0)),
-          if (widget.showHelpText)
-            Text(
-              "Make sure to use a strong password: use lowercase and capital "
-              "letters, special symbols, numbers.",
-              style: Theme.of(context).textTheme.body1.copyWith(fontSize: 14),
-            ),
           TextFormField(
             key: widget.key,
             maxLines: 1,
@@ -247,6 +242,117 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
       return "Password field cannot be empty";
     } else if (password.length < 6) {
       return "Password should contain at least 6 symbols";
+    }
+    return null;
+  }
+}
+
+class RegistrationPasswordFormField extends StatefulWidget {
+  final Function(String) onSaved;
+
+  RegistrationPasswordFormField({Key key, @required this.onSaved, showHelpText})
+      : super(key: key);
+
+  @override
+  _RegistrationPasswordFormFieldState createState() =>
+      _RegistrationPasswordFormFieldState();
+}
+
+class _RegistrationPasswordFormFieldState
+    extends State<RegistrationPasswordFormField> {
+  final _passwordController = TextEditingController();
+  final _repetitionController = TextEditingController();
+
+  bool hideText = true;
+  bool touched = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          FormTitleText(text: "Password", padding: EdgeInsets.only(top: 8.0)),
+          Text(
+            "Make sure to use a strong password: use lowercase and capital "
+            "letters, special symbols, numbers.",
+            style: Theme.of(context).textTheme.body1.copyWith(fontSize: 14),
+          ),
+          TextFormField(
+            controller: _passwordController,
+            key: widget.key,
+            maxLines: 1,
+            obscureText: hideText,
+            autofocus: false,
+            onChanged: (String value) => setState(() {
+              this.touched = isNotEmpty(value);
+            }),
+            validator: (value) => _validatePassword(value),
+            onSaved: (value) => widget.onSaved(value),
+            decoration: touched
+                ? InputDecoration(
+                    suffixIcon: InkWell(
+                      child: Icon(
+                        Icons.remove_red_eye,
+                        color: hideText ? Colors.grey : Colors.blue,
+                      ),
+                      onTap: () => setState(() {
+                        this.hideText = !hideText;
+                      }),
+                    ),
+                  )
+                : null,
+          ),
+          FormTitleText(
+            text: "Repeat the password",
+            padding: EdgeInsets.only(top: 24.0),
+          ),
+          Text(
+            "Make sure that the password matches the one above.",
+            style: Theme.of(context).textTheme.body1.copyWith(fontSize: 14),
+          ),
+          TextFormField(
+            controller: _repetitionController,
+            maxLines: 1,
+            obscureText: hideText,
+            autofocus: false,
+            validator: (value) => _ensureSamePassword(value),
+            onSaved: null,
+            onChanged: (String value) => setState(() {
+              this.touched = isNotEmpty(value);
+            }),
+            decoration: touched
+                ? InputDecoration(
+                    suffixIcon: InkWell(
+                      child: Icon(
+                        Icons.remove_red_eye,
+                        color: hideText ? Colors.grey : Colors.blue,
+                      ),
+                      onTap: () => setState(() {
+                        this.hideText = !hideText;
+                      }),
+                    ),
+                  )
+                : null,
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _validatePassword(String password) {
+    if (password.isEmpty) {
+      return "Password field cannot be empty";
+    } else if (password.length < 6) {
+      return "Password should contain at least 6 symbols";
+    }
+    return null;
+  }
+
+  String _ensureSamePassword(String password) {
+    if (_passwordController.text != _repetitionController.text) {
+      return "Passwords must match";
     }
     return null;
   }

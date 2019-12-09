@@ -53,7 +53,7 @@ class SignInFormState extends State<SignInForm> {
             key: ValueKey("SignIn email"),
             onSaved: _onEmailSaved,
           ),
-          PasswordFormField(
+          SignInPasswordFormField(
             key: ValueKey("SignIn password"),
             onSaved: _onPasswordSaved,
             showHelpText: false,
