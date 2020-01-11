@@ -21,7 +21,10 @@ abstract class Authentication {
 }
 
 class FirebaseEmailAuthentication implements Authentication {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseAuth _auth;
+
+  FirebaseEmailAuthentication({firebaseAuth})
+      : _auth = firebaseAuth ?? FirebaseAuth.instance;
 
   Future<String> signUp(String email, String password) async {
     var result = await _auth.createUserWithEmailAndPassword(
