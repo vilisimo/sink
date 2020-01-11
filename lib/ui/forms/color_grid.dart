@@ -58,9 +58,6 @@ class _ViewModel {
 }
 
 class ColorButton extends StatelessWidget {
-  static const SELECTED_OPACITY = 1.0;
-  static const UNSELECTED_OPACITY = 0.6;
-
   final Color _color;
   final bool _isSelected;
   final Function(Color) _onTap;
@@ -78,7 +75,7 @@ class ColorButton extends StatelessWidget {
               _color.red,
               _color.green,
               _color.blue,
-              _isSelected ? SELECTED_OPACITY : UNSELECTED_OPACITY,
+              1.0,
             ),
           ),
           child: _isSelected ? Icon(Icons.check) : null,
