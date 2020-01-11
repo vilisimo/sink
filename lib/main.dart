@@ -18,6 +18,7 @@ import 'package:sink/ui/forms/signin.dart';
 import 'package:sink/ui/home.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   final navigatorKey = GlobalKey<NavigatorState>();
   final Store store = Store<AppState>(
     reduce,
