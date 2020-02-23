@@ -33,28 +33,26 @@ class IconGridState extends State<IconGrid> {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-        child: Scrollbar(
-          child: GridView.count(
-            shrinkWrap: true,
-            primary: true,
-            physics: BouncingScrollPhysics(),
-            crossAxisCount: 5,
-            children: widget.assignableIcons.entries.map((entry) {
-              return Padding(
-                padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-                child: SelectableIconButton(
-                  entry.key,
-                  entry.value,
-                  widget.selectedColor,
-                  _selectedCategory == entry.key,
-                  _handleTap,
-                ),
-              );
-            }).toList(),
-          ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+      child: Scrollbar(
+        child: GridView.count(
+          shrinkWrap: true,
+          primary: true,
+          physics: BouncingScrollPhysics(),
+          crossAxisCount: 5,
+          children: widget.assignableIcons.entries.map((entry) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+              child: SelectableIconButton(
+                entry.key,
+                entry.value,
+                widget.selectedColor,
+                _selectedCategory == entry.key,
+                _handleTap,
+              ),
+            );
+          }).toList(),
         ),
       ),
     );

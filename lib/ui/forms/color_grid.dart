@@ -21,22 +21,20 @@ class ColorGrid extends StatelessWidget {
       builder: (BuildContext context, _ViewModel vm) {
         final selected = this.selectedColor ?? vm.colors.first;
 
-        return Flexible(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            child: Scrollbar(
-              child: GridView.count(
-                shrinkWrap: true,
-                primary: true,
-                physics: BouncingScrollPhysics(),
-                crossAxisCount: 5,
-                children: vm.colors.map((color) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-                    child: ColorButton(color, selected == color, _handleTap),
-                  );
-                }).toList(),
-              ),
+        return Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+          child: Scrollbar(
+            child: GridView.count(
+              shrinkWrap: true,
+              primary: true,
+              physics: BouncingScrollPhysics(),
+              crossAxisCount: 5,
+              children: vm.colors.map((color) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                  child: ColorButton(color, selected == color, _handleTap),
+                );
+              }).toList(),
             ),
           ),
         );

@@ -6,6 +6,7 @@ import 'package:sink/models/category.dart';
 import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
+import 'package:sink/theme/icons.dart';
 import 'package:sink/ui/common/text_input.dart';
 import 'package:sink/ui/forms/color_grid.dart';
 import 'package:uuid/uuid.dart';
@@ -138,6 +139,89 @@ class _ViewModel {
       },
       usedColors: getUsedColors(store.state),
       availableColors: getAvailableColors(store.state),
+    );
+  }
+}
+
+class CategoryDialog extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => CategoryDialogState();
+}
+
+class CategoryDialogState extends State<CategoryDialog>
+    with SingleTickerProviderStateMixin {
+
+  TabController _tabController;
+  String _category;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: 2);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      contentPadding: EdgeInsets.zero,
+      content: Container(
+        width: double.maxFinite,
+        height: 500,
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: Icon(
+                      icons[_category],
+                      size: 30,
+                    ),
+                  ),
+                  Text('Category name'),
+                ],
+              ),
+            ),
+            Container(
+              child: new TabBar(
+                indicatorColor: Colors.red,
+                labelColor: Theme.of(context).textTheme.title.color,
+                controller: _tabController,
+                tabs: [
+                  new Tab(text: 'Icon'),
+                  new Tab(text: 'Color'),
+                ],
+              ),
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: <Widget>[
+                  IconGrid(
+                    selectedColor: Colors.red,
+                    onTap: (newCategory) => setState(() {
+                      _category = newCategory;
+                    }),
+                  ),
+                  ColorGrid(
+                    selectedColor: null,
+                    onTap: (_) => print(_),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

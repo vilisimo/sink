@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:sink/models/category.dart';
@@ -9,7 +10,7 @@ import 'package:sink/theme/palette.dart' as Palette;
 import 'package:sink/ui/categories/category.dart';
 import 'package:sink/ui/forms/category_form.dart';
 
-class CategoryGrid extends StatelessWidget {
+class CategoryGrid extends StatefulWidget {
   static const ADD_CATEGORY_ID = "Add";
 
   final Function(String) onTap;
@@ -22,21 +23,24 @@ class CategoryGrid extends StatelessWidget {
     @required this.type,
   });
 
+  @override
+  _CategoryGridState createState() => _CategoryGridState();
+}
+
+class _CategoryGridState extends State<CategoryGrid> {
   void _handleTap(String selected) {
-    onTap(selected);
+    widget.onTap(selected);
   }
 
   @override
   Widget build(BuildContext context) {
     Widget addCategoryTile = CategoryTile(
-      handleTap: (filler) => Navigator.pushNamed(
-        context,
-        CategoryForm.route,
-        arguments: CategoryFormArgs(type),
-      ),
+      handleTap: (_) {
+        showDialog(context: context, builder: (context) => CategoryDialog());
+      },
       category: Category(
-        id: ADD_CATEGORY_ID,
-        name: ADD_CATEGORY_ID,
+        id: CategoryGrid.ADD_CATEGORY_ID,
+        name: CategoryGrid.ADD_CATEGORY_ID,
         icon: 'add',
         color: null,
         type: null,
@@ -48,12 +52,12 @@ class CategoryGrid extends StatelessWidget {
       converter: _ViewModel.fromState,
       builder: (BuildContext context, _ViewModel vm) {
         var cats = vm
-            .categories(type)
+            .categories(widget.type)
             .map((category) => CategoryTile(
                   key: ObjectKey(category),
                   handleTap: (_handleTap),
                   category: category,
-                  isSelected: selected == category.id,
+                  isSelected: widget.selected == category.id,
                 ))
             .toList();
         cats.add(addCategoryTile);
