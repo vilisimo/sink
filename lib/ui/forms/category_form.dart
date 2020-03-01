@@ -7,6 +7,7 @@ import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/theme/icons.dart';
+import 'package:sink/ui/categories/category.dart';
 import 'package:sink/ui/common/text_input.dart';
 import 'package:sink/ui/forms/color_grid.dart';
 import 'package:uuid/uuid.dart';
@@ -150,9 +151,9 @@ class CategoryDialog extends StatefulWidget {
 
 class CategoryDialogState extends State<CategoryDialog>
     with SingleTickerProviderStateMixin {
-
   TabController _tabController;
   String _category;
+  Color _color;
 
   @override
   void initState() {
@@ -165,7 +166,6 @@ class CategoryDialogState extends State<CategoryDialog>
     _tabController.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -182,9 +182,10 @@ class CategoryDialogState extends State<CategoryDialog>
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                    child: Icon(
-                      icons[_category],
-                      size: 30,
+                    child: CategoryIcon(
+                      iconData: icons[_category],
+                      color: _color,
+                      isActive: true,
                     ),
                   ),
                   Text('Category name'),
@@ -208,13 +209,15 @@ class CategoryDialogState extends State<CategoryDialog>
                 children: <Widget>[
                   IconGrid(
                     selectedColor: Colors.red,
-                    onTap: (newCategory) => setState(() {
+                    onTap: (String newCategory) => setState(() {
                       _category = newCategory;
                     }),
                   ),
                   ColorGrid(
                     selectedColor: null,
-                    onTap: (_) => print(_),
+                    onTap: (Color newColor) => setState(() {
+                      _color = newColor;
+                    }),
                   ),
                 ],
               ),
