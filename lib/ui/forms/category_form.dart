@@ -185,7 +185,7 @@ class CategoryDialogState extends State<CategoryDialog>
                     padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                     child: CategoryIcon(
                       iconData: icons[_category],
-                      color: _color ?? Colors.red,
+                      color: _color ?? Colors.white,
                       isActive: true,
                     ),
                   ),
@@ -209,13 +209,14 @@ class CategoryDialogState extends State<CategoryDialog>
                 controller: _tabController,
                 children: <Widget>[
                   IconGrid(
-                    selectedColor: Colors.red,
+                    selectedCategory: _category,
+                    selectedColor: _color ?? Palette.lightGrey,
                     onTap: (String newCategory) => setState(() {
                       _category = newCategory;
                     }),
                   ),
                   ColorGrid(
-                    selectedColor: null,
+                    selectedColor: _color,
                     onTap: (Color newColor) => setState(() {
                       _color = newColor;
                     }),
