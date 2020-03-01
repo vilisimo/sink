@@ -19,8 +19,6 @@ class ColorGrid extends StatelessWidget {
     return StoreConnector<AppState, _ViewModel>(
       converter: _ViewModel.fromState,
       builder: (BuildContext context, _ViewModel vm) {
-        final selected = this.selectedColor ?? vm.colors.first;
-
         return Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           child: Scrollbar(
@@ -32,7 +30,11 @@ class ColorGrid extends StatelessWidget {
               children: vm.colors.map((color) {
                 return Padding(
                   padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-                  child: ColorButton(color, selected == color, _handleTap),
+                  child: ColorButton(
+                    color,
+                    this.selectedColor == color,
+                    _handleTap,
+                  ),
                 );
               }).toList(),
             ),
