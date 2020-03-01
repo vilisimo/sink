@@ -7,6 +7,7 @@ import 'package:sink/redux/actions.dart';
 import 'package:sink/redux/selectors.dart';
 import 'package:sink/redux/state.dart';
 import 'package:sink/theme/icons.dart';
+import 'package:sink/theme/palette.dart' as Palette;
 import 'package:sink/ui/categories/category.dart';
 import 'package:sink/ui/common/text_input.dart';
 import 'package:sink/ui/forms/color_grid.dart';
@@ -173,7 +174,7 @@ class CategoryDialogState extends State<CategoryDialog>
       contentPadding: EdgeInsets.zero,
       content: Container(
         width: double.maxFinite,
-        height: 500,
+        height: 400,
         child: Column(
           children: <Widget>[
             Padding(
@@ -184,7 +185,7 @@ class CategoryDialogState extends State<CategoryDialog>
                     padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                     child: CategoryIcon(
                       iconData: icons[_category],
-                      color: _color,
+                      color: _color ?? Colors.red,
                       isActive: true,
                     ),
                   ),
@@ -225,6 +226,26 @@ class CategoryDialogState extends State<CategoryDialog>
           ],
         ),
       ),
+      actions: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 4.0, bottom: 8.0),
+          child: FlatButton(
+            child: Text("Cancel"),
+            textColor: Colors.white,
+            color: Palette.discouraged,
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0, bottom: 8.0),
+          child: FlatButton(
+            child: Text("Add"),
+            textColor: Colors.white,
+            color: Colors.blue,
+            onPressed: () => print("TODO: implement save"),
+          ),
+        ),
+      ],
     );
   }
 }
