@@ -146,6 +146,10 @@ class _ViewModel {
 }
 
 class CategoryDialog extends StatefulWidget {
+  final CategoryType type;
+
+  CategoryDialog({@required this.type});
+
   @override
   State<StatefulWidget> createState() => CategoryDialogState();
 }
