@@ -71,5 +71,8 @@ business itself.
 ### Entry List
 ![Entry List](screens/entries.png)
 
+### Category Creation
+![Category Creation](screens/add-category.png)
+
 ### Breakdowns
 ![Month's Breakdown](screens/month-summary.png) ![Year's Breakdown](screens/year-summary.png)
