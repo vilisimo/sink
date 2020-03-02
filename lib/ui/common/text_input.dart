@@ -3,6 +3,62 @@ import 'package:quiver/strings.dart';
 import 'package:sink/common/validations.dart';
 import 'package:sink/ui/common/text.dart';
 
+class UndecoratedTextInput extends StatefulWidget {
+  final Function(String) onChange;
+  final String value;
+  final String hintText;
+  final TextStyle style;
+
+  UndecoratedTextInput({
+    @required this.onChange,
+    @required this.hintText,
+    this.value,
+    this.style,
+  });
+
+  @override
+  State<StatefulWidget> createState() => _UndecoratedTextInputState(value);
+}
+
+class _UndecoratedTextInputState extends State<UndecoratedTextInput> {
+  final _focus = new FocusNode();
+  final _controller;
+
+  bool clearable = false;
+  bool focused = false;
+
+  _UndecoratedTextInputState(value)
+      : _controller = isBlank(value)
+            ? TextEditingController()
+            : TextEditingController.fromValue(TextEditingValue(text: value));
+
+  @override
+  void initState() {
+    _controller.addListener(() => widget.onChange(_controller.text));
+    _focus.addListener(() => focused = !focused);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: _controller,
+      textInputAction: TextInputAction.done,
+      textCapitalization: TextCapitalization.sentences,
+      style: widget.style,
+      keyboardType: TextInputType.text,
+      focusNode: _focus,
+      decoration: InputDecoration.collapsed(hintText: widget.hintText),
+    );
+  }
+}
+
 class ClearableTextInput extends StatefulWidget {
   final Function(String) onChange;
   final String value;
