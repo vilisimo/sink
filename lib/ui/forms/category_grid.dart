@@ -36,7 +36,10 @@ class _CategoryGridState extends State<CategoryGrid> {
   Widget build(BuildContext context) {
     Widget addCategoryTile = CategoryTile(
       handleTap: (_) {
-        showDialog(context: context, builder: (context) => CategoryDialog());
+        showDialog(
+          context: context,
+          builder: (context) => CategoryDialog(type: widget.type),
+        );
       },
       category: Category(
         id: CategoryGrid.ADD_CATEGORY_ID,
