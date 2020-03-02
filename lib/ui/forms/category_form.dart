@@ -157,6 +157,7 @@ class CategoryDialog extends StatefulWidget {
 class CategoryDialogState extends State<CategoryDialog>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+  String _categoryName;
   String _category;
   Color _color;
 
@@ -193,7 +194,15 @@ class CategoryDialogState extends State<CategoryDialog>
                       isActive: true,
                     ),
                   ),
-                  Text('Category name'),
+                  Expanded(
+                    child: UndecoratedTextInput(
+                      hintText: "Enter category name",
+                      value: _categoryName,
+                      onChange: (String newName) => setState(() {
+                        this._categoryName = newName;
+                      }),
+                    ),
+                  ),
                 ],
               ),
             ),
