@@ -8,7 +8,7 @@ import 'package:sink/redux/state.dart';
 import 'package:sink/theme/icons.dart';
 import 'package:sink/theme/palette.dart' as Palette;
 import 'package:sink/ui/categories/category.dart';
-import 'package:sink/ui/forms/category_form.dart';
+import 'package:sink/ui/forms/category_dialog.dart';
 
 class CategoryGrid extends StatefulWidget {
   static const ADD_CATEGORY_ID = "Add";
